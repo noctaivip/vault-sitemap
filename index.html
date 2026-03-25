@@ -888,7 +888,48 @@
       line-height:1.5;
     }
 
-    .report-modal {
+    
+    .user-profile-active {
+      border-color: rgba(97,225,255,.24) !important;
+      background: linear-gradient(180deg, rgba(97,225,255,.10), rgba(97,225,255,.04)) !important;
+      box-shadow: 0 10px 24px rgba(32,184,232,.10);
+    }
+
+    .signal-grid {
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .signal-card {
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .signal-card .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom:8px;
+    }
+
+    .signal-card .v {
+      font-size:24px;
+      letter-spacing: -.03em;
+      margin-bottom:6px;
+    }
+
+    .signal-card .f {
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.5;
+    }
+
+.report-modal {
       position: fixed;
       inset: 0;
       background: rgba(3,10,18,.66);
@@ -1852,7 +1893,19 @@
     <p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
   </div>
 
-  <div class="grid grid-2">
+  
+  <div class="card" style="margin-top:18px;">
+    <h3>Профиль пользователя</h3>
+    <div class="sub">Выберите профиль, чтобы рекомендации адаптировались под человека, а не были одинаковыми для всех.</div>
+    <div class="action-toolbar" id="userProfileButtons">
+      <button class="ghost-btn active" data-user-profile="general">Обычный</button>
+      <button class="ghost-btn" data-user-profile="child">Ребёнок</button>
+      <button class="ghost-btn" data-user-profile="asthma">Чувствительный</button>
+      <button class="ghost-btn" data-user-profile="sport">Спорт</button>
+    </div>
+  </div>
+
+<div class="grid grid-2">
     <div class="card">
       <h3>Сейчас рядом с вами</h3>
       <div class="value" style="font-size:42px;" id="userAQI">—</div>
@@ -1871,7 +1924,14 @@
     <div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
   </div>
 
+  
   <div class="card" style="margin-top:18px;">
+    <h3>Персональные уведомления</h3>
+    <div class="sub">Логика уведомлений строится на текущем AQI, погоде и выбранном профиле пользователя.</div>
+    <div class="recommend-list" id="userAlertsList"></div>
+  </div>
+
+<div class="card" style="margin-top:18px;">
     <h3>Индекс дня</h3>
     <div style="font-size:32px;" id="userIndex">—</div>
   </div>
@@ -3595,6 +3655,261 @@ updateUserLayer();
   window.addEventListener('load', function() {
     setTimeout(fullSync, 900);
   });
+})();
+</script>
+
+
+<script>
+(function() {
+  const userProfiles = {
+    general: {
+      title: 'Обычный',
+      factor: 1.00,
+      alerts: [
+        'Следите за индексом дня и избегайте длительного пребывания у магистралей в часы пик.',
+        'Открывайте окна только если риск низкий или умеренный.'
+      ]
+    },
+    child: {
+      title: 'Ребёнок',
+      factor: 1.18,
+      alerts: [
+        'Для детей порог осторожности ниже: прогулки лучше переносить на часы с минимальной нагрузкой.',
+        'При среднем и высоком риске избегайте детских площадок рядом с дорогами.'
+      ]
+    },
+    asthma: {
+      title: 'Чувствительный',
+      factor: 1.28,
+      alerts: [
+        'Для чувствительных групп любые пики AQI важнее. Нужны ранние предупреждения и минимизация наружной активности.',
+        'При ухудшении качества воздуха держите окна закрытыми и ограничьте длительные перемещения.'
+      ]
+    },
+    sport: {
+      title: 'Спорт',
+      factor: 1.12,
+      alerts: [
+        'Для спорта критичны утренние и вечерние окна. При повышенном риске переносите тренировки в помещение.',
+        'Наиболее безопасно тренироваться только при низком риске и хорошем рассеивании.'
+      ]
+    }
+  };
+
+  function localizeCityName(raw) {
+    const t = String(raw || '').toLowerCase();
+    if (t.includes('tashkent')) return 'Ташкент';
+    return raw || 'Ташкент';
+  }
+
+  function detectSourceLabelV24() {
+    const waqi = document.getElementById('waqiStatusPill')?.textContent || '';
+    const owm = document.getElementById('owmStatusPill')?.textContent || '';
+    if (waqi.includes('подключен') && owm.includes('подключен')) return 'WAQI + OpenWeather';
+    if (waqi.includes('подключен')) return 'WAQI';
+    if (owm.includes('подключен')) return 'OpenWeather';
+    if (localStorage.getItem('airguardExternalData')) return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function getSortedDistrictsSafe() {
+    if (typeof currentSortedDistricts === 'function') {
+      try { return currentSortedDistricts(); } catch(e) {}
+    }
+    return [];
+  }
+
+  function currentProfile() {
+    return localStorage.getItem('airguardUserProfile') || 'general';
+  }
+
+  function setProfile(profileKey) {
+    localStorage.setItem('airguardUserProfile', profileKey);
+    const wrap = document.getElementById('userProfileButtons');
+    if (wrap) {
+      wrap.querySelectorAll('[data-user-profile]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.userProfile === profileKey);
+        btn.classList.toggle('user-profile-active', btn.dataset.userProfile === profileKey);
+      });
+    }
+  }
+
+  function rebuildUserLayerV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const profileKey = currentProfile();
+    const profile = userProfiles[profileKey] || userProfiles.general;
+    const aqi = Number(appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
+    const weatherWindText = document.getElementById('weatherWindText')?.textContent || '';
+    const windPenalty = weatherWindText.includes('Слабый ветер') ? 12 : 0;
+    const adjusted = Math.round(aqi * profile.factor + windPenalty);
+
+    let decision = '', walk = '', sport = '', windows = '', index = '', status = '';
+    if (adjusted < 50) {
+      decision = 'Воздух хороший. Ограничений для повседневной активности нет.';
+      walk = 'Да';
+      sport = 'Да';
+      windows = 'Можно';
+      index = '9/10';
+      status = `Профиль: ${profile.title} · низкий риск`;
+    } else if (adjusted < 100) {
+      decision = 'Риск умеренный. Можно выходить, но лучше избегать длительной активности у дорог.';
+      walk = 'Да';
+      sport = 'С осторожностью';
+      windows = 'Можно кратко';
+      index = '7/10';
+      status = `Профиль: ${profile.title} · умеренный риск`;
+    } else if (adjusted < 150) {
+      decision = 'Риск повышенный. Лучше сократить активность на улице и следить за следующими обновлениями.';
+      walk = 'Ограничить';
+      sport = 'Не рекомендуется';
+      windows = 'Осторожно';
+      index = '5/10';
+      status = `Профиль: ${profile.title} · повышенный риск`;
+    } else {
+      decision = 'Риск высокий. По возможности оставайтесь в помещении и минимизируйте наружную активность.';
+      walk = 'Нет';
+      sport = 'Нет';
+      windows = 'Закрыть';
+      index = '2/10';
+      status = `Профиль: ${profile.title} · высокий риск`;
+    }
+
+    const alerts = [
+      ...profile.alerts,
+      adjusted >= 100
+        ? 'Сейчас лучше не планировать длительные прогулки или поездки по загруженным коридорам.'
+        : 'Сейчас допустимы короткие прогулки, но лучше выбирать более спокойные зоны.'
+    ];
+
+    const alertsList = document.getElementById('userAlertsList');
+    if (alertsList) {
+      alertsList.innerHTML = alerts.map(text => `<div class="rec-item"><strong>${profile.title}</strong><p>${text}</p></div>`).join('');
+    }
+
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+    setText('userAQI', String(aqi));
+    setText('userDecision', decision);
+    setText('userWalk', walk);
+    setText('userSport', sport);
+    setText('userWindows', windows);
+    setText('userIndex', index);
+    setText('userStatus', status);
+  }
+
+  function syncOverviewSignalsV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = getSortedDistrictsSafe();
+    const top = sorted[0];
+    const pollutant = appData.pollutants?.[state.pollutant];
+    const city = localizeCityName(appData.city);
+
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+
+    setText('overviewTitle', `Оперативная аналитика по показателю ${pollutant?.label || 'AQI'} для ${city}.`);
+    setText('overviewText', `Система отслеживает текущее значение ${pollutant?.label || 'AQI'}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
+    setText('signalSourceValue', detectSourceLabelV24());
+    setText('signalCityValue', city);
+    setText('signalDistrictValue', top ? top.name : '—');
+    setText('signalModeValue', `${appData.windows?.[state.window] || 'Сейчас'} · ${pollutant?.label || 'AQI'}`);
+
+    if (top && appData.districts?.[top.key]) {
+      const topDistrict = appData.districts[top.key];
+      setText('priorityDistrictNarrative', `${topDistrict.name} сейчас остаётся районом с максимальной текущей нагрузкой. Для него требуется приоритетный мониторинг, контроль в пиковое окно ${topDistrict.peak} и ранняя передача сводки ответственным лицам.`);
+      setText('focusDistrictName', topDistrict.name);
+      setText('focusDistrictValue', typeof formatValue === 'function' ? formatValue(top[state.window]) : String(top[state.window]));
+      setText('focusDistrictPeak', topDistrict.peak);
+    }
+
+    const contextChip = document.getElementById('contextChip');
+    if (contextChip) {
+      contextChip.textContent = `${city} · ${pollutant?.label || 'AQI'} · ${appData.windows?.[state.window] || 'Сейчас'}`;
+    }
+
+    const liveClock = document.getElementById('liveClock');
+    if (liveClock) {
+      const raw = liveClock.textContent || '';
+      const timePart = raw.split('·')[0]?.trim() || new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+      liveClock.textContent = `${timePart} · ${city}`;
+    }
+  }
+
+  function syncRussianLabelsV24() {
+    const heroMainLabel = document.getElementById('heroMainLabel');
+    if (heroMainLabel && heroMainLabel.textContent.includes('Current')) {
+      heroMainLabel.textContent = 'AQI · Текущий статус';
+    }
+    const sourceList = document.getElementById('sourceMixList');
+    if (sourceList && sourceList.innerHTML.includes('Estimated contributor share')) {
+      sourceList.innerHTML = sourceList.innerHTML.replaceAll('Estimated contributor share', 'Оценочная доля влияния');
+    }
+    const summaryBoxes = document.querySelectorAll('.summary-box');
+    summaryBoxes.forEach(box => {
+      if (box.textContent.includes('Air quality is currently elevated')) {
+        box.textContent = 'В центральных районах Ташкента качество воздуха ухудшено. Вечерние часы остаются основным окном повышенного риска из-за транспортной нагрузки и слабого рассеивания.';
+      }
+    });
+  }
+
+  function rebuildScenarioTimelineV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = getSortedDistrictsSafe();
+    if (!sorted.length) return;
+    const top = sorted[0];
+    const second = sorted[1] || sorted[0];
+    const pollutant = appData.pollutants?.[state.pollutant];
+    const timeline = document.getElementById('scenarioTimeline');
+    if (!timeline) return;
+    timeline.innerHTML = `
+      <div class="timeline-item">
+        <div class="timeline-time">06:00–09:00</div>
+        <div class="timeline-body">
+          <strong>Утреннее окно контроля</strong>
+          <p>Система сравнивает динамику по районам и выделяет ${top.name} как основной район риска. Следующий район наблюдения — ${second.name}.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">12:00–15:00</div>
+        <div class="timeline-body">
+          <strong>Промежуточная сверка</strong>
+          <p>Карта, аналитика районов и оповещения обновляются по показателю ${pollutant?.label || 'AQI'} и текущему временному окну.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">18:00–22:00</div>
+        <div class="timeline-body">
+          <strong>Пиковое воздействие</strong>
+          <p>При сохранении роста концентрации включается усиленный режим уведомлений и повышенное внимание к транспортным коридорам.</p>
+        </div>
+      </div>`;
+  }
+
+  function bindUserProfileButtonsV24() {
+    const wrap = document.getElementById('userProfileButtons');
+    if (!wrap || wrap.dataset.bound === '1') return;
+    wrap.dataset.bound = '1';
+    wrap.querySelectorAll('[data-user-profile]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setProfile(btn.dataset.userProfile);
+        rebuildUserLayerV24();
+      });
+    });
+    setProfile(currentProfile());
+  }
+
+  function fullSyncV24() {
+    bindUserProfileButtonsV24();
+    syncOverviewSignalsV24();
+    syncRussianLabelsV24();
+    rebuildScenarioTimelineV24();
+    rebuildUserLayerV24();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(fullSyncV24, 800);
+    setTimeout(fullSyncV24, 1800);
+    document.addEventListener('click', () => setTimeout(fullSyncV24, 120));
+  });
+  window.addEventListener('load', () => setTimeout(fullSyncV24, 900));
 })();
 </script>
 
