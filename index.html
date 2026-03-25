@@ -3458,5 +3458,145 @@ updateUserLayer();
 })();
 </script>
 
+
+<script>
+(function() {
+  function byId(id) { return document.getElementById(id); }
+
+  function safeText(id, text) {
+    const el = byId(id);
+    if (el) el.textContent = text;
+  }
+
+  function safeHtml(id, text) {
+    const el = byId(id);
+    if (el) el.innerHTML = text;
+  }
+
+  function detectSourceLabel() {
+    const waqi = byId('waqiStatusPill')?.textContent || '';
+    const owm = byId('owmStatusPill')?.textContent || '';
+    if (waqi.includes('подключен') && owm.includes('подключен')) return 'WAQI + OpenWeather';
+    if (waqi.includes('подключен')) return 'WAQI';
+    if (owm.includes('подключен')) return 'OpenWeather';
+    if (localStorage.getItem('airguardExternalData')) return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function sourceModeText() {
+    const label = detectSourceLabel();
+    if (label === 'WAQI + OpenWeather') return 'реальные API-данные';
+    if (label === 'WAQI') return 'WAQI + районное моделирование';
+    if (label === 'OpenWeather') return 'OpenWeather';
+    if (label === 'внешний JSON') return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function formatVal(v, pollutant) {
+    if (typeof formatValue === 'function') {
+      try { return formatValue(v); } catch(e) {}
+    }
+    if (pollutant === 'co2') return Math.round(v) + ' ppm';
+    if (pollutant === 'pm25') return Math.round(v) + ' µg/m³';
+    return String(Math.round(v));
+  }
+
+  function syncTopbarSource() {
+    const chip = byId('dataChip');
+    if (chip) chip.textContent = 'Источник данных: ' + sourceModeText();
+  }
+
+  function buildScenarioAndPriority() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    if (typeof currentSortedDistricts !== 'function') return;
+
+    const sorted = currentSortedDistricts();
+    if (!sorted || !sorted.length) return;
+
+    const top = sorted[0];
+    const second = sorted[1] || sorted[0];
+    const pollutant = appData.pollutants[state.pollutant];
+    const topDistrict = appData.districts[top.key];
+
+    const timeline = byId('scenarioTimeline');
+    if (timeline) {
+      timeline.innerHTML = `
+        <div class="timeline-item">
+          <div class="timeline-time">06:00–09:00</div>
+          <div class="timeline-body">
+            <strong>Утреннее окно контроля</strong>
+            <p>Система фиксирует стартовую динамику ${pollutant.label} и сравнивает районы. Основной фокус — ${top.name}, следующий район наблюдения — ${second.name}.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:00–15:00</div>
+          <div class="timeline-body">
+            <strong>Промежуточная сверка</strong>
+            <p>Обновляется карта, уточняются hotspot'ы и проверяется устойчивость концентрации в приоритетных районах.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:00–22:00</div>
+          <div class="timeline-body">
+            <strong>Пиковый период воздействия</strong>
+            <p>Если рост ${pollutant.label} сохраняется, активируется усиленный режим оповещений и повышенное внимание к транспортным коридорам.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    safeText('focusDistrictName', topDistrict.name);
+    safeText('focusDistrictValue', formatVal(top[state.window], state.pollutant));
+    safeText('focusDistrictPeak', topDistrict.peak);
+    safeText('priorityDistrictNarrative', `${topDistrict.name} сейчас остаётся районом с максимальным риском по показателю ${pollutant.label}. Для этого района требуется приоритетный мониторинг, контроль в пиковое окно ${topDistrict.peak} и ранняя передача сводки ответственным лицам.`);
+  }
+
+  function syncOverviewRussian() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const pollutant = appData.pollutants[state.pollutant];
+    safeText('overviewTitle', `Оперативная аналитика по показателю ${pollutant.label} для ${appData.city}.`);
+    safeText('overviewText', `Система отслеживает текущее значение ${pollutant.label}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
+    safeText('userStatus', `Город: ${appData.city} · показатель ${pollutant.label}`);
+  }
+
+  function syncDataCardsRussian() {
+    const ws = byId('weatherSummaryBox');
+    if (ws && ws.textContent.includes('Погодный слой активен:')) {
+      // leave as is
+    }
+    const sourceNarrative = byId('sourceMixList');
+    if (sourceNarrative && sourceNarrative.innerHTML.includes('Estimated contributor share')) {
+      sourceNarrative.innerHTML = sourceNarrative.innerHTML.replaceAll('Estimated contributor share', 'Оценочная доля влияния');
+    }
+  }
+
+  function fullSync() {
+    syncTopbarSource();
+    buildScenarioAndPriority();
+    syncOverviewRussian();
+    syncDataCardsRussian();
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(fullSync, 700);
+    setTimeout(fullSync, 1800);
+
+    document.addEventListener('click', function() {
+      setTimeout(fullSync, 120);
+    });
+
+    const observer = new MutationObserver(function() {
+      fullSync();
+    });
+    const target = byId('contextChip');
+    if (target) observer.observe(target, { childList: true, subtree: true, characterData: true });
+  });
+
+  window.addEventListener('load', function() {
+    setTimeout(fullSync, 900);
+  });
+})();
+</script>
+
 </body>
 </html>
