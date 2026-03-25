@@ -1154,15 +1154,6 @@
           <h1>AirGuard AI</h1>
           <p>Операционная экологическая аналитика для Узбекистана</p>
         </div>
-
-        <div class="topbar-left" style="margin-top:10px; width:100%;">
-          <div class="chip">Demo flow</div>
-          <button id="demoPrevBtn" class="ghost-btn">← Назад</button>
-          <button id="demoNextBtn" class="ghost-btn">Далее →</button>
-          <button id="demoStartBtn" class="ghost-btn">Запустить demo-flow</button>
-          <div class="chip" id="demoStepChip">Шаг: 1 / 10</div>
-        </div>
-
       </div>
 
       <div class="status-box">
@@ -1344,38 +1335,6 @@
           <div class="data-status-row">
             <div class="data-pill" id="waqiStatusPill">WAQI: не подключен</div>
             <div class="data-pill" id="waqiUpdatedPill">Последнее обновление: —</div>
-          </div>
-        </div>
-
-
-        
-        <div class="card" style="margin-top:18px;">
-          <h3>Режим реальной работы</h3>
-          <div class="sub">Для реального подключения WAQI и OpenWeather файл нужно открывать не через file:///, а через localhost или домен. Тогда браузер сможет корректно выполнять сетевые запросы и сервис-воркер/PWA тоже будет работать правильно.</div>
-          <div class="data-status-row">
-            <div class="data-pill">Источник: WAQI</div>
-            <div class="data-pill">Источник: OpenWeather</div>
-            <div class="data-pill">Режим: localhost / https</div>
-          </div>
-        </div>
-
-
-        <div class="card" style="margin-top:18px;">
-          <h3>Как запустить по-настоящему</h3>
-          <div class="recommend-list">
-            <div class="rec-item"><strong>Вариант 1 — локально</strong><p>Открой папку с файлом через простой локальный сервер, например Python HTTP server или VS Code Live Server.</p></div>
-            <div class="rec-item"><strong>Вариант 2 — на домене</strong><p>Размести этот HTML на хостинге или домене, чтобы браузер открывал его по https://, а не по file:///.</p></div>
-            <div class="rec-item"><strong>Результат</strong><p>После этого WAQI и OpenWeather будут отрабатывать как живые источники данных, а PWA-режим установки тоже станет доступен.</p></div>
-          </div>
-        </div>
-
-<div class="card" style="margin-top:18px;">
-          <h3>Устойчивость к сбоям API</h3>
-          <div class="sub">Если внешний API временно недоступен, интерфейс не ломается: сохраняется последний рабочий слой и продукт остаётся пригодным для показа.</div>
-          <div class="grid grid-3">
-            <div class="rec-item"><strong>WAQI</strong><p id="waqiFallbackText">При ошибке сохраняется последний подтверждённый городской сигнал.</p></div>
-            <div class="rec-item"><strong>OpenWeather</strong><p id="owmFallbackText">При ошибке сохраняется последний погодный контекст.</p></div>
-            <div class="rec-item"><strong>Статус системы</strong><p id="systemIntegrityText">Интерфейс готов к демонстрации даже при временных сбоях внешних источников.</p></div>
           </div>
         </div>
 
@@ -1876,36 +1835,7 @@
     </div>
   </div>
 
-  
   <div class="card" style="margin-top:18px;">
-    <h3>Сценарий показа</h3>
-    <div class="sub">Эта последовательность нужна, чтобы демонстрация шла без пауз и без лишних объяснений.</div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-time">Шаг 1</div>
-        <div class="timeline-body">
-          <strong>Обзор</strong>
-          <p>Показать городскую картину, риск, рекомендации и текущий источник данных.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-time">Шаг 2</div>
-        <div class="timeline-body">
-          <strong>Карта и районы</strong>
-          <p>Показать hotspot’ы, приоритетный район и аналитический комментарий.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-time">Шаг 3</div>
-        <div class="timeline-body">
-          <strong>Город / бизнес / пользователь</strong>
-          <p>Показать, что одна система решает сразу три класса задач и имеет понятный путь к монетизации.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="card" style="margin-top:18px;">
     <h3>Финальные действия</h3>
     <div class="action-toolbar">
       <button class="ghost-btn" data-action="city-summary">Сформировать финальную сводку</button>
@@ -2478,77 +2408,6 @@
 
 
 
-
-    const DEMO_FLOW = ['overview', 'map', 'districts', 'forecast', 'alerts', 'gov', 'business', 'user', 'pilot'];
-    let demoFlowIndex = 0;
-
-    function updateDemoStepChip() {
-      const chip = document.getElementById('demoStepChip');
-      if (chip) chip.textContent = `Шаг: ${demoFlowIndex + 1} / ${DEMO_FLOW.length}`;
-    }
-
-    function showScreenById(screenId) {
-      navButtons.forEach(b => b.classList.remove('active'));
-      screens.forEach(s => s.classList.remove('active'));
-      const btn = document.querySelector(`.nav button[data-screen="${screenId}"]`);
-      const screen = document.getElementById(screenId);
-      if (btn) btn.classList.add('active');
-      if (screen) screen.classList.add('active');
-      const idx = DEMO_FLOW.indexOf(screenId);
-      if (idx >= 0) demoFlowIndex = idx;
-      updateDemoStepChip();
-    }
-
-    function bindDemoFlow() {
-      const prevBtn = document.getElementById('demoPrevBtn');
-      const nextBtn = document.getElementById('demoNextBtn');
-      const startBtn = document.getElementById('demoStartBtn');
-      if (prevBtn) prevBtn.addEventListener('click', () => {
-        demoFlowIndex = (demoFlowIndex - 1 + DEMO_FLOW.length) % DEMO_FLOW.length;
-        showScreenById(DEMO_FLOW[demoFlowIndex]);
-      });
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        demoFlowIndex = (demoFlowIndex + 1) % DEMO_FLOW.length;
-        showScreenById(DEMO_FLOW[demoFlowIndex]);
-      });
-      if (startBtn) startBtn.addEventListener('click', () => {
-        demoFlowIndex = 0;
-        showScreenById(DEMO_FLOW[0]);
-      });
-      updateDemoStepChip();
-    }
-
-    function saveApiSnapshot() {
-      try {
-        const snapshot = {
-          city: appData.city,
-          pollutants: appData.pollutants,
-          districts: appData.districts,
-          savedAt: new Date().toISOString()
-        };
-        localStorage.setItem('airguardApiSnapshot', JSON.stringify(snapshot));
-      } catch (e) {}
-    }
-
-    function restoreApiSnapshot() {
-      try {
-        const raw = localStorage.getItem('airguardApiSnapshot');
-        if (!raw) return false;
-        const parsed = JSON.parse(raw);
-        if (!parsed || !parsed.pollutants || !parsed.districts) return false;
-        appData.city = parsed.city || appData.city;
-        appData.pollutants = parsed.pollutants;
-        appData.districts = parsed.districts;
-        const chip = document.getElementById('dataChip');
-        if (chip) chip.textContent = 'Источник данных: сохранённый API-снимок';
-        const systemText = document.getElementById('systemIntegrityText');
-        if (systemText) systemText.textContent = 'Используется сохранённый рабочий снимок. Демонстрация остаётся стабильной.';
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-
     const DEFAULT_WAQI_TOKEN = "e39aa4917168a870cfbf2592cac90cd50097a16e";
     const DEFAULT_OWM_KEY = "6a450f4c02e24a6a7c707cdd4e72a9c9";
 
@@ -2606,15 +2465,12 @@
           updatedPill.textContent = `Последнее обновление: ${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}`;
         }
 
-        saveApiSnapshot();
         updateAll();
       } catch (e) {
         if (statusPill) {
-          statusPill.textContent = 'OpenWeather: ошибка подключения / проверь localhost или сеть';
+          statusPill.textContent = 'OpenWeather: ошибка подключения';
           statusPill.className = 'data-pill pill-bad';
         }
-        const fallbackText = document.getElementById('owmFallbackText');
-        if (fallbackText) fallbackText.textContent = 'Погодный слой временно не обновился. Сохраняется последний рабочий контекст.';
       }
     }
 
@@ -2634,7 +2490,7 @@
       clearBtn.addEventListener('click', () => {
         localStorage.removeItem('airguardOwmKey');
         localStorage.removeItem('airguardOwmCity');
-        keyInput.value = '6a450f4c02e24a6a7c707cdd4e72a9c9';
+        keyInput.value = '';
         const pill = document.getElementById('owmStatusPill');
         const upd = document.getElementById('owmUpdatedPill');
         if (pill) { pill.textContent = 'OpenWeather: не подключен'; pill.className = 'data-pill'; }
@@ -2739,16 +2595,12 @@
         if (dataMode) dataMode.textContent = 'Активен реальный городской сигнал WAQI с расчётным распределением по районам.';
         if (dataUpdated) dataUpdated.textContent = 'Городской показатель загружается из WAQI, после чего система строит районное распределение для демонстрации пилота.';
         updateValidationStatus(true);
-        saveApiSnapshot();
         updateAll();
       } catch (e) {
         if (statusPill) {
-          statusPill.textContent = 'WAQI: ошибка подключения / проверь localhost или сеть';
+          statusPill.textContent = 'WAQI: ошибка подключения';
           statusPill.className = 'data-pill pill-bad';
         }
-        const fallback = restoreApiSnapshot();
-        const fallbackText = document.getElementById('waqiFallbackText');
-        if (fallbackText) fallbackText.textContent = fallback ? 'Используется сохранённый городской сигнал из последнего успешного обновления.' : 'Сохранённого снимка нет. Используется встроенный слой.';
       }
     }
 
@@ -2768,7 +2620,7 @@
       clearBtn.addEventListener('click', () => {
         localStorage.removeItem('airguardWaqiToken');
         localStorage.removeItem('airguardWaqiCity');
-        tokenInput.value = 'e39aa4917168a870cfbf2592cac90cd50097a16e';
+        tokenInput.value = '';
         const pill = document.getElementById('waqiStatusPill');
         const upd = document.getElementById('waqiUpdatedPill');
         if (pill) { pill.textContent = 'WAQI: не подключен'; pill.className = 'data-pill'; }
@@ -2863,15 +2715,11 @@
       bindJsonLoader();
     bindWAQIConnector();
     bindOpenWeatherConnector();
-    bindDemoFlow();
     loadStoredExternalData();
-    restoreApiSnapshot();
     updateValidationStatus(localStorage.getItem('airguardExternalData') !== null || localStorage.getItem('airguardWaqiToken') !== null || localStorage.getItem('airguardOwmKey') !== null);
     updateAll();
-    setTimeout(() => {
-      if (DEFAULT_WAQI_TOKEN || localStorage.getItem('airguardWaqiToken')) fetchWAQIAndApply();
-      if (DEFAULT_OWM_KEY || localStorage.getItem('airguardOwmKey')) fetchOpenWeatherAndApply();
-    }, 250);
+    if (DEFAULT_WAQI_TOKEN || localStorage.getItem('airguardWaqiToken')) fetchWAQIAndApply();
+    if (DEFAULT_OWM_KEY || localStorage.getItem('airguardOwmKey')) fetchOpenWeatherAndApply();
       return true;
     }
 
@@ -3388,6 +3236,227 @@ updateUserLayer();
       </div>
     </div>
   </div>
+
+
+<script>
+(function() {
+  const WAQI_DEFAULT = "e39aa4917168a870cfbf2592cac90cd50097a16e";
+  const OWM_DEFAULT = "6a450f4c02e24a6a7c707cdd4e72a9c9";
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function setPill(id, text, cls='') {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'data-pill' + (cls ? ' ' + cls : '');
+  }
+
+  function safeUpdateAll() {
+    try {
+      if (typeof updateAll === 'function') updateAll();
+    } catch (e) {
+      console.error('updateAll failed', e);
+    }
+  }
+
+  function saveSnapshot() {
+    try {
+      if (typeof appData === 'undefined') return;
+      localStorage.setItem('airguardApiSnapshotV22', JSON.stringify({
+        city: appData.city,
+        pollutants: appData.pollutants,
+        districts: appData.districts
+      }));
+    } catch (e) {}
+  }
+
+  function restoreSnapshot() {
+    try {
+      const raw = localStorage.getItem('airguardApiSnapshotV22');
+      if (!raw || typeof appData === 'undefined') return false;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !parsed.pollutants || !parsed.districts) return false;
+      appData.city = parsed.city || appData.city;
+      appData.pollutants = parsed.pollutants;
+      appData.districts = parsed.districts;
+      setText('dataChip', 'Источник данных: сохранённый рабочий слой');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function realFetchWAQI() {
+    const token = (document.getElementById('waqiTokenInput')?.value || WAQI_DEFAULT).trim();
+    const city = (document.getElementById('waqiCityInput')?.value || 'tashkent').trim().toLowerCase();
+    if (!token) {
+      setPill('waqiStatusPill', 'WAQI: token не указан', 'pill-warn');
+      return;
+    }
+    setPill('waqiStatusPill', 'WAQI: загрузка...', 'pill-warn');
+    try {
+      const url = `https://api.waqi.info/feed/${encodeURIComponent(city)}/?token=${encodeURIComponent(token)}`;
+      const res = await fetch(url, { method: 'GET' });
+      const payload = await res.json();
+      if (!payload || payload.status !== 'ok' || !payload.data) throw new Error('WAQI returned no usable data');
+
+      const data = payload.data;
+      const iaqi = data.iaqi || {};
+      const cityName = data.city?.name || 'Ташкент';
+      const aqi = Number(data.aqi || 0) || 0;
+      const pm25 = Number(iaqi.pm25?.v || Math.max(10, Math.round(aqi * 0.45))) || Math.max(10, Math.round(aqi * 0.45));
+      const co2 = Number(iaqi.co2?.v || (650 + Math.round(aqi * 0.7))) || (650 + Math.round(aqi * 0.7));
+
+      if (typeof appData !== 'undefined') {
+        appData.city = cityName;
+        appData.pollutants.aqi.cityValue.live = aqi;
+        appData.pollutants.aqi.cityValue['24h'] = Math.max(0, Math.round(aqi * 0.97));
+        appData.pollutants.aqi.cityValue['7d'] = Math.max(0, Math.round(aqi * 0.91));
+
+        appData.pollutants.pm25.cityValue.live = pm25;
+        appData.pollutants.pm25.cityValue['24h'] = Math.max(0, Math.round(pm25 * 0.95));
+        appData.pollutants.pm25.cityValue['7d'] = Math.max(0, Math.round(pm25 * 0.87));
+
+        appData.pollutants.co2.cityValue.live = co2;
+        appData.pollutants.co2.cityValue['24h'] = Math.max(0, Math.round(co2 * 0.98));
+        appData.pollutants.co2.cityValue['7d'] = Math.max(0, Math.round(co2 * 0.95));
+
+        const factors = {
+          yunusabad: 1.06,
+          chilanzar: 0.98,
+          mirzo: 0.86,
+          bektemir: 0.72,
+        };
+        Object.keys(factors).forEach((key) => {
+          const k = factors[key];
+          appData.districts[key].aqi.live = Math.round(aqi * k);
+          appData.districts[key].aqi['24h'] = Math.round(aqi * k * 0.96);
+          appData.districts[key].aqi['7d'] = Math.round(aqi * k * 0.89);
+
+          appData.districts[key].pm25.live = Math.round(pm25 * k);
+          appData.districts[key].pm25['24h'] = Math.round(pm25 * k * 0.95);
+          appData.districts[key].pm25['7d'] = Math.round(pm25 * k * 0.87);
+
+          appData.districts[key].co2.live = Math.round(co2 * (0.95 + (k - 0.72) * 0.4));
+          appData.districts[key].co2['24h'] = Math.round(appData.districts[key].co2.live * 0.98);
+          appData.districts[key].co2['7d'] = Math.round(appData.districts[key].co2.live * 0.95);
+        });
+      }
+
+      localStorage.setItem('airguardWaqiToken', token);
+      localStorage.setItem('airguardWaqiCity', city);
+      setPill('waqiStatusPill', 'WAQI: подключен', 'pill-ok');
+      setPill('waqiUpdatedPill', 'Последнее обновление: ' + new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}));
+      setText('dataChip', 'Источник данных: WAQI + районное моделирование');
+      setText('dataModeText', 'Активен реальный городской сигнал WAQI с расчётным распределением по районам.');
+      setText('dataUpdatedText', 'Городской показатель загружается из WAQI и сразу перестраивает карту, панели и пользовательский слой.');
+      setText('validationSource', 'Активный источник: WAQI.');
+      setText('validationStructure', 'Реальный городской AQI синхронизирован с районным распределением и экранами продукта.');
+      setText('consoleSource', 'WAQI');
+      setText('consoleMode', 'Real');
+      setText('consoleState', 'Онлайн');
+      setText('mapDataStatus', 'Режим: WAQI');
+      saveSnapshot();
+      safeUpdateAll();
+    } catch (e) {
+      console.error('WAQI failed', e);
+      const restored = restoreSnapshot();
+      setPill('waqiStatusPill', restored ? 'WAQI: offline, использован снимок' : 'WAQI: ошибка подключения', restored ? 'pill-warn' : 'pill-bad');
+      setText('waqiFallbackText', restored ? 'Используется сохранённый рабочий городской сигнал.' : 'Подключение не удалось, сохранённого снимка нет.');
+      safeUpdateAll();
+    }
+  }
+
+  async function realFetchOWM() {
+    const key = (document.getElementById('owmKeyInput')?.value || OWM_DEFAULT).trim();
+    const city = (document.getElementById('owmCityInput')?.value || 'Tashkent').trim();
+    if (!key) {
+      setPill('owmStatusPill', 'OpenWeather: key не указан', 'pill-warn');
+      return;
+    }
+    setPill('owmStatusPill', 'OpenWeather: загрузка...', 'pill-warn');
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${encodeURIComponent(key)}&units=metric&lang=ru`;
+      const res = await fetch(url, { method: 'GET' });
+      const data = await res.json();
+      if (!data || !data.main) throw new Error('OpenWeather returned no usable data');
+
+      const temp = Math.round(Number(data.main.temp || 0));
+      const humidity = Math.round(Number(data.main.humidity || 0));
+      const wind = Math.round(Number(data.wind?.speed || 0));
+      const desc = data.weather?.[0]?.description || 'без описания';
+
+      setText('weatherSummaryBox', `Погодный слой активен: ${desc}. Скорость ветра ${wind} м/с, температура ${temp}°C, влажность ${humidity}%.`);
+      setText('weatherWindValue', `${wind} м/с`);
+      setText('weatherWindText', wind <= 2 ? 'Слабый ветер — риск накопления загрязнения выше' : 'Ветер помогает рассеиванию загрязнения');
+      setText('weatherTempValue', `${temp}°C`);
+      setText('weatherHumidityText', `Влажность: ${humidity}%`);
+      setPill('owmStatusPill', 'OpenWeather: подключен', 'pill-ok');
+      setPill('owmUpdatedPill', 'Последнее обновление: ' + new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}));
+      setText('owmFallbackText', 'Погодный слой обновляется из OpenWeather в реальном времени.');
+      localStorage.setItem('airguardOwmKey', key);
+      localStorage.setItem('airguardOwmCity', city);
+      saveSnapshot();
+      safeUpdateAll();
+    } catch (e) {
+      console.error('OpenWeather failed', e);
+      setPill('owmStatusPill', 'OpenWeather: ошибка подключения', 'pill-bad');
+      setText('owmFallbackText', 'Погодный слой временно недоступен. Сохраняется последний рабочий контекст.');
+    }
+  }
+
+  function bindRealButtons() {
+    const waqiTokenInput = document.getElementById('waqiTokenInput');
+    const waqiCityInput = document.getElementById('waqiCityInput');
+    const waqiBtn = document.getElementById('connectWaqiBtn');
+    const waqiClear = document.getElementById('clearWaqiBtn');
+
+    const owmKeyInput = document.getElementById('owmKeyInput');
+    const owmCityInput = document.getElementById('owmCityInput');
+    const owmBtn = document.getElementById('connectOwmBtn');
+    const owmClear = document.getElementById('clearOwmBtn');
+
+    if (waqiTokenInput) waqiTokenInput.value = localStorage.getItem('airguardWaqiToken') || WAQI_DEFAULT;
+    if (waqiCityInput) waqiCityInput.value = localStorage.getItem('airguardWaqiCity') || 'tashkent';
+    if (owmKeyInput) owmKeyInput.value = localStorage.getItem('airguardOwmKey') || OWM_DEFAULT;
+    if (owmCityInput) owmCityInput.value = localStorage.getItem('airguardOwmCity') || 'Tashkent';
+
+    if (waqiBtn) waqiBtn.onclick = function(e) { e.preventDefault(); realFetchWAQI(); };
+    if (waqiClear) waqiClear.onclick = function(e) {
+      e.preventDefault();
+      localStorage.removeItem('airguardWaqiToken');
+      localStorage.removeItem('airguardWaqiCity');
+      if (waqiTokenInput) waqiTokenInput.value = WAQI_DEFAULT;
+      if (waqiCityInput) waqiCityInput.value = 'tashkent';
+      setPill('waqiStatusPill', 'WAQI: не подключен');
+      setPill('waqiUpdatedPill', 'Последнее обновление: —');
+    };
+
+    if (owmBtn) owmBtn.onclick = function(e) { e.preventDefault(); realFetchOWM(); };
+    if (owmClear) owmClear.onclick = function(e) {
+      e.preventDefault();
+      localStorage.removeItem('airguardOwmKey');
+      localStorage.removeItem('airguardOwmCity');
+      if (owmKeyInput) owmKeyInput.value = OWM_DEFAULT;
+      if (owmCityInput) owmCityInput.value = 'Tashkent';
+      setPill('owmStatusPill', 'OpenWeather: не подключен');
+      setPill('owmUpdatedPill', 'Последнее обновление: —');
+    };
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    bindRealButtons();
+    setTimeout(function() {
+      realFetchWAQI();
+      realFetchOWM();
+    }, 500);
+  });
+})();
+</script>
 
 </body>
 </html>
