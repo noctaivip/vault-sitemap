@@ -1,18 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#07111b" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="AirGuard AI" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icon-192.png" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-
-  <title>AirGuard AI — Рабочий MVP</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#07111b" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="AirGuard AI" name="apple-mobile-web-app-title"/>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="icon-192.png" rel="icon"/>
+<link href="icon-192.png" rel="apple-touch-icon"/>
+<title>AirGuard AI — Рабочий MVP</title>
+<style>
     :root {
       --bg: #07111b;
       --bg-2: #0b1623;
@@ -1560,863 +1560,751 @@
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark"></div>
-        <div>
-          <h1>AirGuard AI</h1>
-          <p>Операционная экологическая аналитика для Узбекистана</p>
-        </div>
-      </div>
-
-      <div class="status-box">
-        <strong>Рабочий single-file MVP</strong>
-        <span>Внутри только продуктовые функции: мониторинг, прогноз, уведомления, районная аналитика, источники, B2G и B2B слои.</span>
-      </div>
-
-      <div class="nav">
-        <button class="active" data-screen="overview"><span>Обзор</span><small>01</small></button>
-        <button data-screen="map"><span>Карта загрязнения</span><small>02</small></button>
-        <button data-screen="forecast"><span>Прогноз</span><small>03</small></button>
-        <button data-screen="alerts"><span>Оповещения</span><small>04</small></button>
-        <button data-screen="districts"><span>Аналитика районов</span><small>05</small></button>
-        <button data-screen="sources"><span>Источники загрязнения</span><small>06</small></button>
-        <button data-screen="gov"><span>Панель мониторинга города</span><small>07</small></button>
-        <button data-screen="business"><span>Аналитика для предприятий</span><small>08</small></button>
-        <button data-screen="pilot"><span>Пилотный запуск</span><small>09</small></button>
+<div class="app-shell">
+<aside class="sidebar">
+<div class="brand">
+<div class="brand-mark"></div>
+<div>
+<h1>AirGuard AI</h1>
+<p>Операционная экологическая аналитика для Узбекистана</p>
+</div>
+</div>
+<div class="status-box">
+<strong>Рабочий single-file MVP</strong>
+<span>Внутри только продуктовые функции: мониторинг, прогноз, уведомления, районная аналитика, источники, B2G и B2B слои.</span>
+</div>
+<div class="nav">
+<button class="active" data-screen="overview"><span>Обзор</span><small>01</small></button>
+<button data-screen="map"><span>Карта загрязнения</span><small>02</small></button>
+<button data-screen="forecast"><span>Прогноз</span><small>03</small></button>
+<button data-screen="alerts"><span>Оповещения</span><small>04</small></button>
+<button data-screen="districts"><span>Аналитика районов</span><small>05</small></button>
+<button data-screen="sources"><span>Источники загрязнения</span><small>06</small></button>
+<button data-screen="gov"><span>Панель мониторинга города</span><small>07</small></button>
+<button data-screen="business"><span>Аналитика для предприятий</span><small>08</small></button>
+<button data-screen="pilot"><span>Пилотный запуск</span><small>09</small></button>
 <button data-screen="user"><span>Пользователь</span><small>10</small></button>
-      </div>
-
-      <div class="live-box">
-        <div class="kicker">Режим реального времени</div>
-        <h3 id="liveClock">09:42 · Ташкент</h3>
-        <p id="liveSummary">Система обновляет текущий экран, прогноз, карту, уведомления и районную аналитику от выбранного загрязнителя и временного окна.</p>
-      </div>
-    </aside>
-
-    <main class="content-pane">
-      <div class="topbar">
-        <div class="topbar-left">
-          <select id="citySelect" class="selector">
-            <option value="tashkent">Ташкент</option>
-          </select>
-          <select id="pollutantSelect" class="selector">
-            <option value="aqi">AQI</option>
-            <option value="pm25">PM2.5</option>
-            <option value="co2">CO2</option>
-          </select>
-          <select id="windowSelect" class="selector">
-            <option value="live">Сейчас</option>
-            <option value="24h">24 часа</option>
-            <option value="7d">7 дней</option>
-          </select>
-          <button id="simulateBtn" class="ghost-btn active">Имитация обновления: ВКЛ</button>
-          <button id="installBtn" class="ghost-btn" style="display:none;">Установить приложение</button>
-        </div>
-        <div class="topbar-right">
-          <div class="chip" id="contextChip">Ташкент · AQI · Сейчас</div>
-          <div class="chip" id="refreshChip">Обновлено только что</div>
-          
+</div>
+<div class="live-box">
+<div class="kicker">Режим реального времени</div>
+<h3 id="liveClock">09:42 · Ташкент</h3>
+<p id="liveSummary">Система обновляет текущий экран, прогноз, карту, уведомления и районную аналитику от выбранного загрязнителя и временного окна.</p>
+</div>
+</aside>
+<main class="content-pane">
+<div class="topbar">
+<div class="topbar-left">
+<select class="selector" id="citySelect">
+<option value="tashkent">Ташкент</option>
+</select>
+<select class="selector" id="pollutantSelect">
+<option value="aqi">AQI</option>
+<option value="pm25">PM2.5</option>
+<option value="co2">CO2</option>
+</select>
+<select class="selector" id="windowSelect">
+<option value="live">Сейчас</option>
+<option value="24h">24 часа</option>
+<option value="7d">7 дней</option>
+</select>
+<button class="ghost-btn active" id="simulateBtn">Имитация обновления: ВКЛ</button>
+<button class="ghost-btn" id="installBtn" style="display:none;">Установить приложение</button>
+</div>
+<div class="topbar-right">
+<div class="chip" id="contextChip">Ташкент · AQI · Сейчас</div>
+<div class="chip" id="refreshChip">Обновлено только что</div>
 <div class="chip" id="dataChip">Источник данных: WAQI + районное моделирование</div>
 <div class="mode-shell" id="modeShell">
-  <div class="mode-badge" id="modeBadge">USER</div>
-  <div class="mode-summary" id="modeSummary">Пользовательский контур: простые решения, прогноз, карта и персональные уведомления.</div>
+<div class="mode-badge" id="modeBadge">USER</div>
+<div class="mode-summary" id="modeSummary">Пользовательский контур: простые решения, прогноз, карта и персональные уведомления.</div>
 </div>
 <div class="chip" id="accessChip">Доступ: пользователь</div>
 <div class="access-switch" id="accessSwitch">
-  <button class="access-btn active" data-access-target="general">Пользователь</button>
-  <button class="access-btn" data-access-target="business">Бизнес</button>
-  <button class="access-btn" data-access-target="gov">Государство</button>
+<button class="access-btn active" data-access-target="general">Пользователь</button>
+<button class="access-btn" data-access-target="business">Бизнес</button>
+<button class="access-btn" data-access-target="gov">Государство</button>
 </div>
-
-        </div>
-      </div>
-
-      <section class="screen active" id="overview">
-        
-        <div class="locked-note access-guard-note" id="govLockedNote">
+</div>
+</div>
+<section class="screen active" id="overview">
+<div class="locked-note access-guard-note" id="govLockedNote">
           Государственный контур закрыт. После ввода ключа доступа открываются приоритетные меры, критические районы, прогнозное окно и управленческие сценарии для города.
         </div>
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Оперативный обзор</div>
-              <h2 id="overviewTitle">Оперативная аналитика качества воздуха по Ташкенту.</h2>
-              <p id="overviewText">Система отслеживает текущее состояние воздуха, прогнозирует краткосрочные риски и формирует практические рекомендации для жителей, предприятий и городских служб.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat">
-                <strong id="heroMainValue">146</strong>
-                <span id="heroMainLabel">AQI · Текущий статус</span>
-              </div>
-              <div class="summary-box" id="heroSummary">В центральных районах Ташкента качество воздуха остаётся ухудшенным. В вечерние часы ожидается дополнительный рост концентрации частиц из-за плотного трафика и слабого рассеивания.</div>
-              <div class="hero-tags">
-                <div class="chip">Карта</div>
-                <div class="chip">Прогноз</div>
-                <div class="chip">Оповещения</div>
-                <div class="chip">Панели решений</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-4">
-          <div class="card metric-card">
-            <div class="label" id="metric1Label">Текущий AQI</div>
-            <div class="value" id="metric1Value">146</div>
-            <div class="status-row"><span id="metric1Status"><i class="dot orange"></i>Повышенный</span><span id="metric1Foot">+12% к сопоставимому периоду</span></div>
-          </div>
-          <div class="card metric-card">
-            <div class="label">PM2.5</div>
-            <div class="value" id="metricPm">68</div>
-            <div class="status-row"><span>µg/m³</span><span id="pmFoot">Выше рекомендуемого уровня</span></div>
-          </div>
-          <div class="card metric-card">
-            <div class="label">CO2</div>
-            <div class="value" id="metricCo2">742</div>
-            <div class="status-row"><span>ppm</span><span id="co2Foot">Городской фон растёт</span></div>
-          </div>
-          <div class="card metric-card">
-            <div class="label">Прогнозный риск</div>
-            <div class="value" id="riskValue">Высокий</div>
-            <div class="status-row"><span id="riskDot"><i class="dot red"></i>Следующие 24 часа</span><span id="confidenceFoot">81% достоверность модели</span></div>
-          </div>
-        </div>
-
-        
-        <div class="grid grid-3" style="margin-top:18px;">
-          <div class="card">
-            <h3>Погодный контекст</h3>
-            <div class="summary-box" id="weatherSummaryBox">Погодный слой не подключен. После подключения OpenWeather здесь появятся ветер, температура и влажность.</div>
-          </div>
-          <div class="card">
-            <h3>Ветер</h3>
-            <div class="value" style="font-size:34px;" id="weatherWindValue">—</div>
-            <div class="sub" id="weatherWindText">Нет данных</div>
-          </div>
-          <div class="card">
-            <h3>Температура / влажность</h3>
-            <div class="value" style="font-size:34px;" id="weatherTempValue">—</div>
-            <div class="sub" id="weatherHumidityText">Нет данных</div>
-          </div>
-        </div>
-
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Оперативный обзор</div>
+<h2 id="overviewTitle">Оперативная аналитика качества воздуха по Ташкенту.</h2>
+<p id="overviewText">Система отслеживает текущее состояние воздуха, прогнозирует краткосрочные риски и формирует практические рекомендации для жителей, предприятий и городских служб.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat">
+<strong id="heroMainValue">146</strong>
+<span id="heroMainLabel">AQI · Текущий статус</span>
+</div>
+<div class="summary-box" id="heroSummary">В центральных районах Ташкента качество воздуха остаётся ухудшенным. В вечерние часы ожидается дополнительный рост концентрации частиц из-за плотного трафика и слабого рассеивания.</div>
+<div class="hero-tags">
+<div class="chip">Карта</div>
+<div class="chip">Прогноз</div>
+<div class="chip">Оповещения</div>
+<div class="chip">Панели решений</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-4">
+<div class="card metric-card">
+<div class="label" id="metric1Label">Текущий AQI</div>
+<div class="value" id="metric1Value">146</div>
+<div class="status-row"><span id="metric1Status"><i class="dot orange"></i>Повышенный</span><span id="metric1Foot">+12% к сопоставимому периоду</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">PM2.5</div>
+<div class="value" id="metricPm">68</div>
+<div class="status-row"><span>µg/m³</span><span id="pmFoot">Выше рекомендуемого уровня</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">CO2</div>
+<div class="value" id="metricCo2">742</div>
+<div class="status-row"><span>ppm</span><span id="co2Foot">Городской фон растёт</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">Прогнозный риск</div>
+<div class="value" id="riskValue">Высокий</div>
+<div class="status-row"><span id="riskDot"><i class="dot red"></i>Следующие 24 часа</span><span id="confidenceFoot">81% достоверность модели</span></div>
+</div>
+</div>
+<div class="grid grid-3" style="margin-top:18px;">
+<div class="card">
+<h3>Погодный контекст</h3>
+<div class="summary-box" id="weatherSummaryBox">Погодный слой не подключен. После подключения OpenWeather здесь появятся ветер, температура и влажность.</div>
+</div>
+<div class="card">
+<h3>Ветер</h3>
+<div class="value" id="weatherWindValue" style="font-size:34px;">—</div>
+<div class="sub" id="weatherWindText">Нет данных</div>
+</div>
+<div class="card">
+<h3>Температура / влажность</h3>
+<div class="value" id="weatherTempValue" style="font-size:34px;">—</div>
+<div class="sub" id="weatherHumidityText">Нет данных</div>
+</div>
+</div>
 <div class="grid grid-main" style="margin-top:18px;">
-          <div class="card">
-            <h3>Сводка системы</h3>
-            <div class="sub">Краткая аналитическая сводка по выбранному загрязнителю и временному окну.</div>
-            <div class="summary-box" id="aiSummary">Система показывает усиление концентрации загрязняющих веществ в Юнусабаде, Чиланзаре и вдоль основных транспортных коридоров. В ближайшие 18–24 часа ожидается окно среднего и высокого загрязнения.</div>
-          </div>
-          <div class="card">
-            <h3>Рекомендуемые действия</h3>
-            <div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
-            <div class="recommend-list" id="actionList"></div>
-          </div>
-        </div>
-
-        
-        
-        
-        </div>
-
-
-        
-        
-          <div class="data-status-row">
-            <div class="data-pill" id="waqiStatusPill">WAQI: не подключен</div>
-            <div class="data-pill" id="waqiUpdatedPill">Последнее обновление: —</div>
-          </div>
-        </div>
-
-
-
-        
-        </div>
-
-
-        <div class="grid grid-3" style="margin-top:18px;">
-          <div class="card">
-            <h3>Ценность для города</h3>
-            <div class="summary-box">Единая панель мониторинга, приоритетные районы, прогнозные окна и отчётность для управленческих решений.</div>
-          </div>
-          <div class="card">
-            <h3>Ценность для предприятий</h3>
-            <div class="summary-box">Оценка риска по объектам, оповещения для операций и регулярные аналитические сводки.</div>
-          </div>
-          <div class="card">
-            <h3>Ценность для пилота</h3>
-            <div class="summary-box">Переход от встроенных данных к внешнему источнику без изменения интерфейса и без потери сценариев использования.</div>
-          </div>
-        </div>
-
+<div class="card">
+<h3>Сводка системы</h3>
+<div class="sub">Краткая аналитическая сводка по выбранному загрязнителю и временному окну.</div>
+<div class="summary-box" id="aiSummary">Система показывает усиление концентрации загрязняющих веществ в Юнусабаде, Чиланзаре и вдоль основных транспортных коридоров. В ближайшие 18–24 часа ожидается окно среднего и высокого загрязнения.</div>
+</div>
+<div class="card">
+<h3>Рекомендуемые действия</h3>
+<div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
+<div class="recommend-list" id="actionList"></div>
+</div>
 <div class="card" style="margin-top:18px;">
-          <h3>Быстрые действия</h3>
-          <div class="sub">Прикладные действия для демонстрации рабочего сценария внутри MVP.</div>
-          <div class="grid grid-3">
-            <div class="rec-item">
-              <strong><button class="ghost-btn" data-action="overview-summary" style="padding:0;border:none;background:none;color:inherit;">Сформировать городскую сводку</button></strong>
-              <p>Подготовить краткий обзор текущего состояния воздуха, районов риска и окна прогноза на 24 часа.</p>
-            </div>
-            <div class="rec-item">
-              <strong><button class="ghost-btn" data-action="priority-map" style="padding:0;border:none;background:none;color:inherit;">Открыть приоритетную карту</button></strong>
-              <p>Перейти к району с максимальным риском и показать зону, где требуется усиленный мониторинг.</p>
-            </div>
-            <div class="rec-item">
-              <strong><button class="ghost-btn" data-action="overview-report" style="padding:0;border:none;background:none;color:inherit;">Скачать пример отчёта</button></strong>
-              <p>Подготовить демонстрационный отчёт для города или предприятия по текущему сценарию.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="scenario-grid">
-          <div class="card">
-            <h3>Операционный сценарий на сутки</h3>
-            <div class="sub">Пошаговая логика того, как системой можно пользоваться в реальном режиме для города и предприятий.</div>
-            <div class="timeline" id="scenarioTimeline"></div>
-          </div>
-          <div class="card">
-            <h3>Приоритетный район</h3>
-            <div class="sub">Блок быстрого фокуса по району с максимальным риском в текущем сценарии.</div>
-            <div class="summary-box" id="priorityDistrictNarrative"></div>
-            <div class="district-focus-grid">
-              <div class="focus-card">
-                <div class="k">Район</div>
-                <div class="v" id="focusDistrictName">—</div>
-                <div class="f">Район с максимальным текущим риском.</div>
-              </div>
-              <div class="focus-card">
-                <div class="k">Показатель</div>
-                <div class="v" id="focusDistrictValue">—</div>
-                <div class="f">Текущее значение по выбранному загрязнителю.</div>
-              </div>
-              <div class="focus-card">
-                <div class="k">Пиковое окно</div>
-                <div class="v" id="focusDistrictPeak">—</div>
-                <div class="f">Окно, где требуется повышенное внимание.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+<h3>Быстрые действия</h3>
+<div class="sub">Прикладные действия для демонстрации рабочего сценария внутри MVP.</div>
+<div class="grid grid-3">
+<div class="rec-item">
+<strong><button class="ghost-btn" data-action="overview-summary" style="padding:0;border:none;background:none;color:inherit;">Сформировать городскую сводку</button></strong>
+<p>Подготовить краткий обзор текущего состояния воздуха, районов риска и окна прогноза на 24 часа.</p>
+</div>
+<div class="rec-item">
+<strong><button class="ghost-btn" data-action="priority-map" style="padding:0;border:none;background:none;color:inherit;">Открыть приоритетную карту</button></strong>
+<p>Перейти к району с максимальным риском и показать зону, где требуется усиленный мониторинг.</p>
+</div>
+<div class="rec-item">
+<strong><button class="ghost-btn" data-action="overview-report" style="padding:0;border:none;background:none;color:inherit;">Скачать пример отчёта</button></strong>
+<p>Подготовить демонстрационный отчёт для города или предприятия по текущему сценарию.</p>
+</div>
+</div>
+</div>
+<div class="scenario-grid">
+<div class="card">
+<h3>Операционный сценарий на сутки</h3>
+<div class="sub">Пошаговая логика того, как системой можно пользоваться в реальном режиме для города и предприятий.</div>
+<div class="timeline" id="scenarioTimeline"></div>
+</div>
+<div class="card">
+<h3>Приоритетный район</h3>
+<div class="sub">Блок быстрого фокуса по району с максимальным риском в текущем сценарии.</div>
+<div class="summary-box" id="priorityDistrictNarrative"></div>
+<div class="district-focus-grid">
+<div class="focus-card">
+<div class="k">Район</div>
+<div class="v" id="focusDistrictName">—</div>
+<div class="f">Район с максимальным текущим риском.</div>
+</div>
+<div class="focus-card">
+<div class="k">Показатель</div>
+<div class="v" id="focusDistrictValue">—</div>
+<div class="f">Текущее значение по выбранному загрязнителю.</div>
+</div>
+<div class="focus-card">
+<div class="k">Пиковое окно</div>
+<div class="v" id="focusDistrictPeak">—</div>
+<div class="f">Окно, где требуется повышенное внимание.</div>
+</div>
+</div>
+</div>
+</div>
 <div class="card" style="margin-top:18px;">
-          <h3>Прогноз на 7 дней</h3>
-          <div class="sub">Краткий прогноз по выбранному загрязнителю.</div>
-          <div class="forecast-strip" id="forecastStrip"></div>
-        </div>
-      </section>
-
-      <section class="screen" id="map">
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Карта загрязнения</div>
-              <h2>Тепловая карта районов с подробной аналитикой.</h2>
-              <p>Карта отражает выбранный загрязнитель и временное окно. Нажмите на активную точку, чтобы открыть профиль района, динамику и аналитический комментарий.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong id="mapSideTitle">Ташкент</strong><span id="mapSideMode">Режим реального времени · AQI</span></div>
-              <div class="summary-box" id="mapSideSummary">Сейчас Юнусабад и центральные транспортные коридоры показывают наибольшую расчётную концентрацию. Ухудшение ожидается в вечерние часы плотного трафика.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card map-card">
-          <div class="map-toolbar">
-            <div class="pill" id="mapToolbarCity">Город: Ташкент</div>
-            <div class="pill" id="mapToolbarMode">Режим: Сейчас</div>
-            <div class="pill" id="mapToolbarPollutant">Загрязнитель: AQI</div>
-            <div class="pill">Навигация: выбор района</div>
-          </div>
-          <div class="city-map">
-
-            <div class="flow-line" style="left:34%; top:63%; width:31%; transform: rotate(-24deg);"></div>
-            <div class="flow-line" style="left:43%; top:28%; width:20%; transform: rotate(34deg);"></div>
-            <div class="flow-line" style="left:58%; top:42%; width:21%; transform: rotate(-37deg);"></div>
-
-
-            <div class="road one"></div>
-            <div class="road two"></div>
-            <div class="ring one"></div>
-            <div class="ring two"></div>
-
-            <div class="hotspot" data-district="yunusabad" style="left:58%;top:42%;"></div>
-            <div class="hotspot" data-district="chilanzar" style="left:33%;top:64%;"></div>
-            <div class="hotspot" data-district="mirzo" style="left:43%;top:28%;"></div>
-            <div class="hotspot" data-district="bektemir" style="left:76%;top:22%;"></div>
-
-            <div class="district-label" style="left:61%;top:39%;">Юнусабад</div>
-            <div class="district-label" style="left:26%;top:68%;">Чиланзар</div>
-            <div class="district-label" style="left:36%;top:22%;">Мирзо-Улугбек</div>
-            <div class="district-label" style="left:79%;top:18%;">Бектемир</div>
-
-            <div class="legend">
-              <h4>Шкала риска</h4>
-              <div class="row"><span><i class="dot green"></i>Низкий</span><span>Нормальный фон</span></div>
-              <div class="row"><span><i class="dot yellow"></i>Средний</span><span>Наблюдение</span></div>
-              <div class="row"><span><i class="dot orange"></i>Повышенный</span><span>Нужно реагировать</span></div>
-              <div class="row"><span><i class="dot red"></i>Высокий</span><span>Приоритетная зона</span></div>
-            </div>
-          </div>
-
-          
-          <div class="map-detail" id="mapDetail"></div>
-
-          <div class="map-quick-grid" id="mapQuickGrid"></div>
-
-        </div>
-      </section>
-
-      <section class="screen" id="forecast">
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Прогноз качества воздуха</div>
-              <h2>Прогноз на 3–7 дней с выделением окон повышенного риска.</h2>
-              <p>Прогнозный модуль автоматически перестраивается под выбранный загрязнитель и показывает пики, уровень достоверности и рекомендуемое время реагирования.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong id="forecastConfidence">81%</strong><span>Достоверность модели</span></div>
-              <div class="summary-box" id="forecastNarrative">Завтра вероятен выраженный пик в интервалах 07:00–11:00 и 18:00–22:00. Основные расчётные факторы — слабый ветер и высокая концентрация городского транспорта.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-main">
-          <div class="card">
-            <h3>Прогноз на 7 дней</h3>
-            <div class="sub">График автоматически реагирует на выбор загрязнителя.</div>
-            <div class="chart-wrap"><canvas id="forecastChart"></canvas></div>
-          </div>
-          <div class="card">
-            <h3>Риск на завтра</h3>
-            <div class="sub">Формируется автоматически из активного сценария.</div>
-            <div class="recommend-list" id="riskBriefList"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="alerts">
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Оповещения</div>
-              <h2>Умные уведомления по уровню риска, району и типу пользователя.</h2>
-              <p>Оповещения меняются в зависимости от уровня загрязнения, статуса района и прогнозной траектории. Это делает систему не пассивной витриной, а рабочим инструментом.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong id="alertRuleCount">12</strong><span>Активные правила</span></div>
-              <div class="summary-box">Правила можно настраивать по загрязнителю, району, профилю чувствительности и порогу риска. Это создаёт рабочий продуктовый слой уже на первом этапе.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-2">
-          <div class="card">
-            <h3>Текущие оповещения</h3>
-            <div class="sub">Список формируется из текущего сценария.</div>
-            <div class="alert-list" id="alertList"></div>
-          </div>
-          <div class="card">
-            <h3>Профили уведомлений</h3>
-            <div class="sub">Профили показывают, как работает система оповещений для каждой категории пользователей.</div>
-            <div class="recommend-list">
-              <div class="rec-item"><strong>Население</strong><p>Получение городских и районных уведомлений при превышении заданного порога.</p></div>
-              <div class="rec-item"><strong>Дети / пожилые / чувствительные группы</strong><p>Более ранние предупреждения и усиленные рекомендации для чувствительных групп.</p></div>
-              <div class="rec-item"><strong>Операционная деятельность предприятий</strong><p>Уведомления по рискам для сотрудников, окна повышенной нагрузки и еженедельные сводки.</p></div>
-              <div class="rec-item"><strong>Городские службы</strong><p>Аномалии по районам, прогнозные пики и уведомления о приоритетных мерах.</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="districts">
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Аналитика районов</div>
-              <h2>Сравнительная аналитика районов и рейтинг по динамике.</h2>
-              <p>Таблица, график динамики и блок факторов реагируют на выбранный загрязнитель. Это даёт реальный слой операционного сравнения, а не декоративный контент.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong>12</strong><span>районов в модели</span></div>
-              <div class="summary-box" id="districtHeroSummary">Платформа сравнивает динамику районов, определяет пиковые окна и оценивает вероятную структуру факторов по повторяющимся сигналам.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="district-scenario-grid" id="districtScenarioGrid"></div>
-
-        <div class="grid grid-main">
-          <div class="card table-card">
-            <h3>Рейтинг районов</h3>
-            <div class="sub">Сортировка по уровню выбранного загрязнителя.</div>
-            <table>
-              <thead>
-                <tr><th>район</th><th id="tableMetricHead">AQI</th><th>Динамика</th><th>Пиковые часы</th><th>Статус</th></tr>
-              </thead>
-              <tbody id="districtTableBody"></tbody>
-            </table>
-          </div>
-          <div class="card">
-            <h3>Динамика района</h3>
-            <div class="sub">7-дневная динамика района с наибольшим риском по выбранному загрязнителю.</div>
-            <div class="mini-chart-wrap"><canvas id="districtTrendChart"></canvas></div>
-            <div style="height:12px"></div>
-            <div class="district-row" id="selectedDistrictBox"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="sources">
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Источники загрязнения</div>
-              <h2>Потенциальные кластеры источников и приоритет вмешательства.</h2>
-              <p>Атрибуция источников остаётся расчётной и оценочной. Экран полезен тем, что показывает, где нужно проверять ситуацию, а не делает недоказуемые утверждения.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong>4</strong><span>категории источников</span></div>
-              <div class="summary-box" id="sourceNarrative">Оценка источников строится на повторяющихся сигнальных окнах, изменениях по районам и контекстных сценариях городской активности.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-2">
-          <div class="card">
-            <h3>Возможные очаги выбросов</h3>
-            <div class="sub">Блок обновляется по типу загрязнителя и уровню давления по районам.</div>
-            <div class="source-list" id="sourceList"></div>
-          </div>
-          <div class="card">
-            <h3>Оценка структуры источников</h3>
-            <div class="sub">Текущая модель по району с наибольшим риском.</div>
-            <div class="recommend-list" id="sourceMixList"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="gov">
-        <div class="premium-hero" id="govPremiumHero">
-          <h3>Государственный контур стратегического мониторинга</h3>
-          <p>Закрытый слой для муниципальных и государственных структур: приоритетные районы, окна реагирования, прогнозный риск, управленческие меры и контур пилотного внедрения для города.</p>
-          <div class="vault-grid">
-            <div class="vault-card">
-              <div class="k">Контур доступа</div>
-              <div class="v" id="govAccessState">Закрыт</div>
-              <div class="f">Открывается только по ключу государственного доступа.</div>
-            </div>
-            <div class="vault-card">
-              <div class="k">Приоритетный район</div>
-              <div class="v" id="govPriorityDistrict">—</div>
-              <div class="f">Район с максимальным текущим давлением по активному сценарию.</div>
-            </div>
-            <div class="vault-card">
-              <div class="k">Окно реагирования</div>
-              <div class="v" id="govPriorityWindow">—</div>
-              <div class="f">Пиковое окно, где нужно раннее управленческое действие.</div>
-            </div>
-          </div>
-        </div>
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Панель мониторинга города</div>
-              <h2>Единая панель для мониторинга и планирования реагирования по городу.</h2>
-              <p>Этот раздел оставляет только прикладные функции: риск по городу, критические районы, краткосрочные пики и рекомендуемые меры.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong id="govWindow">72h</strong><span>критическое окно прогноза</span></div>
-              <div class="summary-box" id="govNarrative">Командный слой объединяет текущий статус, прогнозный риск, рейтинг районов и приоритетные меры в единую операционную панель.</div>
-            </div>
-          </div>
-        </div>
-
-        
-        <div class="ops-grid access-guard gov-guard section-hidden-by-access" id="govOpsGrid">
-          <div class="ops-card">
-            <div class="ey">Сценарий города</div>
-            <div class="tt" id="govScenarioTitle">—</div>
-            <div class="dd" id="govScenarioDesc">—</div>
-            <div class="badge cyan" id="govResponseBadge">Режим</div>
-          </div>
-          <div class="ops-card">
-            <div class="ey">Оперативные указания</div>
-            <div class="ops-list" id="govOpsList"></div>
-          </div>
-          <div class="ops-card">
-            <div class="ey">Контур контроля</div>
-            <div class="ops-list" id="govControlList"></div>
-          </div>
-        </div>
-
-
-        <div class="impact-grid access-guard gov-guard section-hidden-by-access" id="govImpactGrid">
-          <div class="impact-card wow-panel">
-            <div class="ey">Городской контур</div>
-            <div class="value" id="govImpactValue">—</div>
-            <div class="desc" id="govImpactDesc">Интегральный статус города по текущему сценарию.</div>
-          </div>
-          <div class="impact-card wow-panel">
-            <div class="ey">Охват решений</div>
-            <div class="value" id="govCoverageValue">—</div>
-            <div class="desc">Количество контуров, на которые уже можно опираться при управленческом решении.</div>
-          </div>
-          <div class="impact-card wow-panel">
-            <div class="ey">Окно вмешательства</div>
-            <div class="value" id="govWindowValue">—</div>
-            <div class="desc">Критическое окно, где нужен ускоренный цикл коммуникации и контроля.</div>
-          </div>
-        </div>
-
-        <div class="command-strip access-guard gov-guard section-hidden-by-access" id="govCommandStrip">
-          <div class="command-box wow-panel">
-            <h3>Командный бриф для города</h3>
-            <p id="govBriefText">—</p>
-            <div class="command-list" id="govBriefList"></div>
-          </div>
-          <div class="command-box wow-panel">
-            <h3>Почему это выглядит как государственный продукт</h3>
-            <div class="command-list" id="govWhyList">
-              <div class="command-item"><strong>Приоритет районов</strong><span>Система сразу показывает, где нужен контроль и какое окно реагирования важнее всего.</span></div>
-              <div class="command-item"><strong>Оперативные меры</strong><span>Рекомендации ориентированы на реальные действия, а не просто на отображение данных.</span></div>
-              <div class="command-item"><strong>Управленческий контур</strong><span>Интерфейс выглядит как рабочая панель штаба, а не как пользовательский экран.</span></div>
-            </div>
-          </div>
-        </div>
-
+<h3>Прогноз на 7 дней</h3>
+<div class="sub">Краткий прогноз по выбранному загрязнителю.</div>
+<div class="forecast-strip" id="forecastStrip"></div>
+</div>
+</div></section>
+<section class="screen" id="map">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Карта загрязнения</div>
+<h2>Тепловая карта районов с подробной аналитикой.</h2>
+<p>Карта отражает выбранный загрязнитель и временное окно. Нажмите на активную точку, чтобы открыть профиль района, динамику и аналитический комментарий.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong id="mapSideTitle">Ташкент</strong><span id="mapSideMode">Режим реального времени · AQI</span></div>
+<div class="summary-box" id="mapSideSummary">Сейчас Юнусабад и центральные транспортные коридоры показывают наибольшую расчётную концентрацию. Ухудшение ожидается в вечерние часы плотного трафика.</div>
+</div>
+</div>
+</div>
+<div class="card map-card">
+<div class="map-toolbar">
+<div class="pill" id="mapToolbarCity">Город: Ташкент</div>
+<div class="pill" id="mapToolbarMode">Режим: Сейчас</div>
+<div class="pill" id="mapToolbarPollutant">Загрязнитель: AQI</div>
+<div class="pill">Навигация: выбор района</div>
+</div>
+<div class="city-map">
+<div class="flow-line" style="left:34%; top:63%; width:31%; transform: rotate(-24deg);"></div>
+<div class="flow-line" style="left:43%; top:28%; width:20%; transform: rotate(34deg);"></div>
+<div class="flow-line" style="left:58%; top:42%; width:21%; transform: rotate(-37deg);"></div>
+<div class="road one"></div>
+<div class="road two"></div>
+<div class="ring one"></div>
+<div class="ring two"></div>
+<div class="hotspot" data-district="yunusabad" style="left:58%;top:42%;"></div>
+<div class="hotspot" data-district="chilanzar" style="left:33%;top:64%;"></div>
+<div class="hotspot" data-district="mirzo" style="left:43%;top:28%;"></div>
+<div class="hotspot" data-district="bektemir" style="left:76%;top:22%;"></div>
+<div class="district-label" style="left:61%;top:39%;">Юнусабад</div>
+<div class="district-label" style="left:26%;top:68%;">Чиланзар</div>
+<div class="district-label" style="left:36%;top:22%;">Мирзо-Улугбек</div>
+<div class="district-label" style="left:79%;top:18%;">Бектемир</div>
+<div class="legend">
+<h4>Шкала риска</h4>
+<div class="row"><span><i class="dot green"></i>Низкий</span><span>Нормальный фон</span></div>
+<div class="row"><span><i class="dot yellow"></i>Средний</span><span>Наблюдение</span></div>
+<div class="row"><span><i class="dot orange"></i>Повышенный</span><span>Нужно реагировать</span></div>
+<div class="row"><span><i class="dot red"></i>Высокий</span><span>Приоритетная зона</span></div>
+</div>
+</div>
+<div class="map-detail" id="mapDetail"></div>
+<div class="map-quick-grid" id="mapQuickGrid"></div>
+</div>
+</section>
+<section class="screen" id="forecast">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Прогноз качества воздуха</div>
+<h2>Прогноз на 3–7 дней с выделением окон повышенного риска.</h2>
+<p>Прогнозный модуль автоматически перестраивается под выбранный загрязнитель и показывает пики, уровень достоверности и рекомендуемое время реагирования.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong id="forecastConfidence">81%</strong><span>Достоверность модели</span></div>
+<div class="summary-box" id="forecastNarrative">Завтра вероятен выраженный пик в интервалах 07:00–11:00 и 18:00–22:00. Основные расчётные факторы — слабый ветер и высокая концентрация городского транспорта.</div>
+</div>
+</div>
+</div>
+<div class="grid grid-main">
+<div class="card">
+<h3>Прогноз на 7 дней</h3>
+<div class="sub">График автоматически реагирует на выбор загрязнителя.</div>
+<div class="chart-wrap"><canvas id="forecastChart"></canvas></div>
+</div>
+<div class="card">
+<h3>Риск на завтра</h3>
+<div class="sub">Формируется автоматически из активного сценария.</div>
+<div class="recommend-list" id="riskBriefList"></div>
+</div>
+</div>
+</section>
+<section class="screen" id="alerts">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Оповещения</div>
+<h2>Умные уведомления по уровню риска, району и типу пользователя.</h2>
+<p>Оповещения меняются в зависимости от уровня загрязнения, статуса района и прогнозной траектории. Это делает систему не пассивной витриной, а рабочим инструментом.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong id="alertRuleCount">12</strong><span>Активные правила</span></div>
+<div class="summary-box">Правила можно настраивать по загрязнителю, району, профилю чувствительности и порогу риска. Это создаёт рабочий продуктовый слой уже на первом этапе.</div>
+</div>
+</div>
+</div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Текущие оповещения</h3>
+<div class="sub">Список формируется из текущего сценария.</div>
+<div class="alert-list" id="alertList"></div>
+</div>
+<div class="card">
+<h3>Профили уведомлений</h3>
+<div class="sub">Профили показывают, как работает система оповещений для каждой категории пользователей.</div>
+<div class="recommend-list">
+<div class="rec-item"><strong>Население</strong><p>Получение городских и районных уведомлений при превышении заданного порога.</p></div>
+<div class="rec-item"><strong>Дети / пожилые / чувствительные группы</strong><p>Более ранние предупреждения и усиленные рекомендации для чувствительных групп.</p></div>
+<div class="rec-item"><strong>Операционная деятельность предприятий</strong><p>Уведомления по рискам для сотрудников, окна повышенной нагрузки и еженедельные сводки.</p></div>
+<div class="rec-item"><strong>Городские службы</strong><p>Аномалии по районам, прогнозные пики и уведомления о приоритетных мерах.</p></div>
+</div>
+</div>
+</div>
+</section>
+<section class="screen" id="districts">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Аналитика районов</div>
+<h2>Сравнительная аналитика районов и рейтинг по динамике.</h2>
+<p>Таблица, график динамики и блок факторов реагируют на выбранный загрязнитель. Это даёт реальный слой операционного сравнения, а не декоративный контент.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong>12</strong><span>районов в модели</span></div>
+<div class="summary-box" id="districtHeroSummary">Платформа сравнивает динамику районов, определяет пиковые окна и оценивает вероятную структуру факторов по повторяющимся сигналам.</div>
+</div>
+</div>
+</div>
+<div class="district-scenario-grid" id="districtScenarioGrid"></div>
+<div class="grid grid-main">
+<div class="card table-card">
+<h3>Рейтинг районов</h3>
+<div class="sub">Сортировка по уровню выбранного загрязнителя.</div>
+<table>
+<thead>
+<tr><th>район</th><th id="tableMetricHead">AQI</th><th>Динамика</th><th>Пиковые часы</th><th>Статус</th></tr>
+</thead>
+<tbody id="districtTableBody"></tbody>
+</table>
+</div>
+<div class="card">
+<h3>Динамика района</h3>
+<div class="sub">7-дневная динамика района с наибольшим риском по выбранному загрязнителю.</div>
+<div class="mini-chart-wrap"><canvas id="districtTrendChart"></canvas></div>
+<div style="height:12px"></div>
+<div class="district-row" id="selectedDistrictBox"></div>
+</div>
+</div>
+</section>
+<section class="screen" id="sources">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Источники загрязнения</div>
+<h2>Потенциальные кластеры источников и приоритет вмешательства.</h2>
+<p>Атрибуция источников остаётся расчётной и оценочной. Экран полезен тем, что показывает, где нужно проверять ситуацию, а не делает недоказуемые утверждения.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong>4</strong><span>категории источников</span></div>
+<div class="summary-box" id="sourceNarrative">Оценка источников строится на повторяющихся сигнальных окнах, изменениях по районам и контекстных сценариях городской активности.</div>
+</div>
+</div>
+</div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Возможные очаги выбросов</h3>
+<div class="sub">Блок обновляется по типу загрязнителя и уровню давления по районам.</div>
+<div class="source-list" id="sourceList"></div>
+</div>
+<div class="card">
+<h3>Оценка структуры источников</h3>
+<div class="sub">Текущая модель по району с наибольшим риском.</div>
+<div class="recommend-list" id="sourceMixList"></div>
+</div>
+</div>
+</section>
+<section class="screen" id="gov">
+<div class="premium-hero" id="govPremiumHero">
+<h3>Государственный контур стратегического мониторинга</h3>
+<p>Закрытый слой для муниципальных и государственных структур: приоритетные районы, окна реагирования, прогнозный риск, управленческие меры и контур пилотного внедрения для города.</p>
+<div class="vault-grid">
+<div class="vault-card">
+<div class="k">Контур доступа</div>
+<div class="v" id="govAccessState">Закрыт</div>
+<div class="f">Открывается только по ключу государственного доступа.</div>
+</div>
+<div class="vault-card">
+<div class="k">Приоритетный район</div>
+<div class="v" id="govPriorityDistrict">—</div>
+<div class="f">Район с максимальным текущим давлением по активному сценарию.</div>
+</div>
+<div class="vault-card">
+<div class="k">Окно реагирования</div>
+<div class="v" id="govPriorityWindow">—</div>
+<div class="f">Пиковое окно, где нужно раннее управленческое действие.</div>
+</div>
+</div>
+</div>
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Панель мониторинга города</div>
+<h2>Единая панель для мониторинга и планирования реагирования по городу.</h2>
+<p>Этот раздел оставляет только прикладные функции: риск по городу, критические районы, краткосрочные пики и рекомендуемые меры.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong id="govWindow">72h</strong><span>критическое окно прогноза</span></div>
+<div class="summary-box" id="govNarrative">Командный слой объединяет текущий статус, прогнозный риск, рейтинг районов и приоритетные меры в единую операционную панель.</div>
+</div>
+</div>
+</div>
+<div class="ops-grid access-guard gov-guard section-hidden-by-access" id="govOpsGrid">
+<div class="ops-card">
+<div class="ey">Сценарий города</div>
+<div class="tt" id="govScenarioTitle">—</div>
+<div class="dd" id="govScenarioDesc">—</div>
+<div class="badge cyan" id="govResponseBadge">Режим</div>
+</div>
+<div class="ops-card">
+<div class="ey">Оперативные указания</div>
+<div class="ops-list" id="govOpsList"></div>
+</div>
+<div class="ops-card">
+<div class="ey">Контур контроля</div>
+<div class="ops-list" id="govControlList"></div>
+</div>
+</div>
+<div class="impact-grid access-guard gov-guard section-hidden-by-access" id="govImpactGrid">
+<div class="impact-card wow-panel">
+<div class="ey">Городской контур</div>
+<div class="value" id="govImpactValue">—</div>
+<div class="desc" id="govImpactDesc">Интегральный статус города по текущему сценарию.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Охват решений</div>
+<div class="value" id="govCoverageValue">—</div>
+<div class="desc">Количество контуров, на которые уже можно опираться при управленческом решении.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Окно вмешательства</div>
+<div class="value" id="govWindowValue">—</div>
+<div class="desc">Критическое окно, где нужен ускоренный цикл коммуникации и контроля.</div>
+</div>
+</div>
+<div class="command-strip access-guard gov-guard section-hidden-by-access" id="govCommandStrip">
+<div class="command-box wow-panel">
+<h3>Командный бриф для города</h3>
+<p id="govBriefText">—</p>
+<div class="command-list" id="govBriefList"></div>
+</div>
+<div class="command-box wow-panel">
+<h3>Почему это выглядит как государственный продукт</h3>
+<div class="command-list" id="govWhyList">
+<div class="command-item"><strong>Приоритет районов</strong><span>Система сразу показывает, где нужен контроль и какое окно реагирования важнее всего.</span></div>
+<div class="command-item"><strong>Оперативные меры</strong><span>Рекомендации ориентированы на реальные действия, а не просто на отображение данных.</span></div>
+<div class="command-item"><strong>Управленческий контур</strong><span>Интерфейс выглядит как рабочая панель штаба, а не как пользовательский экран.</span></div>
+</div>
+</div>
+</div>
 <div class="card" style="margin-bottom:18px;">
-          <h3>Ключевые показатели по городу</h3>
-          <div class="sub">Основные показатели, связанные с текущими настройками.</div>
-          <div class="kpi-grid" id="govKpiGrid"></div>
-        </div>
-
-        <div class="access-guard gov-guard section-hidden-by-access">
-        <div class="action-toolbar">
-          <button class="ghost-btn" data-action="city-summary">Сформировать сводку города</button>
-          <button class="ghost-btn" data-action="city-report">Экспортировать пример отчёта</button>
-        </div>
-
-        <div class="split">
-          <div class="card table-card">
-            <h3>районы с максимальным риском</h3>
-            <table>
-              <thead><tr><th>район</th><th id="govMetricHead">AQI</th><th>Динамика</th><th>Приоритет</th></tr></thead>
-              <tbody id="govTableBody"></tbody>
-            </table>
-          </div>
-          <div class="card">
-            <h3>Рекомендуемые меры</h3>
-            <div class="recommend-list" id="govActions"></div>
-          </div>
-        </div>
-              </div>
-      </section>
-
-      <section class="screen" id="business">
-        <div class="premium-hero" id="bizPremiumHero">
-          <h3>Корпоративный контур экологического риска</h3>
-          <p>Закрытый слой для предприятий: мониторинг объектов, влияние воздуха на операции, окна повышенного риска и рекомендации для руководства и службы безопасности.</p>
-          <div class="vault-grid">
-            <div class="vault-card">
-              <div class="k">Контур доступа</div>
-              <div class="v" id="bizAccessState">Закрыт</div>
-              <div class="f">Открывается только по ключу бизнес-доступа.</div>
-            </div>
-            <div class="vault-card">
-              <div class="k">Критический объект</div>
-              <div class="v" id="bizCriticalObject">—</div>
-              <div class="f">Объект с максимальной нагрузкой по текущему сценарию.</div>
-            </div>
-            <div class="vault-card">
-              <div class="k">Операционный риск</div>
-              <div class="v" id="bizRiskWindow">—</div>
-              <div class="f">Окно, где рекомендуется корректировка наружных работ и логистики.</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="locked-note access-guard-note" id="bizLockedNote">
+<h3>Ключевые показатели по городу</h3>
+<div class="sub">Основные показатели, связанные с текущими настройками.</div>
+<div class="kpi-grid" id="govKpiGrid"></div>
+</div>
+<div class="access-guard gov-guard section-hidden-by-access">
+<div class="action-toolbar">
+<button class="ghost-btn" data-action="city-summary">Сформировать сводку города</button>
+<button class="ghost-btn" data-action="city-report">Экспортировать пример отчёта</button>
+</div>
+<div class="split">
+<div class="card table-card">
+<h3>районы с максимальным риском</h3>
+<table>
+<thead><tr><th>район</th><th id="govMetricHead">AQI</th><th>Динамика</th><th>Приоритет</th></tr></thead>
+<tbody id="govTableBody"></tbody>
+</table>
+</div>
+<div class="card">
+<h3>Рекомендуемые меры</h3>
+<div class="recommend-list" id="govActions"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="screen" id="business">
+<div class="premium-hero" id="bizPremiumHero">
+<h3>Корпоративный контур экологического риска</h3>
+<p>Закрытый слой для предприятий: мониторинг объектов, влияние воздуха на операции, окна повышенного риска и рекомендации для руководства и службы безопасности.</p>
+<div class="vault-grid">
+<div class="vault-card">
+<div class="k">Контур доступа</div>
+<div class="v" id="bizAccessState">Закрыт</div>
+<div class="f">Открывается только по ключу бизнес-доступа.</div>
+</div>
+<div class="vault-card">
+<div class="k">Критический объект</div>
+<div class="v" id="bizCriticalObject">—</div>
+<div class="f">Объект с максимальной нагрузкой по текущему сценарию.</div>
+</div>
+<div class="vault-card">
+<div class="k">Операционный риск</div>
+<div class="v" id="bizRiskWindow">—</div>
+<div class="f">Окно, где рекомендуется корректировка наружных работ и логистики.</div>
+</div>
+</div>
+</div>
+<div class="locked-note access-guard-note" id="bizLockedNote">
           Бизнес-контур закрыт. После ввода ключа доступа открываются расширенные рекомендации по объектам, операционный риск и сценарии для руководства.
         </div>
-        <div class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Аналитика для предприятий</div>
-              <h2>Оценка экологических рисков для объектов и операционной деятельности предприятий.</h2>
-              <p>Бизнес-слой сфокусирован на практическом применении: риски для объектов, решения по безопасности сотрудников и периодическая аналитика.</p>
-            </div>
-            <div class="hero-side">
-              <div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
-              <div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
-            </div>
-          </div>
-        </div>
-
-        
-        
-        <div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
-          <div class="impact-card wow-panel">
-            <div class="ey">Корпоративный контур</div>
-            <div class="value" id="bizImpactValue">—</div>
-            <div class="desc" id="bizImpactDesc">Интегральный статус корпоративного риска по текущему сценарию.</div>
-          </div>
-          <div class="impact-card wow-panel">
-            <div class="ey">Операционный охват</div>
-            <div class="value" id="bizCoverageValue">—</div>
-            <div class="desc">Количество управляемых направлений: персонал, смены, наружные работы, логистика.</div>
-          </div>
-          <div class="impact-card wow-panel">
-            <div class="ey">Критическое окно</div>
-            <div class="value" id="bizWindowValue">—</div>
-            <div class="desc">Окно, где потери эффективности и риски для персонала максимальны.</div>
-          </div>
-        </div>
-
-        <div class="command-strip access-guard biz-guard section-hidden-by-access" id="bizCommandStrip">
-          <div class="command-box wow-panel">
-            <h3>Исполнительный бриф для предприятия</h3>
-            <p id="bizBriefText">—</p>
-            <div class="command-list" id="bizBriefList"></div>
-          </div>
-          <div class="command-box wow-panel">
-            <h3>Почему это выглядит как B2B продукт</h3>
-            <div class="command-list" id="bizWhyList">
-              <div class="command-item"><strong>Связь с операциями</strong><span>Сигнал качества воздуха сразу переводится в решения по объектам, персоналу и сменам.</span></div>
-              <div class="command-item"><strong>Контроль руководства</strong><span>Режим показывает не только риск, но и конкретные действия для менеджмента.</span></div>
-              <div class="command-item"><strong>Премиальный слой</strong><span>Закрытый доступ формирует ощущение корпоративного сервиса, а не общего публичного инструмента.</span></div>
-            </div>
-          </div>
-        </div>
-
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Аналитика для предприятий</div>
+<h2>Оценка экологических рисков для объектов и операционной деятельности предприятий.</h2>
+<p>Бизнес-слой сфокусирован на практическом применении: риски для объектов, решения по безопасности сотрудников и периодическая аналитика.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
+<div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
+</div>
+</div>
+</div>
+<div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
+<div class="impact-card wow-panel">
+<div class="ey">Корпоративный контур</div>
+<div class="value" id="bizImpactValue">—</div>
+<div class="desc" id="bizImpactDesc">Интегральный статус корпоративного риска по текущему сценарию.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Операционный охват</div>
+<div class="value" id="bizCoverageValue">—</div>
+<div class="desc">Количество управляемых направлений: персонал, смены, наружные работы, логистика.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Критическое окно</div>
+<div class="value" id="bizWindowValue">—</div>
+<div class="desc">Окно, где потери эффективности и риски для персонала максимальны.</div>
+</div>
+</div>
+<div class="command-strip access-guard biz-guard section-hidden-by-access" id="bizCommandStrip">
+<div class="command-box wow-panel">
+<h3>Исполнительный бриф для предприятия</h3>
+<p id="bizBriefText">—</p>
+<div class="command-list" id="bizBriefList"></div>
+</div>
+<div class="command-box wow-panel">
+<h3>Почему это выглядит как B2B продукт</h3>
+<div class="command-list" id="bizWhyList">
+<div class="command-item"><strong>Связь с операциями</strong><span>Сигнал качества воздуха сразу переводится в решения по объектам, персоналу и сменам.</span></div>
+<div class="command-item"><strong>Контроль руководства</strong><span>Режим показывает не только риск, но и конкретные действия для менеджмента.</span></div>
+<div class="command-item"><strong>Премиальный слой</strong><span>Закрытый доступ формирует ощущение корпоративного сервиса, а не общего публичного инструмента.</span></div>
+</div>
+</div>
+</div>
 <div class="ops-grid access-guard biz-guard section-hidden-by-access" id="bizOpsGrid">
-          <div class="ops-card">
-            <div class="ey">Режим предприятия</div>
-            <div class="tt" id="bizScenarioTitle">—</div>
-            <div class="dd" id="bizScenarioDesc">—</div>
-            <div class="badge yellow" id="bizRiskBadge">Операционный риск</div>
-          </div>
-          <div class="ops-card">
-            <div class="ey">Решения для операций</div>
-            <div class="ops-list" id="bizOpsList"></div>
-          </div>
-          <div class="ops-card">
-            <div class="ey">Контур объекта</div>
-            <div class="ops-list" id="bizControlList"></div>
-          </div>
-        </div>
-
-        <div class="access-guard biz-guard section-hidden-by-access">
-        <div class="action-toolbar">
-          <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
-          <button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
-        </div>
-
-        
-        <div class="card" style="margin-bottom:18px;">
-          <h3 id="bizDevBlock1Title">Управление данными пилота</h3>
-          <div class="sub">Этот блок нужен, чтобы показать не просто красивый интерфейс, а управляемый MVP, который уже можно использовать в тестовом контуре.</div>
-          <div class="grid grid-3">
-            <div class="rec-item"><strong>Импорт</strong><p>Загрузка JSON из внешнего контура без перестройки интерфейса.</p></div>
-            <div class="rec-item"><strong>Сброс</strong><p>Возврат к master-набору встроенных данных для стабильной демонстрации.</p></div>
-            <div class="rec-item"><strong>Экспорт</strong><p>Выгрузка активного слоя данных для повторной демонстрации или передачи в пилотный контур.</p></div>
-          </div>
-        </div>
-
+<div class="ops-card">
+<div class="ey">Режим предприятия</div>
+<div class="tt" id="bizScenarioTitle">—</div>
+<div class="dd" id="bizScenarioDesc">—</div>
+<div class="badge yellow" id="bizRiskBadge">Операционный риск</div>
+</div>
+<div class="ops-card">
+<div class="ey">Решения для операций</div>
+<div class="ops-list" id="bizOpsList"></div>
+</div>
+<div class="ops-card">
+<div class="ey">Контур объекта</div>
+<div class="ops-list" id="bizControlList"></div>
+</div>
+</div>
+<div class="access-guard biz-guard section-hidden-by-access">
+<div class="action-toolbar">
+<button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
+<button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
+</div>
 <div class="card" style="margin-bottom:18px;">
-          <h3 id="bizDevBlock2Title">Готовность к подключению внешних данных</h3>
-          <div class="sub">Предприятия и город могут подключать собственные массивы показателей без изменения структуры интерфейса.</div>
-          <div class="grid grid-3">
-            <div class="rec-item"><strong>Входной формат</strong><p>JSON с городом, загрязнителями, районами и временными окнами.</p></div>
-            <div class="rec-item"><strong>Сценарий использования</strong><p>Пилотный контур может загружать ежедневные или часовые показатели и сразу строить сводки.</p></div>
-            <div class="rec-item"><strong>Коммерческий эффект</strong><p>Это позволяет перейти от красивого прототипа к платной аналитической системе без смены интерфейса.</p></div>
-          </div>
-        </div>
-
-        <div class="grid grid-main">
-          <div class="card table-card">
-            <h3>Обзор рисков по объектам</h3>
-            <table>
-              <thead><tr><th>Объект</th><th>район</th><th>Риск</th><th>Динамика</th><th>Статус</th></tr></thead>
-              <tbody id="facilityTableBody"></tbody>
-            </table>
-          </div>
-          <div class="card">
-            <h3>Практические выводы</h3>
-            <div class="recommend-list" id="businessOutputs"></div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:18px;">
-          <h3>Модель подключения</h3>
-          <div class="sub">Доходный контур встроен в продуктовую архитектуру и не выглядит как отдельный pitch.</div>
-          <div class="grid grid-3">
-            <div class="rec-item"><strong>Городская лицензия</strong><p>Лицензирование панели мониторинга города, районной аналитики и сценариев реагирования.</p></div>
-            <div class="rec-item"><strong>Подписка для предприятий</strong><p>Доступ к аналитике по объектам, оповещениям, отчетности и протоколам реагирования.</p></div>
-            <div class="rec-item"><strong>Премиум для жителей</strong><p>Расширенные уведомления, персональные рекомендации и история показателей по районам.</p></div>
-          </div>
-        </div>
-        </div>
-              </div>
-      </section>
-
-      <div class="footer-note">Это front-end MVP, доведённый до рабочего интерактивного состояния в рамках одного HTML-файла: навигация, сценарии, карта, прогноз, таблицы и панели связаны одной моделью данных. Следующий этап — подключение реальных источников данных и упаковка в PWA без пересборки интерфейса.</div>
-    
-<section class="screen" id="pilot">
-  <div class="hero">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow">Пилотный запуск</div>
-        <h2>Готовый контур для тестового внедрения и инвестиционного показа.</h2>
-        <p>Этот слой фиксирует финальную логику продукта: система уже выглядит как готовое решение, умеет принимать внешний набор данных и может быть показана как пилот для города, предприятия или акселерационной программы.</p>
-      </div>
-      <div class="hero-side">
-        <div class="hero-stat"><strong>v16</strong><span>Текущая master-версия</span></div>
-        <div class="summary-box">Файл доведён до состояния, где продукт уже можно показывать не как концепт, а как управляемый MVP с понятным сценарием запуска, подключением реальных данных и коммерческими контурами.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid grid-4">
-    <div class="card metric-card">
-      <div class="label">Статус</div>
-      <div class="value">Готов</div>
-      <div class="status-row"><span>Пилотный контур</span><span>Активен</span></div>
-    </div>
-    <div class="card metric-card">
-      <div class="label">Данные</div>
-      <div class="value">JSON</div>
-      <div class="status-row"><span>Встроенные / внешние</span><span>Подключаемые</span></div>
-    </div>
-    <div class="card metric-card">
-      <div class="label">Монетизация</div>
-      <div class="value">B2G</div>
-      <div class="status-row"><span>Город / министерство</span><span>Лицензия</span></div>
-    </div>
-    <div class="card metric-card">
-      <div class="label">Контур роста</div>
-      <div class="value">B2B</div>
-      <div class="status-row"><span>Предприятия</span><span>Подписка</span></div>
-    </div>
-  </div>
-
-  <div class="grid grid-2" style="margin-top:18px;">
-    <div class="card">
-      <h3>Почему система выглядит готовой</h3>
-      <div class="recommend-list">
-        <div class="rec-item"><strong>Связанный интерфейс</strong><p>Карта, прогноз, оповещения, районная аналитика, городская панель и корпоративный слой работают как единая система.</p></div>
-        <div class="rec-item"><strong>Управляемый слой данных</strong><p>Есть импорт, сброс и экспорт данных, что переводит MVP из статической демо-версии в рабочий пилотный контур.</p></div>
-        <div class="rec-item"><strong>Продуктовая логика</strong><p>Внутри продукта уже есть сценарий действий, сводки, отчёты, приоритетный район и слои для города и предприятий.</p></div>
-      </div>
-    </div>
-    <div class="card">
-      <h3>Почему это можно монетизировать</h3>
-      <div class="recommend-list">
-        <div class="rec-item"><strong>Городская лицензия</strong><p>Панель мониторинга города, районная аналитика и прогнозный слой могут продаваться как лицензируемая система для государственных структур.</p></div>
-        <div class="rec-item"><strong>Подписка для предприятий</strong><p>Компании получают аналитику по объектам, окна риска, оповещения и регулярную отчётность.</p></div>
-        <div class="rec-item"><strong>Премиум для пользователей</strong><p>Расширенные персональные уведомления и рекомендации могут быть выделены в отдельный потребительский слой.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:18px;">
-    <h3>Сценарий запуска</h3>
-    <div class="sub">Путь от демонстрации к реальному пилоту без пересборки продукта.</div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-time">Этап 1</div>
-        <div class="timeline-body">
-          <strong>Демонстрация master-версии</strong>
-          <p>Показать текущий продукт как готовую систему: карта, прогноз, отчёты, районы, городская и корпоративная панели.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-time">Этап 2</div>
-        <div class="timeline-body">
-          <strong>Подключение внешнего набора данных</strong>
-          <p>Загрузить JSON-слой пилотного партнёра и продемонстрировать, что интерфейс перестраивается без переработки логики.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-time">Этап 3</div>
-        <div class="timeline-body">
-          <strong>Пилотное внедрение</strong>
-          <p>Запустить систему как PWA или веб-панель в тестовом контуре города или предприятия, затем перейти к лицензии или подписке.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:18px;">
-    <h3>Финальные действия</h3>
-    <div class="action-toolbar">
-      <button class="ghost-btn" data-action="city-summary">Сформировать финальную сводку</button>
-      <button class="ghost-btn" data-action="overview-report">Скачать демонстрационный отчёт</button>
-      <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
-    </div>
-  </div>
-</section>
-
-
-<section class="screen" id="user">
-  <div class="premium-hero">
-    <h3>Пользовательский контур</h3>
-    <p>Здесь остаются только те функции, которые нужны обычному человеку: понять риск, получить простое решение, увидеть прогноз и персональные уведомления.</p>
-  </div>
-  <div class="hero">
-    <h2>Для людей</h2>
-    <p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
-  </div>
-
-  
-  <div class="card" style="margin-top:18px;">
-    <h3>Профиль пользователя</h3>
-    <div class="sub">Выберите профиль, чтобы рекомендации адаптировались под человека, а не были одинаковыми для всех.</div>
-    <div class="action-toolbar" id="userProfileButtons">
-      <button class="ghost-btn active" data-user-profile="general">Обычный</button>
-      <button class="ghost-btn" data-user-profile="child">Ребёнок</button>
-      <button class="ghost-btn" data-user-profile="asthma">Чувствительный</button>
-      <button class="ghost-btn" data-user-profile="sport">Спорт</button>
-    </div>
-  </div>
-
-<div class="grid grid-2">
-    <div class="card">
-      <h3>Сейчас рядом с вами</h3>
-      <div class="value" style="font-size:42px;" id="userAQI">—</div>
-      <div id="userStatus">Загрузка данных...</div>
-    </div>
-
-    <div class="card">
-      <h3>Решение</h3>
-      <div class="summary-box" id="userDecision">Определяется...</div>
-    </div>
-  </div>
-
-  <div class="grid grid-3" style="margin-top:18px;">
-    <div class="card"><h3>Можно ли гулять</h3><div id="userWalk">—</div></div>
-    <div class="card"><h3>Можно ли спорт</h3><div id="userSport">—</div></div>
-    <div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
-  </div>
-
-  
-  <div class="card" style="margin-top:18px;">
-    <h3>Персональные уведомления</h3>
-    <div class="sub">Логика уведомлений строится на текущем AQI, погоде и выбранном профиле пользователя.</div>
-    <div class="recommend-list" id="userAlertsList"></div>
-  </div>
-
+<h3 id="bizDevBlock1Title">Управление данными пилота</h3>
+<div class="sub">Этот блок нужен, чтобы показать не просто красивый интерфейс, а управляемый MVP, который уже можно использовать в тестовом контуре.</div>
+<div class="grid grid-3">
+<div class="rec-item"><strong>Импорт</strong><p>Загрузка JSON из внешнего контура без перестройки интерфейса.</p></div>
+<div class="rec-item"><strong>Сброс</strong><p>Возврат к master-набору встроенных данных для стабильной демонстрации.</p></div>
+<div class="rec-item"><strong>Экспорт</strong><p>Выгрузка активного слоя данных для повторной демонстрации или передачи в пилотный контур.</p></div>
+</div>
+</div>
+<div class="card" style="margin-bottom:18px;">
+<h3 id="bizDevBlock2Title">Готовность к подключению внешних данных</h3>
+<div class="sub">Предприятия и город могут подключать собственные массивы показателей без изменения структуры интерфейса.</div>
+<div class="grid grid-3">
+<div class="rec-item"><strong>Входной формат</strong><p>JSON с городом, загрязнителями, районами и временными окнами.</p></div>
+<div class="rec-item"><strong>Сценарий использования</strong><p>Пилотный контур может загружать ежедневные или часовые показатели и сразу строить сводки.</p></div>
+<div class="rec-item"><strong>Коммерческий эффект</strong><p>Это позволяет перейти от красивого прототипа к платной аналитической системе без смены интерфейса.</p></div>
+</div>
+</div>
+<div class="grid grid-main">
+<div class="card table-card">
+<h3>Обзор рисков по объектам</h3>
+<table>
+<thead><tr><th>Объект</th><th>район</th><th>Риск</th><th>Динамика</th><th>Статус</th></tr></thead>
+<tbody id="facilityTableBody"></tbody>
+</table>
+</div>
+<div class="card">
+<h3>Практические выводы</h3>
+<div class="recommend-list" id="businessOutputs"></div>
+</div>
+</div>
 <div class="card" style="margin-top:18px;">
-    <h3>Индекс дня</h3>
-    <div style="font-size:32px;" id="userIndex">—</div>
-  </div>
-</section>
+<h3>Модель подключения</h3>
+<div class="sub">Доходный контур встроен в продуктовую архитектуру и не выглядит как отдельный pitch.</div>
+<div class="grid grid-3">
+<div class="rec-item"><strong>Городская лицензия</strong><p>Лицензирование панели мониторинга города, районной аналитики и сценариев реагирования.</p></div>
+<div class="rec-item"><strong>Подписка для предприятий</strong><p>Доступ к аналитике по объектам, оповещениям, отчетности и протоколам реагирования.</p></div>
+<div class="rec-item"><strong>Премиум для жителей</strong><p>Расширенные уведомления, персональные рекомендации и история показателей по районам.</p></div>
+</div>
+</div>
+</div>
+</section><section class="screen" id="pilot">
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Пилотный запуск</div>
+<h2>Готовый контур для тестового внедрения и инвестиционного показа.</h2>
+<p>Этот слой фиксирует финальную логику продукта: система уже выглядит как готовое решение, умеет принимать внешний набор данных и может быть показана как пилот для города, предприятия или акселерационной программы.</p>
+</div>
+<div class="hero-side">
+<div class="hero-stat"><strong>v16</strong><span>Текущая master-версия</span></div>
+<div class="summary-box">Файл доведён до состояния, где продукт уже можно показывать не как концепт, а как управляемый MVP с понятным сценарием запуска, подключением реальных данных и коммерческими контурами.</div>
+</div>
+</div>
+</div>
+<div class="grid grid-4">
+<div class="card metric-card">
+<div class="label">Статус</div>
+<div class="value">Готов</div>
+<div class="status-row"><span>Пилотный контур</span><span>Активен</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">Данные</div>
+<div class="value">JSON</div>
+<div class="status-row"><span>Встроенные / внешние</span><span>Подключаемые</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">Монетизация</div>
+<div class="value">B2G</div>
+<div class="status-row"><span>Город / министерство</span><span>Лицензия</span></div>
+</div>
+<div class="card metric-card">
+<div class="label">Контур роста</div>
+<div class="value">B2B</div>
+<div class="status-row"><span>Предприятия</span><span>Подписка</span></div>
+</div>
+</div>
+<div class="grid grid-2" style="margin-top:18px;">
+<div class="card">
+<h3>Почему система выглядит готовой</h3>
+<div class="recommend-list">
+<div class="rec-item"><strong>Связанный интерфейс</strong><p>Карта, прогноз, оповещения, районная аналитика, городская панель и корпоративный слой работают как единая система.</p></div>
+<div class="rec-item"><strong>Управляемый слой данных</strong><p>Есть импорт, сброс и экспорт данных, что переводит MVP из статической демо-версии в рабочий пилотный контур.</p></div>
+<div class="rec-item"><strong>Продуктовая логика</strong><p>Внутри продукта уже есть сценарий действий, сводки, отчёты, приоритетный район и слои для города и предприятий.</p></div>
+</div>
+</div>
+<div class="card">
+<h3>Почему это можно монетизировать</h3>
+<div class="recommend-list">
+<div class="rec-item"><strong>Городская лицензия</strong><p>Панель мониторинга города, районная аналитика и прогнозный слой могут продаваться как лицензируемая система для государственных структур.</p></div>
+<div class="rec-item"><strong>Подписка для предприятий</strong><p>Компании получают аналитику по объектам, окна риска, оповещения и регулярную отчётность.</p></div>
+<div class="rec-item"><strong>Премиум для пользователей</strong><p>Расширенные персональные уведомления и рекомендации могут быть выделены в отдельный потребительский слой.</p></div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>Сценарий запуска</h3>
+<div class="sub">Путь от демонстрации к реальному пилоту без пересборки продукта.</div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-time">Этап 1</div>
+<div class="timeline-body">
+<strong>Демонстрация master-версии</strong>
+<p>Показать текущий продукт как готовую систему: карта, прогноз, отчёты, районы, городская и корпоративная панели.</p>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-time">Этап 2</div>
+<div class="timeline-body">
+<strong>Подключение внешнего набора данных</strong>
+<p>Загрузить JSON-слой пилотного партнёра и продемонстрировать, что интерфейс перестраивается без переработки логики.</p>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-time">Этап 3</div>
+<div class="timeline-body">
+<strong>Пилотное внедрение</strong>
+<p>Запустить систему как PWA или веб-панель в тестовом контуре города или предприятия, затем перейти к лицензии или подписке.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>Финальные действия</h3>
+<div class="action-toolbar">
+<button class="ghost-btn" data-action="city-summary">Сформировать финальную сводку</button>
+<button class="ghost-btn" data-action="overview-report">Скачать демонстрационный отчёт</button>
+<button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
+</div>
+</div>
+</section><section class="screen" id="user">
+<div class="premium-hero">
+<h3>Пользовательский контур</h3>
+<p>Здесь остаются только те функции, которые нужны обычному человеку: понять риск, получить простое решение, увидеть прогноз и персональные уведомления.</p>
+</div>
+<div class="hero">
+<h2>Для людей</h2>
+<p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>Профиль пользователя</h3>
+<div class="sub">Выберите профиль, чтобы рекомендации адаптировались под человека, а не были одинаковыми для всех.</div>
+<div class="action-toolbar" id="userProfileButtons">
+<button class="ghost-btn active" data-user-profile="general">Обычный</button>
+<button class="ghost-btn" data-user-profile="child">Ребёнок</button>
+<button class="ghost-btn" data-user-profile="asthma">Чувствительный</button>
+<button class="ghost-btn" data-user-profile="sport">Спорт</button>
+</div>
+</div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Сейчас рядом с вами</h3>
+<div class="value" id="userAQI" style="font-size:42px;">—</div>
+<div id="userStatus">Загрузка данных...</div>
+</div>
+<div class="card">
+<h3>Решение</h3>
+<div class="summary-box" id="userDecision">Определяется...</div>
+</div>
+</div>
+<div class="grid grid-3" style="margin-top:18px;">
+<div class="card"><h3>Можно ли гулять</h3><div id="userWalk">—</div></div>
+<div class="card"><h3>Можно ли спорт</h3><div id="userSport">—</div></div>
+<div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>Персональные уведомления</h3>
+<div class="sub">Логика уведомлений строится на текущем AQI, погоде и выбранном профиле пользователя.</div>
+<div class="recommend-list" id="userAlertsList"></div>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>Индекс дня</h3>
+<div id="userIndex" style="font-size:32px;">—</div>
+</div>
+</section></main></div>
 
-</main>
-  </div>
+<div class="footer-note">Это front-end MVP, доведённый до рабочего интерактивного состояния в рамках одного HTML-файла: навигация, сценарии, карта, прогноз, таблицы и панели связаны одной моделью данных. Следующий этап — подключение реальных источников данных и упаковка в PWA без пересборки интерфейса.</div>
 
-  <script>
+
+
+
+<script>
     const appData = {
       city: 'Ташкент',
       windows: { live: 'Сейчас', '24h': '24 часа', '7d': '7 дней' },
@@ -3727,53 +3615,46 @@ updateUserLayer();
 
     updateAll();
   </script>
-
-  <div class="report-modal" id="reportModal">
-    <div class="report-sheet">
-      <div class="sheet-head">
-        <div>
-          <h3 id="reportTitle">Сводка</h3>
-          <p id="reportSubtitle">Демонстрационный документ для текущего сценария.</p>
-        </div>
-        <button class="ghost-btn" id="closeReportBtn">Закрыть</button>
-      </div>
-
-      <div class="sheet-grid">
-        <div class="sheet-box">
-          <div class="k">Город</div>
-          <div class="v" id="sheetCity">Ташкент</div>
-          <div class="f">Базовая зона мониторинга.</div>
-        </div>
-        <div class="sheet-box">
-          <div class="k">Загрязнитель</div>
-          <div class="v" id="sheetPollutant">AQI</div>
-          <div class="f">Активный сценарий для расчёта.</div>
-        </div>
-        <div class="sheet-box">
-          <div class="k">Временное окно</div>
-          <div class="v" id="sheetWindow">Сейчас</div>
-          <div class="f">Контекст построения сводки.</div>
-        </div>
-      </div>
-
-      <div class="sheet-section">
-        <h4>Ключевая картина</h4>
-        <div class="sheet-list" id="sheetHighlights"></div>
-      </div>
-
-      <div class="sheet-section">
-        <h4>Рекомендуемые меры</h4>
-        <div class="sheet-list" id="sheetActions"></div>
-      </div>
-
-      <div class="sheet-section">
-        <h4>Комментарий по району риска</h4>
-        <div class="sheet-list" id="sheetDistricts"></div>
-      </div>
-    </div>
-  </div>
-
-
+<div class="report-modal" id="reportModal">
+<div class="report-sheet">
+<div class="sheet-head">
+<div>
+<h3 id="reportTitle">Сводка</h3>
+<p id="reportSubtitle">Демонстрационный документ для текущего сценария.</p>
+</div>
+<button class="ghost-btn" id="closeReportBtn">Закрыть</button>
+</div>
+<div class="sheet-grid">
+<div class="sheet-box">
+<div class="k">Город</div>
+<div class="v" id="sheetCity">Ташкент</div>
+<div class="f">Базовая зона мониторинга.</div>
+</div>
+<div class="sheet-box">
+<div class="k">Загрязнитель</div>
+<div class="v" id="sheetPollutant">AQI</div>
+<div class="f">Активный сценарий для расчёта.</div>
+</div>
+<div class="sheet-box">
+<div class="k">Временное окно</div>
+<div class="v" id="sheetWindow">Сейчас</div>
+<div class="f">Контекст построения сводки.</div>
+</div>
+</div>
+<div class="sheet-section">
+<h4>Ключевая картина</h4>
+<div class="sheet-list" id="sheetHighlights"></div>
+</div>
+<div class="sheet-section">
+<h4>Рекомендуемые меры</h4>
+<div class="sheet-list" id="sheetActions"></div>
+</div>
+<div class="sheet-section">
+<h4>Комментарий по району риска</h4>
+<div class="sheet-list" id="sheetDistricts"></div>
+</div>
+</div>
+</div>
 <script>
 (function() {
   const WAQI_DEFAULT = "e39aa4917168a870cfbf2592cac90cd50097a16e";
@@ -3993,8 +3874,6 @@ updateUserLayer();
   });
 })();
 </script>
-
-
 <script>
 (function() {
   function byId(id) { return document.getElementById(id); }
@@ -4133,8 +4012,6 @@ updateUserLayer();
   });
 })();
 </script>
-
-
 <script>
 (function() {
   const userProfiles = {
@@ -4388,25 +4265,21 @@ updateUserLayer();
   window.addEventListener('load', () => setTimeout(fullSyncV24, 900));
 })();
 </script>
-
-
 <div class="access-gate" id="accessGate">
-  <div class="access-card">
-    <h3 id="accessGateTitle">Закрытый контур доступа</h3>
-    <p id="accessGateText">Этот раздел доступен только после ввода ключа доступа.</p>
-    <div class="access-note" id="accessGateNote">Пользовательский режим остаётся открытым. Для бизнес- и государственного контура требуется отдельный ключ доступа.</div>
-    <div class="access-grid">
-      <input id="accessKeyInput" class="selector" type="password" placeholder="Введите ключ доступа" style="width:100%;">
-    </div>
-    <div class="access-error" id="accessError"></div>
-    <div class="action-toolbar" style="margin-bottom:0;">
-      <button class="ghost-btn" id="accessSubmitBtn">Открыть доступ</button>
-      <button class="ghost-btn" id="accessCancelBtn">Отмена</button>
-    </div>
-  </div>
+<div class="access-card">
+<h3 id="accessGateTitle">Закрытый контур доступа</h3>
+<p id="accessGateText">Этот раздел доступен только после ввода ключа доступа.</p>
+<div class="access-note" id="accessGateNote">Пользовательский режим остаётся открытым. Для бизнес- и государственного контура требуется отдельный ключ доступа.</div>
+<div class="access-grid">
+<input class="selector" id="accessKeyInput" placeholder="Введите ключ доступа" style="width:100%;" type="password"/>
 </div>
-
-
+<div class="access-error" id="accessError"></div>
+<div class="action-toolbar" style="margin-bottom:0;">
+<button class="ghost-btn" id="accessSubmitBtn">Открыть доступ</button>
+<button class="ghost-btn" id="accessCancelBtn">Отмена</button>
+</div>
+</div>
+</div>
 <script>
 (function() {
   const ACCESS_KEYS = {
@@ -4585,8 +4458,6 @@ updateUserLayer();
   });
 })();
 </script>
-
-
 <script>
 (function() {
   function accessStateV23() {
@@ -4665,8 +4536,6 @@ updateUserLayer();
   });
 })();
 </script>
-
-
 <script>
 (function() {
   const MODE_CONFIG = {
@@ -4932,8 +4801,6 @@ updateUserLayer();
   window.addEventListener('load', () => setTimeout(fullV24, 400));
 })();
 </script>
-
-
 <script>
 (function() {
   function riskTextV25(v) {
@@ -5032,8 +4899,6 @@ updateUserLayer();
   window.addEventListener('load', () => setTimeout(fullV25, 400));
 })();
 </script>
-
-
 <script>
 (function() {
   function scrollToPaneTop() {
@@ -5078,5 +4943,78 @@ updateUserLayer();
   });
 })();
 </script>
+<script>
+(function() {
+  function resetPaneTop() {
+    const pane = document.querySelector('.content-pane');
+    if (!pane) return;
+    const y = pane.getBoundingClientRect().top + window.pageYOffset - 18;
+    window.scrollTo(0, Math.max(0, y));
+    document.documentElement.scrollTop = Math.max(0, y);
+    document.body.scrollTop = Math.max(0, y);
+  }
 
-</body></html>
+  function bindScreenSwitchFix() {
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(() => {
+          document.querySelectorAll('.screen').forEach(screen => {
+            screen.style.display = screen.classList.contains('active') ? 'block' : 'none';
+          });
+          resetPaneTop();
+        }, 25);
+      });
+    });
+
+    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(() => {
+          document.querySelectorAll('.screen').forEach(screen => {
+            screen.style.display = screen.classList.contains('active') ? 'block' : 'none';
+          });
+          resetPaneTop();
+        }, 25);
+      });
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', bindScreenSwitchFix);
+})();
+</script>
+<script>
+(function() {
+  function showScreenTop() {
+    const pane = document.querySelector('.content-pane');
+    if (!pane) return;
+    const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
+    window.scrollTo(0, Math.max(0, top));
+    document.documentElement.scrollTop = Math.max(0, top);
+    document.body.scrollTop = Math.max(0, top);
+  }
+
+  function bindUserTopFix() {
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setTimeout(showScreenTop, 20);
+      });
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', bindUserTopFix);
+})();
+</script>
+<script>
+(function() {
+  function topResetForScreen() {
+    const pane = document.querySelector('main.content-pane');
+    if (!pane) return;
+    const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
+    window.scrollTo(0, Math.max(0, top));
+  }
+  window.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.nav button, #accessSwitch [data-access-target]').forEach(function(btn) {
+      btn.addEventListener('click', function() { setTimeout(topResetForScreen, 20); });
+    });
+  });
+})();
+</script></body></html>
