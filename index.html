@@ -1,110 +1,4116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>AirGuard Uzbekistan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AirGuard AI" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <title>AirGuard AI — Рабочий MVP</title>
   <style>
-    :root{
-      --bg:#07111b;--card:#102235;--line:rgba(255,255,255,.08);--text:#eaf2ff;--muted:#9bb0c9;--accent:#43c7ff;
+    :root {
+      --bg: #07111b;
+      --bg-2: #0b1623;
+      --panel: rgba(13, 23, 36, 0.78);
+      --panel-2: rgba(18, 31, 48, 0.88);
+      --line: rgba(255,255,255,0.08);
+      --text: #eef5ff;
+      --muted: #9db0c7;
+      --soft: #7f90a8;
+      --cyan: #61e1ff;
+      --cyan-2: #20b8e8;
+      --green: #52c592;
+      --yellow: #f6c566;
+      --orange: #ff9f57;
+      --red: #ff6363;
+      --purple: #8b87ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.38);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
     }
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#06101a,#081625);color:var(--text)}
-    .app{max-width:1200px;margin:0 auto;padding:24px}
-    .top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}
-    .title{font-size:34px;font-weight:800;letter-spacing:-.03em}
-    .sub{color:var(--muted);font-size:14px;line-height:1.6}
-    .row{display:grid;grid-template-columns:2fr 1fr;gap:18px}
-    .card{background:linear-gradient(180deg,rgba(16,34,53,.95),rgba(10,22,35,.95));border:1px solid var(--line);border-radius:24px;padding:22px}
-    .hero h1{font-size:56px;line-height:1.02;margin:10px 0 14px}
-    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
-    .metric{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:18px}
-    .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-    .v{font-size:52px;font-weight:800;letter-spacing:-.04em}
-    .vv{font-size:34px;font-weight:700}
-    .stack{display:flex;flex-direction:column;gap:18px}
-    .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    input,button{background:#102235;border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 14px}
-    input{min-width:220px}
-    button{cursor:pointer}
-    .list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .item{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
-    .ok{color:#91ffcd}.bad{color:#ffc8c8}
-    @media (max-width:900px){.row,.metrics,.list{grid-template-columns:1fr}.hero h1{font-size:40px}}
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; min-height: 100%; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(52, 138, 255, 0.18), transparent 26%),
+        radial-gradient(circle at 84% 16%, rgba(40, 184, 232, 0.14), transparent 22%),
+        radial-gradient(circle at 72% 74%, rgba(139, 135, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, #06101a 0%, #08131f 42%, #07111b 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+      opacity: .5;
+    }
+
+    .app-shell {
+      width: min(1540px, calc(100vw - 40px));
+      margin: 20px auto;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar, .content-pane {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .sidebar {
+      padding: 22px;
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      min-height: calc(100vh - 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(97,225,255,0.18), rgba(139,135,255,0.28));
+      border: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.04), 0 10px 30px rgba(32,184,232,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::before, .brand-mark::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(97,225,255,0.28);
+    }
+
+    .brand-mark::before { width: 26px; height: 26px; }
+    .brand-mark::after { width: 12px; height: 12px; }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: .01em;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .status-box {
+      padding: 16px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--line);
+    }
+
+    .status-box strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .status-box span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      display: block;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav button {
+      all: unset;
+      cursor: pointer;
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: .2s ease;
+      color: var(--text);
+      font-size: 14px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .nav button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(97,225,255,0.18);
+      background: rgba(97,225,255,0.06);
+    }
+
+    .nav button.active {
+      background: linear-gradient(180deg, rgba(97,225,255,0.14), rgba(97,225,255,0.06));
+      border-color: rgba(97,225,255,0.22);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 8px 24px rgba(32,184,232,0.12);
+    }
+
+    .nav button small {
+      color: var(--soft);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .live-box {
+      margin-top: auto;
+      padding: 16px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(139,135,255,.10), rgba(255,255,255,.03));
+      border: 1px solid rgba(139,135,255,.16);
+    }
+
+    .live-box .kicker {
+      color: #c9c7ff;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: 11px;
+    }
+
+    .live-box h3 {
+      margin: 10px 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .live-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .content-pane {
+      padding: 18px;
+      min-height: calc(100vh - 40px);
+    }
+
+    .screen {
+      display: none;
+      animation: fade .32s ease;
+    }
+
+    .screen.active { display: block; }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .topbar-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .selector, .ghost-btn {
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 11px 14px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .ghost-btn {
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .ghost-btn:hover { background: rgba(97,225,255,0.08); border-color: rgba(97,225,255,0.22); }
+    .ghost-btn.active { background: rgba(97,225,255,0.14); border-color: rgba(97,225,255,0.24); }
+
+    .hero {
+      padding: 28px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 80% 15%, rgba(97,225,255,0.16), transparent 22%),
+        radial-gradient(circle at 20% 80%, rgba(139,135,255,0.12), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(97,225,255,0.11), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.04;
+      letter-spacing: -.03em;
+      max-width: 850px;
+    }
+
+    .hero p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 760px;
+    }
+
+    .hero-side {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(7, 17, 27, 0.46);
+      border: 1px solid rgba(255,255,255,.07);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.02);
+    }
+
+    .hero-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .hero-stat strong {
+      font-size: 40px;
+      letter-spacing: -.03em;
+    }
+
+    .hero-stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.035);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .grid { display: grid; gap: 18px; }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-main { grid-template-columns: 1.2fr .8fr; }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.018));
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.01);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(97,225,255,0.06), transparent 28%);
+      pointer-events: none;
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -.01em;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .metric-card .label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    .metric-card .value {
+      font-size: 38px;
+      letter-spacing: -.04em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      box-shadow: 0 0 18px currentColor;
+    }
+
+    .green { color: var(--green); }
+    .yellow { color: var(--yellow); }
+    .orange { color: var(--orange); }
+    .red { color: var(--red); }
+    .cyan { color: var(--cyan); }
+
+    .summary-box {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.028);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .forecast-strip {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .day-chip {
+      padding: 16px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.028);
+      text-align: center;
+    }
+
+    .day-chip strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .day-chip span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .map-card {
+      min-height: 600px;
+      position: relative;
+      background:
+        radial-gradient(circle at 40% 35%, rgba(255,99,99,0.16), transparent 16%),
+        radial-gradient(circle at 60% 52%, rgba(255,159,87,0.18), transparent 18%),
+        radial-gradient(circle at 30% 68%, rgba(246,197,102,0.16), transparent 14%),
+        linear-gradient(180deg, rgba(10,20,32,0.92), rgba(7,17,27,0.94));
+    }
+
+    .map-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .pill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .city-map {
+      position: relative;
+      height: 430px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.07);
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        radial-gradient(circle at 36% 34%, rgba(255,99,99,0.28), transparent 10%),
+        radial-gradient(circle at 61% 48%, rgba(255,159,87,0.28), transparent 12%),
+        radial-gradient(circle at 26% 72%, rgba(246,197,102,0.20), transparent 10%),
+        radial-gradient(circle at 80% 20%, rgba(82,197,146,0.12), transparent 10%),
+        linear-gradient(180deg, rgba(15,25,38,0.9), rgba(11,22,35,0.96));
+      background-size: 72px 72px, 72px 72px, auto, auto, auto, auto, auto;
+    }
+
+    .road, .ring {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      opacity: .55;
+    }
+
+    .road.one { left: 8%; top: 44%; width: 84%; height: 1px; border: 0; background: rgba(255,255,255,.09); }
+    .road.two { left: 48%; top: 8%; width: 1px; height: 84%; border: 0; background: rgba(255,255,255,.08); }
+    .ring.one { width: 62%; height: 62%; left: 19%; top: 19%; }
+    .ring.two { width: 34%; height: 34%; left: 33%; top: 33%; }
+
+    .hotspot {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(255,99,99,.45);
+      animation: pulse 2.6s infinite;
+      cursor: pointer;
+      transition: transform .15s ease;
+    }
+    .hotspot:hover { transform: scale(1.08); }
+
+    .hotspot::after {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, currentColor 0%, transparent 70%);
+      opacity: .22;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,99,99,.38); }
+      70% { transform: scale(1.02); box-shadow: 0 0 0 14px rgba(255,99,99,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,99,99,0); }
+    }
+
+    .legend {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 180px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(7,17,27,.76);
+      border: 1px solid rgba(255,255,255,.07);
+      z-index: 3;
+    }
+
+    .legend h4, .map-detail h4 { margin: 0 0 12px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+
+    .legend .row, .mini-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .map-detail {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .detail-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .detail-title strong { font-size: 22px; letter-spacing: -.02em; }
+    .detail-title span { color: var(--muted); font-size: 12px; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mini-metric {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .mini-metric .k { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .mini-metric .v { font-size: 20px; letter-spacing: -.03em; }
+
+    .chart-wrap {
+      height: 320px;
+      position: relative;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      overflow: hidden;
+    }
+
+    .mini-chart-wrap {
+      height: 240px;
+      position: relative;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      overflow: hidden;
+    }
+
+    canvas { display: block; width: 100%; height: 100%; }
+
+    .recommend-list, .alert-list, .source-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rec-item, .alert-item, .source-item, .district-row {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.028);
+    }
+
+    .rec-item strong, .alert-item strong, .source-item strong { display: block; font-size: 15px; margin-bottom: 6px; }
+    .rec-item p, .alert-item p, .source-item p, .district-row p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 13px; }
+
+    .alert-item .head, .district-row .head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      border: 1px solid rgba(255,255,255,.08);
+      white-space: nowrap;
+    }
+
+    .badge.red { background: rgba(255,99,99,.12); color: #ffc1c1; }
+    .badge.orange { background: rgba(255,159,87,.12); color: #ffd4bc; }
+    .badge.cyan { background: rgba(97,225,255,.12); color: #bcefff; }
+    .badge.green { background: rgba(82,197,146,.12); color: #c7ffe4; }
+    .badge.yellow { background: rgba(246,197,102,.12); color: #ffe9bb; }
+
+    .table-card table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .table-card th, .table-card td {
+      text-align: left;
+      padding: 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .table-card th { color: var(--muted); font-weight: 500; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .kpi {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .kpi .kicker { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+    .kpi .big { font-size: 28px; letter-spacing: -.03em; margin-bottom: 6px; }
+    .kpi .foot { color: var(--muted); font-size: 12px; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 0 6px;
+    }
+
+    .tiny {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    
+
+
+
+
+    .pill-ok { border-color: rgba(82,197,146,.24); color: #c7ffe4; background: rgba(82,197,146,.10); }
+    .pill-warn { border-color: rgba(246,197,102,.24); color: #ffe9bb; background: rgba(246,197,102,.10); }
+    .pill-bad { border-color: rgba(255,99,99,.24); color: #ffc1c1; background: rgba(255,99,99,.10); }
+
+    .status-console {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .console-card {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .console-card .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+
+    .console-card .v {
+      font-size:22px;
+      letter-spacing:-.03em;
+      margin-bottom:6px;
+    }
+
+    .console-card .f {
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .data-pill {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      font-size:12px;
+      color: var(--muted);
+    }
+
+    .data-status-row {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .action-toolbar {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .scenario-grid {
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .timeline {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .timeline-item {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.028);
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .timeline-time {
+      font-size:13px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding-top: 2px;
+    }
+
+    .timeline-body strong {
+      display:block;
+      font-size:15px;
+      margin-bottom:6px;
+    }
+
+    .timeline-body p {
+      margin:0;
+      font-size:13px;
+      color: var(--muted);
+      line-height:1.6;
+    }
+
+    .district-focus-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .focus-card {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.028);
+    }
+
+    .focus-card .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom:8px;
+    }
+
+    .focus-card .v {
+      font-size:24px;
+      letter-spacing: -.03em;
+      margin-bottom:6px;
+    }
+
+    .focus-card .f {
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.5;
+    }
+
+    
+    .user-profile-active {
+      border-color: rgba(97,225,255,.24) !important;
+      background: linear-gradient(180deg, rgba(97,225,255,.10), rgba(97,225,255,.04)) !important;
+      box-shadow: 0 10px 24px rgba(32,184,232,.10);
+    }
+
+    .signal-grid {
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .signal-card {
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .signal-card .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom:8px;
+    }
+
+    .signal-card .v {
+      font-size:24px;
+      letter-spacing: -.03em;
+      margin-bottom:6px;
+    }
+
+    .signal-card .f {
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.5;
+    }
+
+
+    .access-panel {
+      margin-bottom: 18px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.018));
+    }
+
+    .access-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .access-head h3 {
+      margin:0 0 6px;
+      font-size:18px;
+    }
+
+    .access-grid {
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:12px;
+      align-items:center;
+    }
+
+    .access-status {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .access-locked {
+      border-color: rgba(246,197,102,.22);
+      background: rgba(246,197,102,.08);
+      color: #ffe9bb;
+    }
+
+    .access-open {
+      border-color: rgba(82,197,146,.22);
+      background: rgba(82,197,146,.08);
+      color: #c7ffe4;
+    }
+
+    .access-protected {
+      display:none;
+    }
+
+    .access-protected.open {
+      display:block;
+    }
+
+    .access-note {
+      margin-top:12px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .role-chip-row {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+
+    .report-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(3,10,18,.66);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .report-modal.open { display:flex; }
+
+    .report-sheet {
+      width: min(980px, 100%);
+      max-height: 88vh;
+      overflow: auto;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(10,19,31,.98), rgba(7,17,27,.98));
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      padding: 26px;
+    }
+
+    .sheet-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .sheet-head h3 {
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-.03em;
+    }
+
+    .sheet-head p {
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size:14px;
+      max-width:620px;
+    }
+
+    .sheet-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .sheet-box {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .sheet-box .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+
+    .sheet-box .v {
+      font-size:24px;
+      letter-spacing:-.03em;
+      margin-bottom:6px;
+    }
+
+    .sheet-box .f {
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .sheet-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .sheet-section h4 {
+      margin:0 0 12px;
+      font-size:16px;
+    }
+
+    .sheet-list {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .sheet-item {
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.025);
+      color: var(--muted);
+      line-height:1.6;
+      font-size:13px;
+    }
+
+
+
+    .district-label {
+      position:absolute;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(7,17,27,.78);
+      border:1px solid rgba(255,255,255,.08);
+      color: var(--text);
+      font-size:11px;
+      line-height:1;
+      z-index:3;
+      pointer-events:none;
+      box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    }
+
+    .flow-line {
+      position:absolute;
+      height:2px;
+      background: linear-gradient(90deg, rgba(97,225,255,.05), rgba(97,225,255,.35), rgba(255,99,99,.08));
+      transform-origin:left center;
+      border-radius:999px;
+      opacity:.8;
+      z-index:2;
+      filter: blur(.2px);
+    }
+
+    .map-quick-grid {
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .map-quick-card {
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .map-quick-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(97,225,255,.18);
+      background: rgba(97,225,255,.05);
+    }
+
+    .map-quick-card.active {
+      border-color: rgba(97,225,255,.24);
+      background: linear-gradient(180deg, rgba(97,225,255,.10), rgba(97,225,255,.04));
+      box-shadow: 0 10px 24px rgba(32,184,232,.10);
+    }
+
+    .map-quick-card .name {
+      font-size:14px;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .map-quick-card .meta {
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .mini-action-row {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .district-scenario-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .scenario-card {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .scenario-card .top {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .scenario-card .title {
+      font-size:15px;
+      font-weight:600;
+    }
+
+    .scenario-card .metric {
+      font-size:24px;
+      letter-spacing:-.03em;
+      margin-bottom:8px;
+    }
+
+    .scenario-card .desc {
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+
+    @media (max-width: 820px) {
+      .app-shell { width: min(100vw - 16px, 1540px); margin: 8px auto; gap: 10px; }
+      .sidebar, .content-pane { border-radius: 22px; }
+      .sidebar { padding: 14px; }
+      .content-pane { padding: 12px; min-height: auto; }
+      .hero { padding: 18px; border-radius: 22px; }
+      .card { padding: 16px; border-radius: 20px; }
+      .hero h2 { font-size: 34px; }
+      .metric-card .value { font-size: 32px; }
+      .topbar-left, .topbar-right { gap: 8px; }
+      .selector, .ghost-btn { width: 100%; }
+      .topbar-right { display: none; }
+      .forecast-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .scenario-grid, .sheet-grid, .district-focus-grid, .map-quick-grid, .district-scenario-grid { grid-template-columns: 1fr; }
+      .data-status-row { flex-direction: column; }
+      .status-console { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .report-sheet { padding: 18px; border-radius: 22px; }
+    }
+
+    @media (max-width: 1180px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { position: relative; min-height: auto; top: 0; }
+      .topbar, .hero-grid, .grid-main, .grid-4, .grid-3, .grid-2, .split, .kpi-grid, .detail-grid { grid-template-columns: 1fr; }
+      .topbar-right { justify-content: flex-start; }
+      .forecast-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .scenario-grid, .sheet-grid, .district-focus-grid, .map-quick-grid, .district-scenario-grid { grid-template-columns: 1fr; }
+      .data-status-row { flex-direction: column; }
+      .status-console { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .report-sheet { padding: 18px; border-radius: 22px; }
+    }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="top">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <h1>AirGuard AI</h1>
+          <p>Операционная экологическая аналитика для Узбекистана</p>
+        </div>
+      </div>
+
+      <div class="status-box">
+        <strong>Рабочий single-file MVP</strong>
+        <span>Внутри только продуктовые функции: мониторинг, прогноз, уведомления, районная аналитика, источники, B2G и B2B слои.</span>
+      </div>
+
+      <div class="nav">
+        <button class="active" data-screen="overview"><span>Обзор</span><small>01</small></button>
+        <button data-screen="map"><span>Карта загрязнения</span><small>02</small></button>
+        <button data-screen="forecast"><span>Прогноз</span><small>03</small></button>
+        <button data-screen="alerts"><span>Оповещения</span><small>04</small></button>
+        <button data-screen="districts"><span>Аналитика районов</span><small>05</small></button>
+        <button data-screen="sources"><span>Источники загрязнения</span><small>06</small></button>
+        <button data-screen="gov"><span>Панель мониторинга города</span><small>07</small></button>
+        <button data-screen="business"><span>Аналитика для предприятий</span><small>08</small></button>
+        <button data-screen="pilot"><span>Пилотный запуск</span><small>09</small></button>
+<button data-screen="user"><span>Пользователь</span><small>10</small></button>
+      </div>
+
+      <div class="live-box">
+        <div class="kicker">Режим реального времени</div>
+        <h3 id="liveClock">09:42 · Ташкент</h3>
+        <p id="liveSummary">Система обновляет текущий экран, прогноз, карту, уведомления и районную аналитику от выбранного загрязнителя и временного окна.</p>
+      </div>
+    </aside>
+
+    <main class="content-pane">
+      <div class="topbar">
+        <div class="topbar-left">
+          <select id="citySelect" class="selector">
+            <option value="tashkent">Ташкент</option>
+          </select>
+          <select id="pollutantSelect" class="selector">
+            <option value="aqi">AQI</option>
+            <option value="pm25">PM2.5</option>
+            <option value="co2">CO2</option>
+          </select>
+          <select id="windowSelect" class="selector">
+            <option value="live">Сейчас</option>
+            <option value="24h">24 часа</option>
+            <option value="7d">7 дней</option>
+          </select>
+          <button id="simulateBtn" class="ghost-btn active">Имитация обновления: ВКЛ</button>
+          <button id="installBtn" class="ghost-btn" style="display:none;">Установить приложение</button>
+        </div>
+        <div class="topbar-right">
+          <div class="chip" id="contextChip">Ташкент · AQI · Сейчас</div>
+          <div class="chip" id="refreshChip">Обновлено только что</div>
+          <div class="chip" id="dataChip">Источник данных: демонстрационный слой</div>
+          <div class="chip" id="accessScopeChip">Доступ: общий</div>
+          <button id="loadJsonBtn" class="ghost-btn">Загрузить JSON</button>
+          <button id="resetDataBtn" class="ghost-btn">Сбросить данные</button>
+          <button id="exportDataBtn" class="ghost-btn">Экспортировать JSON</button>
+          <input id="jsonFileInput" type="file" accept=".json,application/json" style="display:none;">
+        </div>
+      </div>
+
+      <section class="screen active" id="overview">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Оперативный обзор</div>
+              <h2 id="overviewTitle">Оперативная аналитика качества воздуха по Ташкенту.</h2>
+              <p id="overviewText">Система отслеживает текущее состояние воздуха, прогнозирует краткосрочные риски и формирует практические рекомендации для жителей, предприятий и городских служб.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat">
+                <strong id="heroMainValue">146</strong>
+                <span id="heroMainLabel">AQI · Текущий статус</span>
+              </div>
+              <div class="summary-box" id="heroSummary">В центральных районах Ташкента качество воздуха остаётся ухудшенным. В вечерние часы ожидается дополнительный рост концентрации частиц из-за плотного трафика и слабого рассеивания.</div>
+              <div class="hero-tags">
+                <div class="chip">Карта</div>
+                <div class="chip">Прогноз</div>
+                <div class="chip">Оповещения</div>
+                <div class="chip">Панели решений</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card metric-card">
+            <div class="label" id="metric1Label">Текущий AQI</div>
+            <div class="value" id="metric1Value">146</div>
+            <div class="status-row"><span id="metric1Status"><i class="dot orange"></i>Повышенный</span><span id="metric1Foot">+12% к сопоставимому периоду</span></div>
+          </div>
+          <div class="card metric-card">
+            <div class="label">PM2.5</div>
+            <div class="value" id="metricPm">68</div>
+            <div class="status-row"><span>µg/m³</span><span id="pmFoot">Выше рекомендуемого уровня</span></div>
+          </div>
+          <div class="card metric-card">
+            <div class="label">CO2</div>
+            <div class="value" id="metricCo2">742</div>
+            <div class="status-row"><span>ppm</span><span id="co2Foot">Городской фон растёт</span></div>
+          </div>
+          <div class="card metric-card">
+            <div class="label">Прогнозный риск</div>
+            <div class="value" id="riskValue">Высокий</div>
+            <div class="status-row"><span id="riskDot"><i class="dot red"></i>Следующие 24 часа</span><span id="confidenceFoot">81% достоверность модели</span></div>
+          </div>
+        </div>
+
+        
+        <div class="grid grid-3" style="margin-top:18px;">
+          <div class="card">
+            <h3>Погодный контекст</h3>
+            <div class="summary-box" id="weatherSummaryBox">Погодный слой не подключен. После подключения OpenWeather здесь появятся ветер, температура и влажность.</div>
+          </div>
+          <div class="card">
+            <h3>Ветер</h3>
+            <div class="value" style="font-size:34px;" id="weatherWindValue">—</div>
+            <div class="sub" id="weatherWindText">Нет данных</div>
+          </div>
+          <div class="card">
+            <h3>Температура / влажность</h3>
+            <div class="value" style="font-size:34px;" id="weatherTempValue">—</div>
+            <div class="sub" id="weatherHumidityText">Нет данных</div>
+          </div>
+        </div>
+
+<div class="grid grid-main" style="margin-top:18px;">
+          <div class="card">
+            <h3>Сводка системы</h3>
+            <div class="sub">Краткая аналитическая сводка по выбранному загрязнителю и временному окну.</div>
+            <div class="summary-box" id="aiSummary">Система показывает усиление концентрации загрязняющих веществ в Юнусабаде, Чиланзаре и вдоль основных транспортных коридоров. В ближайшие 18–24 часа ожидается окно среднего и высокого загрязнения.</div>
+          </div>
+          <div class="card">
+            <h3>Рекомендуемые действия</h3>
+            <div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
+            <div class="recommend-list" id="actionList"></div>
+          </div>
+        </div>
+
+        
+        
+        <div class="card" style="margin-top:18px;">
+          <h3>Слой данных</h3>
+          <div class="sub">Переходный этап между демонстрационным MVP и реальным продуктом. Система уже умеет принимать внешний JSON-слой без перестройки интерфейса.</div>
+          <div class="grid grid-3">
+            <div class="rec-item">
+              <strong>Текущий режим</strong>
+              <p id="dataModeText">Демонстрационный слой активен. Интерфейс работает полностью и готов к подключению внешних данных.</p>
+            </div>
+            <div class="rec-item">
+              <strong>Последнее обновление</strong>
+              <p id="dataUpdatedText">Используется встроенный набор данных, синхронизированный со всеми экранами.</p>
+            </div>
+            <div class="rec-item">
+              <strong>Подключение</strong>
+              <p>Можно загрузить собственный JSON со значениями по городу, загрязнителям и районам. После загрузки интерфейс перестраивается автоматически.</p>
+            </div>
+          </div>
+        </div>
+
+
+        
+        <div class="card" style="margin-top:18px;">
+          <h3>Подключение реальных данных WAQI</h3>
+          <div class="sub">Подключение официального API качества воздуха. Токен сохраняется в браузере, а текущие значения подгружаются в интерфейс без смены дизайна.</div>
+          <div class="grid grid-3">
+            <div class="rec-item">
+              <strong>Токен API</strong>
+              <p><input id="waqiTokenInput" class="selector" type="text" value="e39aa4917168a870cfbf2592cac90cd50097a16e" placeholder="Вставьте WAQI token" style="width:100%;"></p>
+            </div>
+            <div class="rec-item">
+              <strong>Город запроса</strong>
+              <p><input id="waqiCityInput" class="selector" type="text" value="tashkent" placeholder="tashkent" style="width:100%;"></p>
+            </div>
+            <div class="rec-item">
+              <strong>Действия</strong>
+              <p style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button id="connectWaqiBtn" class="ghost-btn">Подключить WAQI</button>
+                <button id="clearWaqiBtn" class="ghost-btn">Очистить token</button>
+              </p>
+            </div>
+          </div>
+          <div class="data-status-row">
+            <div class="data-pill" id="waqiStatusPill">WAQI: не подключен</div>
+            <div class="data-pill" id="waqiUpdatedPill">Последнее обновление: —</div>
+          </div>
+        </div>
+
+<div class="status-console">
+          <div class="console-card">
+            <div class="k">Источник</div>
+            <div class="v" id="consoleSource">Demo</div>
+            <div class="f">Показывает активный тип слоя данных.</div>
+          </div>
+          <div class="console-card">
+            <div class="k">Режим</div>
+            <div class="v" id="consoleMode">Master</div>
+            <div class="f">Master-режим или внешний JSON.</div>
+          </div>
+          <div class="console-card">
+            <div class="k">Состояние</div>
+            <div class="v" id="consoleState">Готов</div>
+            <div class="f">Интерфейс синхронизирован со всеми экранами.</div>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top:18px;">
+          <div class="card">
+            <h3>Готовность к пилоту</h3>
+            <div class="sub">Переход от демо-версии к пилотному контуру для города, предприятия или акселерационной подачи.</div>
+            <div class="recommend-list">
+              <div class="rec-item"><strong>Интерфейс зафиксирован</strong><p>Ключевая структура экранов и верхняя панель управления закреплены как master-слой.</p></div>
+              <div class="rec-item"><strong>Слой данных подключаемый</strong><p>Система уже принимает внешний JSON без перестройки интерфейса.</p></div>
+              <div class="rec-item"><strong>Пилотный сценарий готов</strong><p>Есть карта, прогноз, уведомления, районная аналитика, городская панель и блок для предприятий.</p></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Проверка слоя данных</h3>
+            <div class="sub">Контрольный блок для демонстрации того, что продукт готов к загрузке и замене данных без переделки логики.</div>
+            <div class="recommend-list">
+              <div class="rec-item"><strong>Текущий источник</strong><p id="validationSource">Демонстрационный встроенный набор данных.</p></div>
+              <div class="rec-item"><strong>Статус структуры</strong><p id="validationStructure">Структура данных согласована с картой, прогнозом, районами и панелями.</p></div>
+              <div class="rec-item"><strong>Действие</strong><p>Можно загрузить внешний JSON, проверить результат, затем сбросить данные обратно.</p></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="grid grid-3" style="margin-top:18px;">
+          <div class="card">
+            <h3>Ценность для города</h3>
+            <div class="summary-box">Единая панель мониторинга, приоритетные районы, прогнозные окна и отчётность для управленческих решений.</div>
+          </div>
+          <div class="card">
+            <h3>Ценность для предприятий</h3>
+            <div class="summary-box">Оценка риска по объектам, оповещения для операций и регулярные аналитические сводки.</div>
+          </div>
+          <div class="card">
+            <h3>Ценность для пилота</h3>
+            <div class="summary-box">Переход от встроенных данных к внешнему источнику без изменения интерфейса и без потери сценариев использования.</div>
+          </div>
+        </div>
+
+<div class="card" style="margin-top:18px;">
+          <h3>Быстрые действия</h3>
+          <div class="sub">Прикладные действия для демонстрации рабочего сценария внутри MVP.</div>
+          <div class="grid grid-3">
+            <div class="rec-item">
+              <strong><button class="ghost-btn" data-action="overview-summary" style="padding:0;border:none;background:none;color:inherit;">Сформировать городскую сводку</button></strong>
+              <p>Подготовить краткий обзор текущего состояния воздуха, районов риска и окна прогноза на 24 часа.</p>
+            </div>
+            <div class="rec-item">
+              <strong><button class="ghost-btn" data-action="priority-map" style="padding:0;border:none;background:none;color:inherit;">Открыть приоритетную карту</button></strong>
+              <p>Перейти к району с максимальным риском и показать зону, где требуется усиленный мониторинг.</p>
+            </div>
+            <div class="rec-item">
+              <strong><button class="ghost-btn" data-action="overview-report" style="padding:0;border:none;background:none;color:inherit;">Скачать пример отчёта</button></strong>
+              <p>Подготовить демонстрационный отчёт для города или предприятия по текущему сценарию.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-grid">
+          <div class="card">
+            <h3>Операционный сценарий на сутки</h3>
+            <div class="sub">Пошаговая логика того, как системой можно пользоваться в реальном режиме для города и предприятий.</div>
+            <div class="timeline" id="scenarioTimeline"></div>
+          </div>
+          <div class="card">
+            <h3>Приоритетный район</h3>
+            <div class="sub">Блок быстрого фокуса по району с максимальным риском в текущем сценарии.</div>
+            <div class="summary-box" id="priorityDistrictNarrative"></div>
+            <div class="district-focus-grid">
+              <div class="focus-card">
+                <div class="k">Район</div>
+                <div class="v" id="focusDistrictName">—</div>
+                <div class="f">Район с максимальным текущим риском.</div>
+              </div>
+              <div class="focus-card">
+                <div class="k">Показатель</div>
+                <div class="v" id="focusDistrictValue">—</div>
+                <div class="f">Текущее значение по выбранному загрязнителю.</div>
+              </div>
+              <div class="focus-card">
+                <div class="k">Пиковое окно</div>
+                <div class="v" id="focusDistrictPeak">—</div>
+                <div class="f">Окно, где требуется повышенное внимание.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<div class="card" style="margin-top:18px;">
+          <h3>Прогноз на 7 дней</h3>
+          <div class="sub">Краткий прогноз по выбранному загрязнителю.</div>
+          <div class="forecast-strip" id="forecastStrip"></div>
+        </div>
+      </section>
+
+      <section class="screen" id="map">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Карта загрязнения</div>
+              <h2>Тепловая карта районов с подробной аналитикой.</h2>
+              <p>Карта отражает выбранный загрязнитель и временное окно. Нажмите на активную точку, чтобы открыть профиль района, динамику и аналитический комментарий.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong id="mapSideTitle">Ташкент</strong><span id="mapSideMode">Режим реального времени · AQI</span></div>
+              <div class="summary-box" id="mapSideSummary">Сейчас Юнусабад и центральные транспортные коридоры показывают наибольшую расчётную концентрацию. Ухудшение ожидается в вечерние часы плотного трафика.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card map-card">
+          <div class="map-toolbar">
+            <div class="pill" id="mapToolbarCity">Город: Ташкент</div>
+            <div class="pill" id="mapToolbarMode">Режим: Сейчас</div>
+            <div class="pill" id="mapToolbarPollutant">Загрязнитель: AQI</div>
+            <div class="pill">Навигация: выбор района</div>
+          </div>
+          <div class="city-map">
+
+            <div class="flow-line" style="left:34%; top:63%; width:31%; transform: rotate(-24deg);"></div>
+            <div class="flow-line" style="left:43%; top:28%; width:20%; transform: rotate(34deg);"></div>
+            <div class="flow-line" style="left:58%; top:42%; width:21%; transform: rotate(-37deg);"></div>
+
+
+            <div class="road one"></div>
+            <div class="road two"></div>
+            <div class="ring one"></div>
+            <div class="ring two"></div>
+
+            <div class="hotspot" data-district="yunusabad" style="left:58%;top:42%;"></div>
+            <div class="hotspot" data-district="chilanzar" style="left:33%;top:64%;"></div>
+            <div class="hotspot" data-district="mirzo" style="left:43%;top:28%;"></div>
+            <div class="hotspot" data-district="bektemir" style="left:76%;top:22%;"></div>
+
+            <div class="district-label" style="left:61%;top:39%;">Юнусабад</div>
+            <div class="district-label" style="left:26%;top:68%;">Чиланзар</div>
+            <div class="district-label" style="left:36%;top:22%;">Мирзо-Улугбек</div>
+            <div class="district-label" style="left:79%;top:18%;">Бектемир</div>
+
+            <div class="legend">
+              <h4>Шкала риска</h4>
+              <div class="row"><span><i class="dot green"></i>Низкий</span><span>Нормальный фон</span></div>
+              <div class="row"><span><i class="dot yellow"></i>Средний</span><span>Наблюдение</span></div>
+              <div class="row"><span><i class="dot orange"></i>Повышенный</span><span>Нужно реагировать</span></div>
+              <div class="row"><span><i class="dot red"></i>Высокий</span><span>Приоритетная зона</span></div>
+            </div>
+          </div>
+
+          
+          <div class="map-detail" id="mapDetail"></div>
+
+          <div class="map-quick-grid" id="mapQuickGrid"></div>
+
+        </div>
+      </section>
+
+      <section class="screen" id="forecast">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Прогноз качества воздуха</div>
+              <h2>Прогноз на 3–7 дней с выделением окон повышенного риска.</h2>
+              <p>Прогнозный модуль автоматически перестраивается под выбранный загрязнитель и показывает пики, уровень достоверности и рекомендуемое время реагирования.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong id="forecastConfidence">81%</strong><span>Достоверность модели</span></div>
+              <div class="summary-box" id="forecastNarrative">Завтра вероятен выраженный пик в интервалах 07:00–11:00 и 18:00–22:00. Основные расчётные факторы — слабый ветер и высокая концентрация городского транспорта.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-main">
+          <div class="card">
+            <h3>Прогноз на 7 дней</h3>
+            <div class="sub">График автоматически реагирует на выбор загрязнителя.</div>
+            <div class="chart-wrap"><canvas id="forecastChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h3>Риск на завтра</h3>
+            <div class="sub">Формируется автоматически из активного сценария.</div>
+            <div class="recommend-list" id="riskBriefList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="alerts">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Оповещения</div>
+              <h2>Умные уведомления по уровню риска, району и типу пользователя.</h2>
+              <p>Оповещения меняются в зависимости от уровня загрязнения, статуса района и прогнозной траектории. Это делает систему не пассивной витриной, а рабочим инструментом.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong id="alertRuleCount">12</strong><span>Активные правила</span></div>
+              <div class="summary-box">Правила можно настраивать по загрязнителю, району, профилю чувствительности и порогу риска. Это создаёт рабочий продуктовый слой уже на первом этапе.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Текущие оповещения</h3>
+            <div class="sub">Список формируется из текущего сценария.</div>
+            <div class="alert-list" id="alertList"></div>
+          </div>
+          <div class="card">
+            <h3>Профили уведомлений</h3>
+            <div class="sub">Профили показывают, как работает система оповещений для каждой категории пользователей.</div>
+            <div class="recommend-list">
+              <div class="rec-item"><strong>Население</strong><p>Получение городских и районных уведомлений при превышении заданного порога.</p></div>
+              <div class="rec-item"><strong>Дети / пожилые / чувствительные группы</strong><p>Более ранние предупреждения и усиленные рекомендации для чувствительных групп.</p></div>
+              <div class="rec-item"><strong>Операционная деятельность предприятий</strong><p>Уведомления по рискам для сотрудников, окна повышенной нагрузки и еженедельные сводки.</p></div>
+              <div class="rec-item"><strong>Городские службы</strong><p>Аномалии по районам, прогнозные пики и уведомления о приоритетных мерах.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="districts">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Аналитика районов</div>
+              <h2>Сравнительная аналитика районов и рейтинг по динамике.</h2>
+              <p>Таблица, график динамики и блок факторов реагируют на выбранный загрязнитель. Это даёт реальный слой операционного сравнения, а не декоративный контент.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong>12</strong><span>районов в модели</span></div>
+              <div class="summary-box" id="districtHeroSummary">Платформа сравнивает динамику районов, определяет пиковые окна и оценивает вероятную структуру факторов по повторяющимся сигналам.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="district-scenario-grid" id="districtScenarioGrid"></div>
+
+        <div class="grid grid-main">
+          <div class="card table-card">
+            <h3>Рейтинг районов</h3>
+            <div class="sub">Сортировка по уровню выбранного загрязнителя.</div>
+            <table>
+              <thead>
+                <tr><th>район</th><th id="tableMetricHead">AQI</th><th>Динамика</th><th>Пиковые часы</th><th>Статус</th></tr>
+              </thead>
+              <tbody id="districtTableBody"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Динамика района</h3>
+            <div class="sub">7-дневная динамика района с наибольшим риском по выбранному загрязнителю.</div>
+            <div class="mini-chart-wrap"><canvas id="districtTrendChart"></canvas></div>
+            <div style="height:12px"></div>
+            <div class="district-row" id="selectedDistrictBox"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="sources">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Источники загрязнения</div>
+              <h2>Потенциальные кластеры источников и приоритет вмешательства.</h2>
+              <p>Атрибуция источников остаётся расчётной и оценочной. Экран полезен тем, что показывает, где нужно проверять ситуацию, а не делает недоказуемые утверждения.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong>4</strong><span>категории источников</span></div>
+              <div class="summary-box" id="sourceNarrative">Оценка источников строится на повторяющихся сигнальных окнах, изменениях по районам и контекстных сценариях городской активности.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Возможные очаги выбросов</h3>
+            <div class="sub">Блок обновляется по типу загрязнителя и уровню давления по районам.</div>
+            <div class="source-list" id="sourceList"></div>
+          </div>
+          <div class="card">
+            <h3>Оценка структуры источников</h3>
+            <div class="sub">Текущая модель по району с наибольшим риском.</div>
+            <div class="recommend-list" id="sourceMixList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="gov">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Панель мониторинга города</div>
+              <h2>Единая панель для мониторинга и планирования реагирования по городу.</h2>
+              <p>Этот раздел оставляет только прикладные функции: риск по городу, критические районы, краткосрочные пики и рекомендуемые меры.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong id="govWindow">72h</strong><span>критическое окно прогноза</span></div>
+              <div class="summary-box" id="govNarrative">Командный слой объединяет текущий статус, прогнозный риск, рейтинг районов и приоритетные меры в единую операционную панель.</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="access-panel">
+          <div class="access-head">
+            <div>
+              <h3>Государственный доступ</h3>
+              <div class="sub">Этот контур предназначен для города, министерств и операторов мониторинга. Вход выполняется по ключу доступа.</div>
+            </div>
+            <div class="access-status access-locked" id="govAccessStatus">Доступ закрыт</div>
+          </div>
+          <div class="access-grid">
+            <input id="govAccessCode" class="selector" type="password" placeholder="Введите ключ государственного доступа">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button id="govUnlockBtn" class="ghost-btn">Открыть доступ</button>
+              <button id="govLockBtn" class="ghost-btn">Закрыть</button>
+            </div>
+          </div>
+          <div class="role-chip-row">
+            <div class="chip">Контур: B2G</div>
+            <div class="chip">Назначение: город / министерство</div>
+            <div class="chip">Режим: закрытый доступ</div>
+          </div>
+          <div class="access-note">Для демо и пилота используется локальный ключ доступа. На следующем этапе это переводится на backend-auth и персональные роли.</div>
+        </div>
+
+        <div id="govProtected" class="access-protected">
+<div class="card" style="margin-bottom:18px;">
+          <h3>Ключевые показатели по городу</h3>
+          <div class="sub">Основные показатели, связанные с текущими настройками.</div>
+          <div class="kpi-grid" id="govKpiGrid"></div>
+        </div>
+
+        <div class="action-toolbar">
+          <button class="ghost-btn" data-action="city-summary">Сформировать сводку города</button>
+          <button class="ghost-btn" data-action="city-report">Экспортировать пример отчёта</button>
+        </div>
+
+        <div class="split">
+          <div class="card table-card">
+            <h3>районы с максимальным риском</h3>
+            <table>
+              <thead><tr><th>район</th><th id="govMetricHead">AQI</th><th>Динамика</th><th>Приоритет</th></tr></thead>
+              <tbody id="govTableBody"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Рекомендуемые меры</h3>
+            <div class="recommend-list" id="govActions"></div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <section class="screen" id="business">
+        <div class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Аналитика для предприятий</div>
+              <h2>Оценка экологических рисков для объектов и операционной деятельности предприятий.</h2>
+              <p>Бизнес-слой сфокусирован на практическом применении: риски для объектов, решения по безопасности сотрудников и периодическая аналитика.</p>
+            </div>
+            <div class="hero-side">
+              <div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
+              <div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="access-panel">
+          <div class="access-head">
+            <div>
+              <h3>Доступ для предприятий</h3>
+              <div class="sub">Этот контур предназначен для объектов, работодателей и корпоративных клиентов. Вход выполняется по ключу доступа или демонстрационному паролю.</div>
+            </div>
+            <div class="access-status access-locked" id="businessAccessStatus">Доступ закрыт</div>
+          </div>
+          <div class="access-grid">
+            <input id="businessAccessCode" class="selector" type="password" placeholder="Введите ключ доступа предприятия">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button id="businessUnlockBtn" class="ghost-btn">Открыть доступ</button>
+              <button id="businessLockBtn" class="ghost-btn">Закрыть</button>
+            </div>
+          </div>
+          <div class="role-chip-row">
+            <div class="chip">Контур: B2B</div>
+            <div class="chip">Назначение: предприятия / объекты</div>
+            <div class="chip">Режим: закрытый доступ</div>
+          </div>
+          <div class="access-note">Для демонстрации используется локальный ключ. При следующем этапе это переводится на backend-аутентификацию и отдельные учётные записи.</div>
+        </div>
+
+        <div id="businessProtected" class="access-protected">
+<div class="action-toolbar">
+          <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
+          <button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
+        </div>
+
+        
+        <div class="card" style="margin-bottom:18px;">
+          <h3>Управление данными пилота</h3>
+          <div class="sub">Этот блок нужен, чтобы показать не просто красивый интерфейс, а управляемый MVP, который уже можно использовать в тестовом контуре.</div>
+          <div class="grid grid-3">
+            <div class="rec-item"><strong>Импорт</strong><p>Загрузка JSON из внешнего контура без перестройки интерфейса.</p></div>
+            <div class="rec-item"><strong>Сброс</strong><p>Возврат к master-набору встроенных данных для стабильной демонстрации.</p></div>
+            <div class="rec-item"><strong>Экспорт</strong><p>Выгрузка активного слоя данных для повторной демонстрации или передачи в пилотный контур.</p></div>
+          </div>
+        </div>
+
+<div class="card" style="margin-bottom:18px;">
+          <h3>Готовность к подключению внешних данных</h3>
+          <div class="sub">Предприятия и город могут подключать собственные массивы показателей без изменения структуры интерфейса.</div>
+          <div class="grid grid-3">
+            <div class="rec-item"><strong>Входной формат</strong><p>JSON с городом, загрязнителями, районами и временными окнами.</p></div>
+            <div class="rec-item"><strong>Сценарий использования</strong><p>Пилотный контур может загружать ежедневные или часовые показатели и сразу строить сводки.</p></div>
+            <div class="rec-item"><strong>Коммерческий эффект</strong><p>Это позволяет перейти от красивого прототипа к платной аналитической системе без смены интерфейса.</p></div>
+          </div>
+        </div>
+
+        <div class="grid grid-main">
+          <div class="card table-card">
+            <h3>Обзор рисков по объектам</h3>
+            <table>
+              <thead><tr><th>Объект</th><th>район</th><th>Риск</th><th>Динамика</th><th>Статус</th></tr></thead>
+              <tbody id="facilityTableBody"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Практические выводы</h3>
+            <div class="recommend-list" id="businessOutputs"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <h3>Модель подключения</h3>
+          <div class="sub">Доходный контур встроен в продуктовую архитектуру и не выглядит как отдельный pitch.</div>
+          <div class="grid grid-3">
+            <div class="rec-item"><strong>Городская лицензия</strong><p>Лицензирование панели мониторинга города, районной аналитики и сценариев реагирования.</p></div>
+            <div class="rec-item"><strong>Подписка для предприятий</strong><p>Доступ к аналитике по объектам, оповещениям, отчетности и протоколам реагирования.</p></div>
+            <div class="rec-item"><strong>Премиум для жителей</strong><p>Расширенные уведомления, персональные рекомендации и история показателей по районам.</p></div>
+          </div>
+        </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="footer-note">Это front-end MVP, доведённый до рабочего интерактивного состояния в рамках одного HTML-файла: навигация, сценарии, карта, прогноз, таблицы и панели связаны одной моделью данных. Следующий этап — подключение реальных источников данных и упаковка в PWA без пересборки интерфейса.</div>
+    
+<section class="screen" id="pilot">
+  <div class="hero">
+    <div class="hero-grid">
       <div>
-        <div class="title">AirGuard Uzbekistan</div>
-        <div class="sub">Реальная рабочая программа на backend proxy. Данные идут через сервер, а не напрямую из браузера.</div>
+        <div class="eyebrow">Пилотный запуск</div>
+        <h2>Готовый контур для тестового внедрения и инвестиционного показа.</h2>
+        <p>Этот слой фиксирует финальную логику продукта: система уже выглядит как готовое решение, умеет принимать внешний набор данных и может быть показана как пилот для города, предприятия или акселерационной программы.</p>
       </div>
-      <div class="controls">
-        <input id="city" value="tashkent" placeholder="Город">
-        <button id="refresh">Обновить</button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="card hero">
-        <div class="k">Оперативный обзор</div>
-        <h1 id="heroTitle">Загрузка данных...</h1>
-        <div class="sub" id="heroText">Сервер получает WAQI и OpenWeather, объединяет данные и отдаёт их как единый ответ.</div>
-        <div class="metrics">
-          <div class="metric"><div class="k">AQI</div><div class="v" id="aqi">—</div></div>
-          <div class="metric"><div class="k">PM2.5</div><div class="vv" id="pm25">—</div></div>
-          <div class="metric"><div class="k">CO2</div><div class="vv" id="co2">—</div></div>
-          <div class="metric"><div class="k">Ветер</div><div class="vv" id="wind">—</div></div>
-        </div>
-      </div>
-
-      <div class="stack">
-        <div class="card">
-          <div class="k">Погода</div>
-          <div class="vv" id="temp">—</div>
-          <div class="sub" id="weatherText">—</div>
-        </div>
-        <div class="card">
-          <div class="k">Статус</div>
-          <div class="sub" id="statusText">Ожидание запроса...</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:18px">
-      <div class="k">Что это уже решает</div>
-      <div class="list">
-        <div class="item">Ключи WAQI и OpenWeather больше не живут в клиентском JS.</div>
-        <div class="item">Запросы идут через backend и не зависят от frontend CORS-поведения.</div>
-        <div class="item">Фронтенд получает единый ответ `/api/realtime/summary`.</div>
-        <div class="item">Это реальная база для следующего этапа: карта, auth, БД, уведомления.</div>
+      <div class="hero-side">
+        <div class="hero-stat"><strong>v16</strong><span>Текущая master-версия</span></div>
+        <div class="summary-box">Файл доведён до состояния, где продукт уже можно показывать не как концепт, а как управляемый MVP с понятным сценарием запуска, подключением реальных данных и коммерческими контурами.</div>
       </div>
     </div>
   </div>
+
+  <div class="grid grid-4">
+    <div class="card metric-card">
+      <div class="label">Статус</div>
+      <div class="value">Готов</div>
+      <div class="status-row"><span>Пилотный контур</span><span>Активен</span></div>
+    </div>
+    <div class="card metric-card">
+      <div class="label">Данные</div>
+      <div class="value">JSON</div>
+      <div class="status-row"><span>Встроенные / внешние</span><span>Подключаемые</span></div>
+    </div>
+    <div class="card metric-card">
+      <div class="label">Монетизация</div>
+      <div class="value">B2G</div>
+      <div class="status-row"><span>Город / министерство</span><span>Лицензия</span></div>
+    </div>
+    <div class="card metric-card">
+      <div class="label">Контур роста</div>
+      <div class="value">B2B</div>
+      <div class="status-row"><span>Предприятия</span><span>Подписка</span></div>
+    </div>
+  </div>
+
+  <div class="grid grid-2" style="margin-top:18px;">
+    <div class="card">
+      <h3>Почему система выглядит готовой</h3>
+      <div class="recommend-list">
+        <div class="rec-item"><strong>Связанный интерфейс</strong><p>Карта, прогноз, оповещения, районная аналитика, городская панель и корпоративный слой работают как единая система.</p></div>
+        <div class="rec-item"><strong>Управляемый слой данных</strong><p>Есть импорт, сброс и экспорт данных, что переводит MVP из статической демо-версии в рабочий пилотный контур.</p></div>
+        <div class="rec-item"><strong>Продуктовая логика</strong><p>Внутри продукта уже есть сценарий действий, сводки, отчёты, приоритетный район и слои для города и предприятий.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Почему это можно монетизировать</h3>
+      <div class="recommend-list">
+        <div class="rec-item"><strong>Городская лицензия</strong><p>Панель мониторинга города, районная аналитика и прогнозный слой могут продаваться как лицензируемая система для государственных структур.</p></div>
+        <div class="rec-item"><strong>Подписка для предприятий</strong><p>Компании получают аналитику по объектам, окна риска, оповещения и регулярную отчётность.</p></div>
+        <div class="rec-item"><strong>Премиум для пользователей</strong><p>Расширенные персональные уведомления и рекомендации могут быть выделены в отдельный потребительский слой.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>Сценарий запуска</h3>
+    <div class="sub">Путь от демонстрации к реальному пилоту без пересборки продукта.</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">Этап 1</div>
+        <div class="timeline-body">
+          <strong>Демонстрация master-версии</strong>
+          <p>Показать текущий продукт как готовую систему: карта, прогноз, отчёты, районы, городская и корпоративная панели.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">Этап 2</div>
+        <div class="timeline-body">
+          <strong>Подключение внешнего набора данных</strong>
+          <p>Загрузить JSON-слой пилотного партнёра и продемонстрировать, что интерфейс перестраивается без переработки логики.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">Этап 3</div>
+        <div class="timeline-body">
+          <strong>Пилотное внедрение</strong>
+          <p>Запустить систему как PWA или веб-панель в тестовом контуре города или предприятия, затем перейти к лицензии или подписке.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>Финальные действия</h3>
+    <div class="action-toolbar">
+      <button class="ghost-btn" data-action="city-summary">Сформировать финальную сводку</button>
+      <button class="ghost-btn" data-action="overview-report">Скачать демонстрационный отчёт</button>
+      <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
+    </div>
+  </div>
+</section>
+
+
+<section class="screen" id="user">
+  <div class="hero">
+    <h2>Для людей</h2>
+    <p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
+  </div>
+
+  
+  <div class="card" style="margin-top:18px;">
+    <h3>Профиль пользователя</h3>
+    <div class="sub">Выберите профиль, чтобы рекомендации адаптировались под человека, а не были одинаковыми для всех.</div>
+    <div class="action-toolbar" id="userProfileButtons">
+      <button class="ghost-btn active" data-user-profile="general">Обычный</button>
+      <button class="ghost-btn" data-user-profile="child">Ребёнок</button>
+      <button class="ghost-btn" data-user-profile="asthma">Чувствительный</button>
+      <button class="ghost-btn" data-user-profile="sport">Спорт</button>
+    </div>
+  </div>
+
+<div class="grid grid-2">
+    <div class="card">
+      <h3>Сейчас рядом с вами</h3>
+      <div class="value" style="font-size:42px;" id="userAQI">—</div>
+      <div id="userStatus">Загрузка данных...</div>
+    </div>
+
+    <div class="card">
+      <h3>Решение</h3>
+      <div class="summary-box" id="userDecision">Определяется...</div>
+    </div>
+  </div>
+
+  <div class="grid grid-3" style="margin-top:18px;">
+    <div class="card"><h3>Можно ли гулять</h3><div id="userWalk">—</div></div>
+    <div class="card"><h3>Можно ли спорт</h3><div id="userSport">—</div></div>
+    <div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
+  </div>
+
+  
+  <div class="card" style="margin-top:18px;">
+    <h3>Персональные уведомления</h3>
+    <div class="sub">Логика уведомлений строится на текущем AQI, погоде и выбранном профиле пользователя.</div>
+    <div class="recommend-list" id="userAlertsList"></div>
+  </div>
+
+<div class="card" style="margin-top:18px;">
+    <h3>Индекс дня</h3>
+    <div style="font-size:32px;" id="userIndex">—</div>
+  </div>
+</section>
+
+</main>
+  </div>
+
   <script>
-    async function loadSummary() {
-      const city = document.getElementById('city').value.trim() || 'tashkent';
-      const status = document.getElementById('statusText');
-      status.textContent = 'Загрузка...';
+    const appData = {
+      city: 'Ташкент',
+      windows: { live: 'Сейчас', '24h': '24 часа', '7d': '7 дней' },
+      pollutants: {
+        aqi: {
+          label: 'AQI',
+          unit: '',
+          cityValue: { live: 146, '24h': 141, '7d': 134 },
+          statusText: { live: 'Повышенный', '24h': 'Повышенный', '7d': 'Средний' },
+          summary: 'Air quality is currently elevated across central Ташкент. A stronger evening exposure window is likely due to traffic density and reduced dispersion.',
+          aiSummary: 'Система показывает усиление загрязнения в Юнусабаде, Чиланзаре и вдоль центральных транспортных коридоров. В ближайшие 18–24 часа ожидается окно среднего и высокого риска.',
+          forecast: [132, 146, 162, 151, 128, 96, 115],
+          confidence: 81,
+          narrative: 'A pronounced AQI spike is likely tomorrow during 07:00–11:00 and 18:00–22:00. Низкийer wind speed and urban transport concentration are the leading modeled drivers.',
+          govWindow: '72h',
+          actions: {
+            citizen: 'После 18:00 сократить пребывание на улице и избегать длительного воздействия рядом с загруженными дорогами.',
+            business: 'Скорректировать графики наружных работ и включить фильтрацию воздуха на объектах, где это возможно.',
+            government: 'Подготовить районные уведомления к следующему утреннему и вечернему окну повышенного риска.'
+          },
+          sourceClusters: [
+            ['Центральный транспортный коридор', 'Repeated AQI spikes during morning and evening traffic peaks. Intervention priority: high.'],
+            ['Восточный промышленный коридор', 'Persistent evening deterioration with medium correlation to industrial activity windows.'],
+            ['Зона строительной активности', 'Localized short-range spikes with district-level variability.']
+          ]
+        },
+        pm25: {
+          label: 'PM2.5',
+          unit: 'µg/m³',
+          cityValue: { live: 68, '24h': 64, '7d': 57 },
+          statusText: { live: 'Высокая нагрузка PM2.5', '24h': 'Повышенная нагрузка PM2.5', '7d': 'Умеренная нагрузка PM2.5' },
+          summary: 'Концентрация PM2.5 в центральных районах остаётся повышенной. Наиболее сильный рост ожидается вечером в период плотного трафика.',
+          aiSummary: 'Fine particulate concentration is intensifying in Юнусабад, Чиланзар, and high-density corridors. Exposure should be reduced for sensitive groups during peak windows.',
+          forecast: [58, 68, 74, 69, 55, 38, 47],
+          confidence: 84,
+          narrative: 'PM2.5 is expected to peak tomorrow morning and again after 18:00. Dense traffic and stable evening air mass are the main drivers.',
+          govWindow: '48h',
+          actions: {
+            citizen: 'Reduce outdoor workouts, use a mask in dense corridors, and keep windows closed during evening peaks.',
+            business: 'Reschedule outdoor work blocks and review indoor air filtration in affected facilities.',
+            government: 'Strengthen district monitoring and issue particulate-specific public guidance for sensitive groups.'
+          },
+          sourceClusters: [
+            ['Центральный транспортный коридор', 'Fine particulate build-up strongly correlates with traffic peaks and corridor density.'],
+            ['Зона строительной активности', 'Dust persistence and short-term PM2.5 spikes appear in localized intervals.'],
+            ['Коридор сезонной пыли', 'Background particulate load remains elevated under weak wind conditions.']
+          ]
+        },
+        co2: {
+          label: 'CO2',
+          unit: 'ppm',
+          cityValue: { live: 742, '24h': 731, '7d': 718 },
+          statusText: { live: 'Плотное городское накопление', '24h': 'Городское накопление', '7d': 'Стабильный городской фон' },
+          summary: 'CO2 accumulation is rising in dense urban zones and enclosed activity clusters, especially during high traffic and low circulation windows.',
+          aiSummary: 'CO2 levels indicate urban concentration pressure in dense districts and transport corridors. Indoor and roadside exposure should be monitored more closely.',
+          forecast: [706, 742, 769, 752, 726, 688, 701],
+          confidence: 78,
+          narrative: 'CO2 concentration is likely to intensify in commuting windows and densely built zones tomorrow, with slower release during the evening period.',
+          govWindow: '72h',
+          actions: {
+            citizen: 'Avoid prolonged roadside exposure during dense traffic periods and ventilate indoor spaces earlier in the day.',
+            business: 'Track facility-level indoor air quality and adjust ventilation schedules in high-density sites.',
+            government: 'Use urban mobility and dense-zone monitoring to isolate repeated accumulation windows.'
+          },
+          sourceClusters: [
+            ['Центральная транспортная сеть', 'Urban concentration strongly follows repeated commuting density patterns.'],
+            ['Зона плотной коммерческой застройки', 'CO2 accumulation is more persistent in dense mixed-use zones.'],
+            ['Промышленно-сервисный коридор', 'Localized build-up appears during synchronized operating windows.']
+          ]
+        }
+      },
+      districts: {
+        yunusabad: {
+          name: 'Юнусабад',
+          peak: '08:00 / 20:00',
+          coords: { x: 58, y: 42 },
+          aqi: { live: 152, '24h': 148, '7d': 139, trend: '+12%', series: [137, 145, 152, 150, 142, 126, 134], note: 'Плотность трафика и температурная инверсия могут усиливать AQI в этой зоне.' },
+          pm25: { live: 71, '24h': 69, '7d': 61, trend: '+14%', series: [61, 67, 71, 70, 62, 49, 56], note: 'Концентрация мелких частиц повышена из-за транспортных коридоров и вечернего застоя воздуха.' },
+          co2: { live: 760, '24h': 749, '7d': 732, trend: '+8%', series: [726, 742, 760, 754, 741, 718, 724], note: 'Накопление CO2 повышено в периоды плотного трафика и слабого рассеивания.' },
+          sources: { traffic: 41, construction: 17, industrial: 19, seasonal: 11, mixed: 12 }
+        },
+        chilanzar: {
+          name: 'Чиланзар',
+          peak: '07:30 / 19:30',
+          coords: { x: 33, y: 64 },
+          aqi: { live: 141, '24h': 137, '7d': 130, trend: '+9%', series: [126, 133, 141, 139, 131, 118, 123], note: 'AQI остаётся повышенным с заметным вечерним давлением и повторяющимися районными пиками.' },
+          pm25: { live: 62, '24h': 59, '7d': 54, trend: '+11%', series: [52, 57, 62, 60, 55, 43, 47], note: 'Нагрузка PM2.5 указывает на сочетание транспортного трафика и строительной пыли.' },
+          co2: { live: 735, '24h': 726, '7d': 714, trend: '+6%', series: [706, 718, 735, 731, 719, 698, 704], note: 'CO2 остаётся выше районного базового уровня в часы вечерней плотности.' },
+          sources: { traffic: 35, construction: 23, industrial: 16, seasonal: 12, mixed: 14 }
+        },
+        mirzo: {
+          name: 'Мирзо-Улугбек',
+          peak: '08:15 / 18:40',
+          coords: { x: 43, y: 28 },
+          aqi: { live: 122, '24h': 119, '7d': 113, trend: '+4%', series: [111, 117, 122, 119, 114, 103, 108], note: 'Условия остаются умеренными, но в утренние часы трафика фиксируются локальные пики AQI.' },
+          pm25: { live: 49, '24h': 47, '7d': 43, trend: '+5%', series: [41, 45, 49, 47, 44, 36, 39], note: 'Концентрация частиц умеренная, с краткими пиками в часы передвижения.' },
+          co2: { live: 701, '24h': 694, '7d': 686, trend: '+3%', series: [678, 688, 701, 697, 689, 671, 676], note: 'Концентрация CO2 сохраняется в пределах умеренного городского накопления.' },
+          sources: { traffic: 32, construction: 14, industrial: 12, seasonal: 21, mixed: 21 }
+        },
+        bektemir: {
+          name: 'Бектемир',
+          peak: '12:00 / 17:00',
+          coords: { x: 76, y: 22 },
+          aqi: { live: 89, '24h': 92, '7d': 95, trend: '-6%', series: [94, 91, 89, 90, 92, 97, 96], note: 'Более сильное рассеивание снижает AQI по сравнению с центральными зонами.' },
+          pm25: { live: 27, '24h': 29, '7d': 31, trend: '-7%', series: [31, 29, 27, 28, 30, 33, 32], note: 'PM2.5 остаётся относительно низким благодаря лучшему рассеиванию и меньшей плотности.' },
+          co2: { live: 648, '24h': 653, '7d': 661, trend: '-4%', series: [664, 657, 648, 651, 654, 666, 662], note: 'Накопление CO2 сравнительно ниже, чем в более плотных районах.' },
+          sources: { traffic: 22, construction: 9, industrial: 24, seasonal: 19, mixed: 26 }
+        }
+      },
+      facilities: [
+        { name: 'Логистический узел A', district: 'yunusabad' },
+        { name: 'Офисный кампус B', district: 'mirzo' },
+        { name: 'Промышленный объект C', district: 'bektemir' }
+      ]
+    };
+
+    const state = {
+      city: 'tashkent',
+      pollutant: 'aqi',
+      window: 'live',
+      liveSimulation: true,
+      selectedDistrict: 'yunusabad'
+    };
+
+    const navButtons = document.querySelectorAll('.nav button');
+    const screens = document.querySelectorAll('.screen');
+    const pollutantSelect = document.getElementById('pollutantSelect');
+    const windowSelect = document.getElementById('windowSelect');
+    const citySelect = document.getElementById('citySelect');
+    const simulateBtn = document.getElementById('simulateBtn');
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        screens.forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.screen).classList.add('active');
+      });
+    });
+
+    pollutantSelect.addEventListener('change', e => { state.pollutant = e.target.value; updateAll(); });
+    windowSelect.addEventListener('change', e => { state.window = e.target.value; updateAll(); });
+    citySelect.addEventListener('change', e => { state.city = e.target.value; updateAll(); });
+    simulateBtn.addEventListener('click', () => {
+      state.liveSimulation = !state.liveSimulation;
+      simulateBtn.classList.toggle('active', state.liveSimulation);
+      simulateBtn.textContent = `Имитация обновления: ${state.liveSimulation ? 'ВКЛ' : 'ВЫКЛ'}`;
+    });
+
+    document.querySelectorAll('.hotspot').forEach(h => {
+      h.addEventListener('click', () => {
+        state.selectedDistrict = h.dataset.district;
+        updateMapDetail();
+      buildMapQuickGrid();
+      });
+    });
+
+    function getCurrentPollutant() {
+      return appData.pollutants[state.pollutant];
+    }
+
+    function getDistrictMetric(key) {
+      return appData.districts[key][state.pollutant];
+    }
+
+    function getRiskClass(value) {
+      if (state.pollutant === 'co2') {
+        if (value < 680) return 'green';
+        if (value < 720) return 'yellow';
+        if (value < 750) return 'orange';
+        return 'red';
+      }
+      if (state.pollutant === 'pm25') {
+        if (value < 35) return 'green';
+        if (value < 55) return 'yellow';
+        if (value < 70) return 'orange';
+        return 'red';
+      }
+      if (value < 100) return 'green';
+      if (value < 130) return 'yellow';
+      if (value < 150) return 'orange';
+      return 'red';
+    }
+
+    function riskLabel(cls) {
+      return { green: 'Низкий', yellow: 'Средний', orange: 'Повышенный', red: 'Высокий' }[cls];
+    }
+
+    function formatValue(v) {
+      const p = getCurrentPollutant();
+      return p.unit ? `${v} ${p.unit}` : String(v);
+    }
+
+    function currentSortedDistricts() {
+      return Object.entries(appData.districts)
+        .map(([key, d]) => ({ key, name: d.name, peak: d.peak, ...d[state.pollutant] }))
+        .sort((a, b) => b[state.window] - a[state.window]);
+    }
+
+    function updateTopbar() {
+      const pollutant = getCurrentPollutant();
+      document.getElementById('contextChip').textContent = `${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}`;
+      document.getElementById('refreshChip').textContent = `Обновлено ${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}`;
+      document.getElementById('liveClock').textContent = `${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })} · ${appData.city}`;
+      document.getElementById('liveSummary').textContent = `Активный режим: ${pollutant.label}, окно ${appData.windows[state.window]}. Все ключевые экраны синхронизированы с этим сценарием.`;
+      document.getElementById('dataChip').textContent = `Источник данных: демонстрационный слой · ${pollutant.label}`;
+    }
+
+    function updateOverview() {
+      const pollutant = getCurrentPollutant();
+      const topрайон = currentSortedDistricts()[0];
+      const cityValue = pollutant.cityValue[state.window];
+      const statusClass = getRiskClass(cityValue);
+
+      document.getElementById('overviewTitle').textContent = `${pollutant.label} intelligence for ${appData.city}.`;
+      document.getElementById('overviewText').textContent = `Система отслеживает текущие значения ${pollutant.label}, прогнозирует краткосрочный риск и превращает экологические данные в прикладные рекомендации для жителей, предприятий и городских служб.`;
+      document.getElementById('heroMainValue').textContent = cityValue;
+      document.getElementById('heroMainLabel').textContent = `${pollutant.label} · ${appData.windows[state.window]}`;
+      document.getElementById('heroSummary').textContent = pollutant.summary;
+
+      document.getElementById('metric1Label').textContent = `Текущий ${pollutant.label}`;
+      document.getElementById('metric1Value').textContent = cityValue;
+      document.getElementById('metric1Status').innerHTML = `<i class="dot ${statusClass}"></i>${riskLabel(statusClass)}`;
+      document.getElementById('metric1Foot').textContent = `${topрайон.trend} к сопоставимому периоду`;
+
+      document.getElementById('metricPm').textContent = appData.pollutants.pm25.cityValue[state.window];
+      document.getElementById('metricCo2').textContent = appData.pollutants.co2.cityValue[state.window];
+      document.getElementById('pmFoot').textContent = appData.pollutants.pm25.statusText[state.window];
+      document.getElementById('co2Foot').textContent = appData.pollutants.co2.statusText[state.window];
+      document.getElementById('riskValue').textContent = riskLabel(getRiskClass(topрайон[state.window]));
+      document.getElementById('riskDot').innerHTML = `<i class="dot ${getRiskClass(topрайон[state.window])}"></i>${appData.windows[state.window]}`;
+      document.getElementById('confidenceFoot').textContent = `${pollutant.confidence}% достоверность модели`;
+      document.getElementById('aiSummary').textContent = pollutant.aiSummary;
+
+      const actions = pollutant.actions;
+      document.getElementById('actionList').innerHTML = `
+        <div class="rec-item"><strong>Для жителей</strong><p>${actions.citizen}</p></div>
+        <div class="rec-item"><strong>Для предприятий</strong><p>${actions.business}</p></div>
+        <div class="rec-item"><strong>Для городских служб</strong><p>${actions.government}</p></div>
+      `;
+
+      const days = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+      document.getElementById('forecastStrip').innerHTML = pollutant.forecast.map((v, i) => {
+        const cls = getRiskClass(v);
+        return `<div class="day-chip"><strong>${days[i]}</strong><div class="dot ${cls}"></div><span>${formatValue(v)}</span></div>`;
+      }).join('');
+    }
+
+    function updateHotspots() {
+      document.querySelectorAll('.hotspot').forEach(h => {
+        const districtKey = h.dataset.district;
+        const value = getDistrictMetric(districtKey)[state.window];
+        const cls = getRiskClass(value);
+        const colorMap = { green: 'var(--green)', yellow: 'var(--yellow)', orange: 'var(--orange)', red: 'var(--red)' };
+        h.style.background = colorMap[cls];
+        h.style.color = colorMap[cls];
+      });
+    }
+
+    function updateMapMeta() {
+      const pollutant = getCurrentPollutant();
+      const sorted = currentSortedDistricts();
+      const top = sorted[0];
+      document.getElementById('mapSideTitle').textContent = appData.city;
+      document.getElementById('mapSideMode').textContent = `${appData.windows[state.window]} · ${pollutant.label}`;
+      document.getElementById('mapSideSummary').textContent = `Сейчас район ${top.name} показывает максимальную нагрузку по показателю ${pollutant.label}. Этот район остаётся основным для контроля в выбранном временном окне.`;
+      document.getElementById('mapToolbarCity').textContent = `Город: ${appData.city}`;
+      document.getElementById('mapToolbarMode').textContent = `Режим: ${appData.windows[state.window]}`;
+      document.getElementById('mapToolbarPollutant').textContent = `Загрязнитель: ${pollutant.label}`;
+    }
+
+    function updateMapDetail() {
+      const district = appData.districts[state.selectedDistrict];
+      const metric = district[state.pollutant];
+      const cls = getRiskClass(metric[state.window]);
+      document.getElementById('mapDetail').innerHTML = `
+        <h4>Детализация района</h4>
+        <div class="detail-title">
+          <strong>${district.name}</strong>
+          <span>${appData.windows[state.window]} · ${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}</span>
+        </div>
+        <div class="detail-grid">
+          <div class="mini-metric"><div class="k">${getCurrentPollutant().label}</div><div class="v">${formatValue(metric[state.window])}</div></div>
+          <div class="mini-metric"><div class="k">PM2.5</div><div class="v">${appData.districts[state.selectedDistrict].pm25[state.window]} µg/m³</div></div>
+          <div class="mini-metric"><div class="k">CO2</div><div class="v">${appData.districts[state.selectedDistrict].co2[state.window]} ppm</div></div>
+          <div class="mini-metric"><div class="k">Динамика</div><div class="v">${metric.trend}</div></div>
+        </div>
+        <div class="summary-box"><span class="badge ${cls}" style="margin-bottom:10px; display:inline-block;">${riskLabel(cls)}</span><br>${metric.note}</div>
+        <div class="data-status-row">
+          <div class="data-pill" id="mapDataStatus">Режим: демонстрационный слой</div>
+          <div class="data-pill" id="mapWindowStatus">Окно: активно</div>
+        </div>
+        <div class="mini-action-row">
+          <button class="ghost-btn" data-action="priority-map">Открыть как приоритетный район</button>
+          <button class="ghost-btn" data-action="city-summary">Сформировать сводку по району</button>
+        </div>
+      `;
+    }
+
+    function updateForecast() {
+      const pollutant = getCurrentPollutant();
+      const maxVal = Math.max(...pollutant.forecast);
+      const maxIndex = pollutant.forecast.indexOf(maxVal);
+      const days = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+      document.getElementById('forecastConfidence').textContent = `${pollutant.confidence}%`;
+      document.getElementById('forecastNarrative').textContent = pollutant.narrative;
+      document.getElementById('riskBriefList').innerHTML = `
+        <div class="rec-item"><strong>Ожидаемый пик</strong><p>${days[maxIndex]} · ${formatValue(maxVal)} · ${riskLabel(getRiskClass(maxVal))} уровень риска.</p></div>
+        <div class="rec-item"><strong>Факторы</strong><p>${pollutant.narrative}</p></div>
+        <div class="rec-item"><strong>Рекомендация для жителей</strong><p>${pollutant.actions.citizen}</p></div>
+        <div class="rec-item"><strong>Рекомендация для города</strong><p>${pollutant.actions.government}</p></div>
+      `;
+      drawForecastChart();
+    }
+
+    function updateAlerts() {
+      const pollutant = getCurrentPollutant();
+      const sorted = currentSortedDistricts();
+      const top = sorted[0];
+      const second = sorted[1];
+      document.getElementById('alertRuleCount').textContent = state.pollutant === 'aqi' ? '12' : state.pollutant === 'pm25' ? '15' : '10';
+      document.getElementById('alertList').innerHTML = `
+        <div class="alert-item">
+          <div class="head"><strong>Городское оповещение · ${appData.city}</strong><span class="badge ${getRiskClass(top[state.window])}">${riskLabel(getRiskClass(top[state.window]))}</span></div>
+          <p>${pollutant.label} демонстрирует восходящую динамику. ${pollutant.actions.citizen}</p>
+        </div>
+        <div class="alert-item">
+          <div class="head"><strong>Оповещение по району · ${top.name}</strong><span class="badge ${getRiskClass(top[state.window])}">Приоритет</span></div>
+          <p>${top.name} shows ${formatValue(top[state.window])} with trend ${top.trend}. Требуется повышенное внимание.</p>
+        </div>
+        <div class="alert-item">
+          <div class="head"><strong>Превентивное оповещение · ${second.name}</strong><span class="badge ${getRiskClass(second[state.window])}">Наблюдение</span></div>
+          <p>${second.name} remains the next district to monitor as concentrations may intensify in the next comparable window.</p>
+        </div>
+      `;
+    }
+
+    function updateрайонs() {
+      const sorted = currentSortedDistricts();
+      const top = sorted[0];
+      document.getElementById('tableMetricHead').textContent = getCurrentPollutant().label;
+      document.getElementById('districtHeroSummary').textContent = `Сравнение по показателю ${getCurrentPollutant().label} показывает, что район ${top.name} сейчас является основным по уровню нагрузки в выбранном окне. Рейтинг и динамика обновляются автоматически.`;
+      document.getElementById('districtTableBody').innerHTML = sorted.map(row => {
+        const cls = getRiskClass(row[state.window]);
+        return `<tr><td>${row.name}</td><td>${formatValue(row[state.window])}</td><td>${row.trend}</td><td>${row.peak}</td><td>${riskLabel(cls)}</td></tr>`;
+      }).join('');
+
+      const dominant = appData.districts[top.key];
+      const mix = dominant.sources;
+      document.getElementById('selectedDistrictBox').innerHTML = `
+        <div class="head"><strong>${dominant.name}</strong><span class="badge ${getRiskClass(dominant[state.pollutant][state.window])}">${riskLabel(getRiskClass(dominant[state.pollutant][state.window]))}</span></div>
+        <p>${dominant[state.pollutant].note}</p>
+        <div class="tiny" style="margin-top:10px;">Оценка структуры источников · Транспорт ${mix.traffic}% · Строительство ${mix.construction}% · Промышленность ${mix.industrial}% · Сезонный фактор ${mix.seasonal}% · Смешанный фактор ${mix.mixed}%</div>
+      `;
+      drawрайонДинамикаChart(dominant[state.pollutant].series);
+    }
+
+    function updateSources() {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const dominant = appData.districts[top.key];
+      document.getElementById('sourceNarrative').textContent = `Структура источников по показателю ${pollutant.label} оценивается по изменениям концентрации в районах, повторяющимся временным окнам и городской активности. Сейчас основное внимание сосредоточено на районе ${dominant.name}.`;
+      document.getElementById('sourceList').innerHTML = pollutant.sourceClusters.map(item => `<div class="source-item"><strong>${item[0]}</strong><p>${item[1]}</p></div>`).join('');
+      const mix = dominant.sources;
+      document.getElementById('sourceMixList').innerHTML = `
+        <div class="rec-item"><strong>Транспорт</strong><p>Estimated contributor share: ${mix.traffic}%</p></div>
+        <div class="rec-item"><strong>Строительство</strong><p>Estimated contributor share: ${mix.construction}%</p></div>
+        <div class="rec-item"><strong>Промышленность activity</strong><p>Estimated contributor share: ${mix.industrial}%</p></div>
+        <div class="rec-item"><strong>Сезонный фактор / mixed</strong><p>Estimated contributor share: ${mix.seasonal + mix.mixed}%</p></div>
+      `;
+    }
+
+    
+function updateGov() {
+      const pollutant = getCurrentPollutant();
+      const sorted = currentSortedDistricts();
+      const top = sorted[0];
+      const elevatedCount = sorted.filter(row => ['orange','red'].includes(getRiskClass(row[state.window]))).length;
+      document.getElementById('govWindow').textContent = pollutant.govWindow;
+      document.getElementById('govNarrative').textContent = `Городской контур объединяет ${pollutant.label}, рейтинг районов и приоритетные меры в одну операционную панель краткосрочного реагирования.`;
+      document.getElementById('govMetricHead').textContent = pollutant.label;
+      document.getElementById('govKpiGrid').innerHTML = `
+        <div class="kpi"><div class="kicker">Городской ${pollutant.label}</div><div class="big">${formatValue(pollutant.cityValue[state.window])}</div><div class="foot">Текущее значение в выбранном окне</div></div>
+        <div class="kpi"><div class="kicker">Критические районы</div><div class="big">${elevatedCount}</div><div class="foot">Выше порога повышенного риска</div></div>
+        <div class="kpi"><div class="kicker">Приоритетный район</div><div class="big">${top.name}</div><div class="foot">${formatValue(top[state.window])}</div></div>
+        <div class="kpi"><div class="kicker">Статус вмешательства</div><div class="big">${riskLabel(getRiskClass(top[state.window]))}</div><div class="foot">Рекомендуется реагирование</div></div>
+      `;
+      document.getElementById('govTableBody').innerHTML = sorted.slice(0, 4).map(row => `<tr><td>${row.name}</td><td>${formatValue(row[state.window])}</td><td>${row.trend}</td><td>${riskLabel(getRiskClass(row[state.window]))}</td></tr>`).join('');
+      document.getElementById('govActions').innerHTML = `
+        <div class="rec-item"><strong>Городская коммуникация</strong><p>${pollutant.actions.government}</p></div>
+        <div class="rec-item"><strong>Усиление наблюдения</strong><p>Сфокусировать наблюдение на ${top.name} и следующем районе по рейтингу при текущем сценарии ${pollutant.label}.</p></div>
+        <div class="rec-item"><strong>Районный приоритет</strong><p>Использовать сравнительную таблицу для приоритизации проверок, уведомлений и распределения ресурсов.</p></div>
+      `;
+    }
+
+    
+function updateBusiness() {
+      const pollutant = getCurrentPollutant();
+      document.getElementById('businessNarrative').textContent = `Бизнес-контур переводит ${pollutant.label} в прикладные решения для объектов, безопасности персонала и регулярной отчётности.`;
+      document.getElementById('facilityTableBody').innerHTML = appData.facilities.map(f => {
+        const d = appData.districts[f.district][state.pollutant];
+        const cls = getRiskClass(d[state.window]);
+        const statusMap = { green: 'Стабильно', yellow: 'Наблюдение', orange: 'Нужно реагировать', red: 'Приоритетное действие' };
+        return `<tr><td>${f.name}</td><td>${appData.districts[f.district].name}</td><td>${riskLabel(cls)}</td><td>${d.trend}</td><td>${statusMap[cls]}</td></tr>`;
+      }).join('');
+      document.getElementById('businessOutputs').innerHTML = `
+        <div class="rec-item"><strong>Операционные уведомления</strong><p>Сообщать менеджерам, когда риск по ${pollutant.label} превышает допустимый порог для объекта.</p></div>
+        <div class="rec-item"><strong>Безопасность персонала</strong><p>${pollutant.actions.business}</p></div>
+        <div class="rec-item"><strong>Ежемесячная отчётность</strong><p>Формировать районные сводки по нагрузке и краткие отчёты по рискам для объектов.</p></div>
+        <div class="rec-item"><strong>Сценарное планирование</strong><p>Сдвигать наружные работы и чувствительные операции вне пиковых окон воздействия.</p></div>
+      `;
+    }
+
+    function drawLineChart(canvasId, values, color, formatter) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const w = rect.width;
+      const h = rect.height;
+      const padding = { top: 26, right: 24, bottom: 42, left: 36 };
+      const chartW = w - padding.left - padding.right;
+      const chartH = h - padding.top - padding.bottom;
+      const min = Math.min(...values) * 0.92;
+      const max = Math.max(...values) * 1.06;
+
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i <= 4; i++) {
+        const y = padding.top + (chartH / 4) * i;
+        ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(w - padding.right, y);
+        ctx.stroke();
+      }
+
+      const points = values.map((v, i) => ({
+        x: padding.left + (chartW / (values.length - 1)) * i,
+        y: padding.top + (1 - (v - min) / (max - min || 1)) * chartH,
+        value: v,
+        label: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'][i]
+      }));
+
+      const gradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+      gradient.addColorStop(0, 'rgba(97,225,255,0.25)');
+      gradient.addColorStop(1, 'rgba(97,225,255,0)');
+
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        const cx = (prev.x + curr.x) / 2;
+        ctx.bezierCurveTo(cx, prev.y, cx, curr.y, curr.x, curr.y);
+      }
+      ctx.lineTo(points[points.length - 1].x, padding.top + chartH);
+      ctx.lineTo(points[0].x, padding.top + chartH);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const prev = points[i - 1];
+        const curr = points[i];
+        const cx = (prev.x + curr.x) / 2;
+        ctx.bezierCurveTo(cx, prev.y, cx, curr.y, curr.x, curr.y);
+      }
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      points.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#07111b';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        ctx.fillStyle = '#9db0c7';
+        ctx.font = '12px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.label, p.x, h - 16);
+
+        ctx.fillStyle = '#eef5ff';
+        ctx.font = '11px Inter, sans-serif';
+        ctx.fillText(formatter(p.value), p.x, p.y - 12);
+      });
+    }
+
+    function drawForecastChart() {
+      drawLineChart('forecastChart', getCurrentPollutant().forecast, '#61e1ff', v => String(v));
+    }
+
+    function drawрайонДинамикаChart(series) {
+      drawLineChart('districtTrendChart', series, '#8b87ff', v => String(v));
+    }
+
+    function tickСейчас() {
+      if (!state.liveSimulation) {
+        updateTopbar();
+        return;
+      }
+      const p = appData.pollutants[state.pollutant];
+      const delta = (Math.random() > 0.5 ? 1 : -1) * (state.pollutant === 'co2' ? Math.floor(Math.random() * 4) : 1);
+      p.cityValue.live = Math.max(1, p.cityValue.live + delta);
+      Object.keys(appData.districts).forEach(key => {
+        const metric = appData.districts[key][state.pollutant];
+        const move = (Math.random() > 0.55 ? 1 : -1) * (state.pollutant === 'co2' ? Math.floor(Math.random() * 3) : 1);
+        metric.live = Math.max(1, metric.live + move);
+        metric.series[metric.series.length - 1] = metric.live;
+      });
+  
+
+
+
+
+
+    const DEFAULT_WAQI_TOKEN = "e39aa4917168a870cfbf2592cac90cd50097a16e";
+    const DEFAULT_OWM_KEY = "6a450f4c02e24a6a7c707cdd4e72a9c9";
+
+    async function fetchOpenWeatherAndApply() {
+      const keyInput = document.getElementById('owmKeyInput');
+      const cityInput = document.getElementById('owmCityInput');
+      const key = (keyInput?.value || '').trim();
+      const city = (cityInput?.value || 'Tashkent').trim();
+      const statusPill = document.getElementById('owmStatusPill');
+      const updatedPill = document.getElementById('owmUpdatedPill');
+
+      if (!key) {
+        if (statusPill) {
+          statusPill.textContent = 'OpenWeather: key не указан';
+          statusPill.className = 'data-pill pill-warn';
+        }
+        return;
+      }
+
       try {
-        const res = await fetch(`/api/realtime/summary?city=${encodeURIComponent(city)}`);
+        if (statusPill) {
+          statusPill.textContent = 'OpenWeather: загрузка...';
+          statusPill.className = 'data-pill pill-warn';
+        }
+
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${encodeURIComponent(key)}&units=metric`;
+        const res = await fetch(url);
         const data = await res.json();
-        if (!res.ok) throw new Error(data.detail || 'API error');
-        document.getElementById('heroTitle').textContent = `Оперативная аналитика по ${data.city.display_name}.`;
-        document.getElementById('heroText').textContent = `WAQI: индекс ${data.air.idx ?? '—'}, время ${data.air.time ?? '—'}. OpenWeather: ${data.weather.description}.`;
-        document.getElementById('aqi').textContent = data.air.aqi;
-        document.getElementById('pm25').textContent = `${data.air.pm25} µg/m³`;
-        document.getElementById('co2').textContent = `${data.air.co2} ppm`;
-        document.getElementById('wind').textContent = `${data.weather.wind_mps} м/с`;
-        document.getElementById('temp').textContent = `${data.weather.temperature_c}°C`;
-        document.getElementById('weatherText').textContent = `Влажность ${data.weather.humidity}%, ${data.weather.description}`;
-        status.innerHTML = `<span class="ok">Онлайн.</span> Сервер успешно объединил WAQI и OpenWeather.`;
+        if (!data || !data.main) throw new Error('OpenWeather returned no usable data');
+
+        const temp = Math.round(Number(data.main.temp || 0));
+        const humidity = Math.round(Number(data.main.humidity || 0));
+        const wind = Math.round(Number((data.wind && data.wind.speed) || 0));
+        const desc = (data.weather && data.weather[0] && data.weather[0].description) ? data.weather[0].description : 'без описания';
+
+        document.getElementById('weatherSummaryBox').textContent = `Погодный слой активен: ${desc}. Скорость ветра ${wind} м/с, температура ${temp}°C, влажность ${humidity}%. Эти параметры усиливают сценарий прогноза и поясняют динамику загрязнения.`;
+        document.getElementById('weatherWindValue').textContent = `${wind} м/с`;
+        document.getElementById('weatherWindText').textContent = wind <= 2 ? 'Слабый ветер — риск накопления загрязнения выше' : 'Ветер помогает рассеиванию загрязнения';
+        document.getElementById('weatherTempValue').textContent = `${temp}°C`;
+        document.getElementById('weatherHumidityText').textContent = `Влажность: ${humidity}%`;
+
+        // enrich textual narratives
+        if (appData.pollutants[state.pollutant]) {
+          appData.pollutants[state.pollutant].summary = `Городской сценарий учитывает погодный контекст: ${desc}, ветер ${wind} м/с, температура ${temp}°C. Это помогает уточнять риск накопления загрязнения и окна воздействия.`;
+        }
+
+        localStorage.setItem('airguardOwmKey', key);
+        localStorage.setItem('airguardOwmCity', city);
+
+        if (statusPill) {
+          statusPill.textContent = 'OpenWeather: подключен';
+          statusPill.className = 'data-pill pill-ok';
+        }
+        if (updatedPill) {
+          updatedPill.textContent = `Последнее обновление: ${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}`;
+        }
+
+    
+    const ACCESS_KEYS = {
+      gov: 'GOV-2030-UZ',
+      business: 'BIZ-AIR-2026'
+    };
+
+    function setProtectedState(type, isOpen) {
+      const protectedBlock = document.getElementById(type + 'Protected');
+      const statusEl = document.getElementById(type + 'AccessStatus');
+      if (protectedBlock) protectedBlock.classList.toggle('open', isOpen);
+      if (statusEl) {
+        statusEl.textContent = isOpen ? 'Доступ открыт' : 'Доступ закрыт';
+        statusEl.classList.toggle('access-open', isOpen);
+        statusEl.classList.toggle('access-locked', !isOpen);
+      }
+      localStorage.setItem('airguard_access_' + type, isOpen ? '1' : '0');
+      updateAccessScopeChip();
+    }
+
+    function updateAccessScopeChip() {
+      const chip = document.getElementById('accessScopeChip');
+      if (!chip) return;
+      const scopes = ['общий'];
+      if (localStorage.getItem('airguard_access_gov') === '1') scopes.push('B2G');
+      if (localStorage.getItem('airguard_access_business') === '1') scopes.push('B2B');
+      chip.textContent = 'Доступ: ' + scopes.join(' · ');
+    }
+
+    function bindProtectedAccess() {
+      const configs = [
+        { type: 'gov', input: 'govAccessCode', unlock: 'govUnlockBtn', lock: 'govLockBtn' },
+        { type: 'business', input: 'businessAccessCode', unlock: 'businessUnlockBtn', lock: 'businessLockBtn' }
+      ];
+
+      configs.forEach(cfg => {
+        const input = document.getElementById(cfg.input);
+        const unlockBtn = document.getElementById(cfg.unlock);
+        const lockBtn = document.getElementById(cfg.lock);
+        if (!input || !unlockBtn || !lockBtn) return;
+
+        const stored = localStorage.getItem('airguard_access_' + cfg.type) === '1';
+        setProtectedState(cfg.type, stored);
+
+        unlockBtn.addEventListener('click', () => {
+          const value = (input.value || '').trim();
+          if (value === ACCESS_KEYS[cfg.type]) {
+            setProtectedState(cfg.type, true);
+            input.value = '';
+          } else {
+            input.value = '';
+            input.placeholder = 'Неверный ключ доступа';
+          }
+        });
+
+        lockBtn.addEventListener('click', () => {
+          setProtectedState(cfg.type, false);
+        });
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') unlockBtn.click();
+        });
+      });
+
+      updateAccessScopeChip();
+    }
+
+
+    bindProtectedAccess();
+    updateAll();
       } catch (e) {
-        status.innerHTML = `<span class="bad">Ошибка.</span> ${e.message}`;
+        if (statusPill) {
+          statusPill.textContent = 'OpenWeather: ошибка подключения';
+          statusPill.className = 'data-pill pill-bad';
+        }
       }
     }
-    document.getElementById('refresh').addEventListener('click', loadSummary);
-    loadSummary();
+
+    function bindOpenWeatherConnector() {
+      const keyInput = document.getElementById('owmKeyInput');
+      const cityInput = document.getElementById('owmCityInput');
+      const connectBtn = document.getElementById('connectOwmBtn');
+      const clearBtn = document.getElementById('clearOwmBtn');
+      if (!keyInput || !cityInput || !connectBtn || !clearBtn) return;
+
+      const savedKey = localStorage.getItem('airguardOwmKey') || DEFAULT_OWM_KEY;
+      const savedCity = localStorage.getItem('airguardOwmCity') || 'Tashkent';
+      keyInput.value = savedKey;
+      cityInput.value = savedCity;
+
+      connectBtn.addEventListener('click', fetchOpenWeatherAndApply);
+      clearBtn.addEventListener('click', () => {
+        localStorage.removeItem('airguardOwmKey');
+        localStorage.removeItem('airguardOwmCity');
+        keyInput.value = '';
+        const pill = document.getElementById('owmStatusPill');
+        const upd = document.getElementById('owmUpdatedPill');
+        if (pill) { pill.textContent = 'OpenWeather: не подключен'; pill.className = 'data-pill'; }
+        if (upd) upd.textContent = 'Последнее обновление: —';
+        document.getElementById('weatherSummaryBox').textContent = 'Погодный слой не подключен. После подключения OpenWeather здесь появятся ветер, температура и влажность.';
+        document.getElementById('weatherWindValue').textContent = '—';
+        document.getElementById('weatherWindText').textContent = 'Нет данных';
+        document.getElementById('weatherTempValue').textContent = '—';
+        document.getElementById('weatherHumidityText').textContent = 'Нет данных';
+      });
+    }
+
+    async function fetchWAQIAndApply() {
+      const tokenInput = document.getElementById('waqiTokenInput');
+      const cityInput = document.getElementById('waqiCityInput');
+      const token = (tokenInput?.value || '').trim();
+      const city = (cityInput?.value || 'tashkent').trim().toLowerCase();
+      const statusPill = document.getElementById('waqiStatusPill');
+      const updatedPill = document.getElementById('waqiUpdatedPill');
+
+      if (!token) {
+        if (statusPill) {
+          statusPill.textContent = 'WAQI: token не указан';
+          statusPill.className = 'data-pill pill-warn';
+        }
+        return;
+      }
+
+      try {
+        if (statusPill) {
+          statusPill.textContent = 'WAQI: загрузка...';
+          statusPill.className = 'data-pill pill-warn';
+        }
+
+        const url = `https://api.waqi.info/feed/${encodeURIComponent(city)}/?token=${encodeURIComponent(token)}`;
+        const res = await fetch(url);
+        const payload = await res.json();
+
+        if (!payload || payload.status !== 'ok' || !payload.data) {
+          throw new Error('WAQI returned no usable data');
+        }
+
+        const data = payload.data || {};
+        const iaqi = data.iaqi || {};
+        const cityDisplay = (data.city && data.city.name) ? data.city.name : 'Ташкент';
+        const aqi = Number(data.aqi || 0) || 0;
+        const pm25 = Number((iaqi.pm25 && iaqi.pm25.v) || Math.max(10, Math.round(aqi * 0.45))) || Math.max(10, Math.round(aqi * 0.45));
+        const co2 = Number((iaqi.co2 && iaqi.co2.v) || (650 + Math.round(aqi * 0.7))) || (650 + Math.round(aqi * 0.7));
+
+        appData.city = cityDisplay;
+
+        appData.pollutants.aqi.cityValue.live = aqi;
+        appData.pollutants.aqi.cityValue['24h'] = Math.max(0, Math.round(aqi * 0.97));
+        appData.pollutants.aqi.cityValue['7d'] = Math.max(0, Math.round(aqi * 0.91));
+
+        appData.pollutants.pm25.cityValue.live = pm25;
+        appData.pollutants.pm25.cityValue['24h'] = Math.max(0, Math.round(pm25 * 0.95));
+        appData.pollutants.pm25.cityValue['7d'] = Math.max(0, Math.round(pm25 * 0.87));
+
+        appData.pollutants.co2.cityValue.live = co2;
+        appData.pollutants.co2.cityValue['24h'] = Math.max(0, Math.round(co2 * 0.98));
+        appData.pollutants.co2.cityValue['7d'] = Math.max(0, Math.round(co2 * 0.95));
+
+        // Controlled district modeling from real city-level data
+        const factors = {
+          yunusabad: 1.06,
+          chilanzar: 0.98,
+          mirzo: 0.86,
+          bektemir: 0.72,
+        };
+
+        Object.keys(factors).forEach(key => {
+          const k = factors[key];
+          appData.districts[key].aqi.live = Math.round(aqi * k);
+          appData.districts[key].aqi['24h'] = Math.round(aqi * k * 0.96);
+          appData.districts[key].aqi['7d'] = Math.round(aqi * k * 0.89);
+
+          appData.districts[key].pm25.live = Math.round(pm25 * k);
+          appData.districts[key].pm25['24h'] = Math.round(pm25 * k * 0.95);
+          appData.districts[key].pm25['7d'] = Math.round(pm25 * k * 0.87);
+
+          appData.districts[key].co2.live = Math.round(co2 * (0.95 + (k - 0.72) * 0.4));
+          appData.districts[key].co2['24h'] = Math.round(appData.districts[key].co2.live * 0.98);
+          appData.districts[key].co2['7d'] = Math.round(appData.districts[key].co2.live * 0.95);
+        });
+
+        localStorage.setItem('airguardWaqiToken', token);
+        localStorage.setItem('airguardWaqiCity', city);
+
+        if (statusPill) {
+          statusPill.textContent = 'WAQI: подключен';
+          statusPill.className = 'data-pill pill-ok';
+        }
+        if (updatedPill) {
+          updatedPill.textContent = `Последнее обновление: ${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}`;
+        }
+
+        const dataChip = document.getElementById('dataChip');
+        if (dataChip) dataChip.textContent = 'Источник данных: WAQI + моделирование районов';
+        const dataMode = document.getElementById('dataModeText');
+        const dataUpdated = document.getElementById('dataUpdatedText');
+        if (dataMode) dataMode.textContent = 'Активен реальный городской сигнал WAQI с расчётным распределением по районам.';
+        if (dataUpdated) dataUpdated.textContent = 'Городской показатель загружается из WAQI, после чего система строит районное распределение для демонстрации пилота.';
+        updateValidationStatus(true);
+        updateAll();
+      } catch (e) {
+        if (statusPill) {
+          statusPill.textContent = 'WAQI: ошибка подключения';
+          statusPill.className = 'data-pill pill-bad';
+        }
+      }
+    }
+
+    function bindWAQIConnector() {
+      const tokenInput = document.getElementById('waqiTokenInput');
+      const cityInput = document.getElementById('waqiCityInput');
+      const connectBtn = document.getElementById('connectWaqiBtn');
+      const clearBtn = document.getElementById('clearWaqiBtn');
+      if (!tokenInput || !cityInput || !connectBtn || !clearBtn) return;
+
+      const savedToken = localStorage.getItem('airguardWaqiToken') || DEFAULT_WAQI_TOKEN;
+      const savedCity = localStorage.getItem('airguardWaqiCity') || 'tashkent';
+      tokenInput.value = savedToken;
+      cityInput.value = savedCity;
+
+      connectBtn.addEventListener('click', fetchWAQIAndApply);
+      clearBtn.addEventListener('click', () => {
+        localStorage.removeItem('airguardWaqiToken');
+        localStorage.removeItem('airguardWaqiCity');
+        tokenInput.value = '';
+        const pill = document.getElementById('waqiStatusPill');
+        const upd = document.getElementById('waqiUpdatedPill');
+        if (pill) { pill.textContent = 'WAQI: не подключен'; pill.className = 'data-pill'; }
+        if (upd) upd.textContent = 'Последнее обновление: —';
+      });
+    }
+
+    const MASTER_PAYLOAD = JSON.parse(JSON.stringify({
+      city: appData.city,
+      pollutants: appData.pollutants,
+      districts: appData.districts
+    }));
+
+    function updateValidationStatus(external = false) {
+      const sourceText = external ? 'Загружен внешний JSON-слой.' : 'Демонстрационный встроенный набор данных.';
+      const structureText = external
+        ? 'Внешний слой применён и синхронизирован с картой, прогнозом, районами и панелями.'
+        : 'Структура данных согласована с картой, прогнозом, районами и панелями.';
+      const sourceEl = document.getElementById('validationSource');
+      const structEl = document.getElementById('validationStructure');
+      const consoleSource = document.getElementById('consoleSource');
+      const consoleMode = document.getElementById('consoleMode');
+      const consoleState = document.getElementById('consoleState');
+      if (sourceEl) sourceEl.textContent = sourceText;
+      if (structEl) structEl.textContent = structureText;
+      if (consoleSource) consoleSource.textContent = external ? 'JSON' : 'Demo';
+      if (consoleMode) consoleMode.textContent = external ? 'External' : 'Master';
+      if (consoleState) consoleState.textContent = 'Готов';
+    }
+
+    function exportCurrentData() {
+      const payload = {
+        city: appData.city,
+        pollutants: appData.pollutants,
+        districts: appData.districts
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'airguard_export_ru.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function resetToMasterData() {
+      appData.city = MASTER_PAYLOAD.city;
+      appData.pollutants = JSON.parse(JSON.stringify(MASTER_PAYLOAD.pollutants));
+      appData.districts = JSON.parse(JSON.stringify(MASTER_PAYLOAD.districts));
+      localStorage.removeItem('airguardExternalData');
+      document.getElementById('dataChip').textContent = 'Источник данных: демонстрационный слой';
+      const dataMode = document.getElementById('dataModeText');
+      const dataUpdated = document.getElementById('dataUpdatedText');
+      if (dataMode) dataMode.textContent = 'Демонстрационный слой активен. Интерфейс работает полностью и готов к подключению внешних данных.';
+      if (dataUpdated) dataUpdated.textContent = 'Используется встроенный набор данных, синхронизированный со всеми экранами.';
+      updateValidationStatus(false);
+      updateAll();
+    }
+
+    function applyExternalData(payload) {
+      if (!payload || typeof payload !== 'object') return false;
+
+      if (payload.city && typeof payload.city === 'string') {
+        appData.city = payload.city;
+      }
+
+      if (payload.pollutants && typeof payload.pollutants === 'object') {
+        Object.keys(payload.pollutants).forEach(key => {
+          if (appData.pollutants[key]) {
+            appData.pollutants[key] = { ...appData.pollutants[key], ...payload.pollutants[key] };
+          }
+        });
+      }
+
+      if (payload.districts && typeof payload.districts === 'object') {
+        Object.keys(payload.districts).forEach(key => {
+          if (appData.districts[key]) {
+            appData.districts[key] = { ...appData.districts[key], ...payload.districts[key] };
+          }
+        });
+      }
+
+      localStorage.setItem('airguardExternalData', JSON.stringify(payload));
+      document.getElementById('dataChip').textContent = 'Источник данных: внешний JSON';
+      updateValidationStatus(true);
+      const dataMode = document.getElementById('dataModeText');
+      const dataUpdated = document.getElementById('dataUpdatedText');
+      if (dataMode) dataMode.textContent = 'Активен внешний JSON-слой. Интерфейс использует загруженные значения без изменения логики экранов.';
+      if (dataUpdated) dataUpdated.textContent = 'Данные были загружены вручную и сразу применены ко всем экранам.';
+      bindJsonLoader();
+    bindWAQIConnector();
+    bindOpenWeatherConnector();
+    loadStoredExternalData();
+    updateValidationStatus(localStorage.getItem('airguardExternalData') !== null || localStorage.getItem('airguardWaqiToken') !== null || localStorage.getItem('airguardOwmKey') !== null);
+    updateAll();
+    if (DEFAULT_WAQI_TOKEN || localStorage.getItem('airguardWaqiToken')) fetchWAQIAndApply();
+    if (DEFAULT_OWM_KEY || localStorage.getItem('airguardOwmKey')) fetchOpenWeatherAndApply();
+      return true;
+    }
+
+    function loadStoredExternalData() {
+      try {
+        const raw = localStorage.getItem('airguardExternalData');
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        applyExternalData(parsed);
+      } catch (e) {}
+    }
+
+    function bindJsonLoader() {
+      const btn = document.getElementById('loadJsonBtn');
+      const input = document.getElementById('jsonFileInput');
+      const resetBtn = document.getElementById('resetDataBtn');
+      const exportBtn = document.getElementById('exportDataBtn');
+      if (!btn || !input) return;
+
+      btn.addEventListener('click', () => input.click());
+      if (resetBtn) resetBtn.addEventListener('click', resetToMasterData);
+      if (exportBtn) exportBtn.addEventListener('click', exportCurrentData);
+      input.addEventListener('change', async (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        try {
+          const text = await file.text();
+          const parsed = JSON.parse(text);
+          const ok = applyExternalData(parsed);
+          if (!ok) alert('Файл не удалось применить.');
+        } catch (e) {
+          alert('JSON-файл поврежден или имеет неверную структуру.');
+        } finally {
+          input.value = '';
+        }
+      });
+    }
+
+    function updateDataLayerStatus() {
+      const sourceLabel = document.getElementById('dataChip')?.textContent || 'Источник данных: демонстрационный слой';
+      const mapData = document.getElementById('mapDataStatus');
+      const mapWindow = document.getElementById('mapWindowStatus');
+      if (mapData) mapData.textContent = sourceLabel.replace('Источник данных: ', 'Режим: ');
+      if (mapWindow) mapWindow.textContent = `Окно: ${appData.windows[state.window]} · ${getCurrentPollutant().label}`;
+    }
+
+
+    function buildMapQuickGrid() {
+      const sorted = currentSortedDistricts();
+      document.getElementById('mapQuickGrid').innerHTML = sorted.map(row => {
+        const cls = getRiskClass(row[state.window]);
+        const active = row.key === state.selectedDistrict ? 'active' : '';
+        return `<div class="map-quick-card ${active}" data-map-select="${row.key}">
+          <div class="name">${row.name}</div>
+          <div class="meta">${getCurrentPollutant().label}: ${formatValue(row[state.window])}<br>Динамика: ${row.trend}<br>Пиковое окно: ${row.peak}</div>
+          <div style="margin-top:10px;"><span class="badge ${cls}">${riskLabel(cls)}</span></div>
+        </div>`;
+      }).join('');
+    }
+
+    function buildDistrictScenarioGrid() {
+      const sorted = currentSortedDistricts().slice(0, 3);
+      document.getElementById('districtScenarioGrid').innerHTML = sorted.map((row, index) => {
+        const cls = getRiskClass(row[state.window]);
+        const priority = index === 0 ? 'Основной контроль' : index === 1 ? 'Следующее наблюдение' : 'Фоновый контроль';
+        return `<div class="scenario-card">
+          <div class="top">
+            <div class="title">${row.name}</div>
+            <span class="badge ${cls}">${priority}</span>
+          </div>
+          <div class="metric">${formatValue(row[state.window])}</div>
+          <div class="desc">Динамика: ${row.trend}. Пиковое окно: ${row.peak}. Район включён в сценарий сравнения по текущему загрязнителю.</div>
+        </div>`;
+      }).join('');
+    }
+
+    function buildScenarioTimeline() {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      document.getElementById('scenarioTimeline').innerHTML = `
+        <div class="timeline-item">
+          <div class="timeline-time">06:00–09:00</div>
+          <div class="timeline-body">
+            <strong>Утреннее окно контроля</strong>
+            <p>Система фиксирует стартовую динамику ${pollutant.label} и сравнивает районы. Приоритет — ${top.name} и ${second.name}.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:00–15:00</div>
+          <div class="timeline-body">
+            <strong>Промежуточная сверка</strong>
+            <p>Обновляется карта, оценивается устойчивость концентрации и уточняется необходимость районных уведомлений.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:00–22:00</div>
+          <div class="timeline-body">
+            <strong>Пиковый период воздействия</strong>
+            <p>При сохранении роста ${pollutant.label} активируется усиленный режим оповещений и повышенный фокус на транспортные коридоры.</p>
+          </div>
+        </div>
+      `;
+
+      const topDistrict = appData.districts[top.key];
+      document.getElementById('focusDistrictName').textContent = topDistrict.name;
+      document.getElementById('focusDistrictValue').textContent = formatValue(top[state.window]);
+      document.getElementById('focusDistrictPeak').textContent = topDistrict.peak;
+      document.getElementById('priorityDistrictNarrative').textContent = `${topDistrict.name} сейчас остаётся основным районом внимания. По активному сценарию ${pollutant.label} здесь требуется точечный мониторинг, контроль в пиковые часы и быстрая передача сводки ответственным лицам.`;
+    }
+
+    function openReport(kind = 'summary') {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      const modal = document.getElementById('reportModal');
+      const titles = {
+        'city-summary': 'Городская сводка по качеству воздуха',
+        'city-report': 'Экспортируемый пример городского отчёта',
+        'biz-report': 'Сводка по объектам предприятия',
+        'biz-pdf': 'PDF-шаблон корпоративной сводки',
+        'overview-summary': 'Оперативная сводка по текущему сценарию',
+        'overview-report': 'Демонстрационный отчёт по текущему сценарию'
+      };
+      document.getElementById('reportTitle').textContent = titles[kind] || 'Сводка';
+      document.getElementById('reportSubtitle').textContent = `Документ сформирован на основе текущего сценария: ${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}.`;
+      document.getElementById('sheetCity').textContent = appData.city;
+      document.getElementById('sheetPollutant').textContent = pollutant.label;
+      document.getElementById('sheetWindow').textContent = appData.windows[state.window];
+
+      document.getElementById('sheetHighlights').innerHTML = `
+        <div class="sheet-item">Текущее значение по городу: <strong>${formatValue(pollutant.cityValue[state.window])}</strong>. Основной район риска: <strong>${top.name}</strong>.</div>
+        <div class="sheet-item">Следующий район наблюдения: <strong>${second.name}</strong>. Динамика по лидеру: <strong>${top.trend}</strong>.</div>
+        <div class="sheet-item">${pollutant.summary}</div>
+      `;
+
+      document.getElementById('sheetActions').innerHTML = `
+        <div class="sheet-item"><strong>Для жителей:</strong> ${pollutant.actions.citizen}</div>
+        <div class="sheet-item"><strong>Для предприятий:</strong> ${pollutant.actions.business}</div>
+        <div class="sheet-item"><strong>Для города:</strong> ${pollutant.actions.government}</div>
+      `;
+
+      document.getElementById('sheetDistricts').innerHTML = `
+        <div class="sheet-item"><strong>${top.name}</strong>: ${appData.districts[top.key][state.pollutant].note}</div>
+        <div class="sheet-item"><strong>${second.name}</strong>: концентрация ниже, но район требует наблюдения в следующем сопоставимом окне.</div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeReport() {
+      document.getElementById('reportModal').classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const mapSelect = e.target.closest('[data-map-select]');
+      if (mapSelect) {
+        state.selectedDistrict = mapSelect.getAttribute('data-map-select');
+        updateMapDetail();
+        buildMapQuickGrid();
+        return;
+      }
+
+      const action = e.target.closest('[data-action]');
+      if (action) {
+        const type = action.getAttribute('data-action');
+        if (type === 'priority-map') {
+          const top = currentSortedDistricts()[0];
+          state.selectedDistrict = top.key;
+          navButtons.forEach(b => b.classList.remove('active'));
+          screens.forEach(s => s.classList.remove('active'));
+          document.querySelector('.nav button[data-screen="map"]').classList.add('active');
+          document.getElementById('map').classList.add('active');
+          updateMapDetail();
+          buildMapQuickGrid();
+        } else {
+          openReport(type);
+        }
+      }
+    });
+
+    document.getElementById('closeReportBtn').addEventListener('click', closeReport);
+    document.getElementById('reportModal').addEventListener('click', (e) => {
+      if (e.target.id === 'reportModal') closeReport();
+    });
+
+    updateAll();
+    }
+
+    
+function updateUserLayer() {
+  const aqi = appData.pollutants.aqi.cityValue[state.window];
+  document.getElementById('userAQI').textContent = aqi;
+
+  let decision, walk, sport, windows, index;
+
+  if (aqi < 50) {
+    decision='Отличный воздух — можно гулять'; walk='Да'; sport='Да'; windows='Да'; index='9/10';
+  } else if (aqi < 100) {
+    decision='Нормально — без ограничений'; walk='Да'; sport='Да'; windows='Да'; index='7/10';
+  } else if (aqi < 150) {
+    decision='Лучше сократить активность'; walk='Ограничить'; sport='Нет'; windows='Осторожно'; index='5/10';
+  } else {
+    decision='Опасный воздух — оставайтесь дома'; walk='Нет'; sport='Нет'; windows='Закрыть'; index='2/10';
+  }
+
+  document.getElementById('userDecision').textContent = decision;
+  document.getElementById('userWalk').textContent = walk;
+  document.getElementById('userSport').textContent = sport;
+  document.getElementById('userWindows').textContent = windows;
+  document.getElementById('userIndex').textContent = index;
+}
+
+function updateAll() {
+      updateTopbar();
+      updateOverview();
+      updateHotspots();
+      updateMapMeta();
+      updateMapDetail();
+      updateForecast();
+      updateAlerts();
+      updateрайонs();
+      buildDistrictScenarioGrid();
+      updateSources();
+      updateDataLayerStatus();
+updateUserLayer();
+      updateGov();
+      updateBusiness();
+      buildScenarioTimeline();
+    }
+
+    window.addEventListener('resize', () => {
+      drawForecastChart();
+      const top = currentSortedDistricts()[0];
+      drawрайонДинамикаChart(appData.districts[top.key][state.pollutant].series);
+    });
+
+
+    function buildScenarioTimeline() {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      document.getElementById('scenarioTimeline').innerHTML = `
+        <div class="timeline-item">
+          <div class="timeline-time">06:00–09:00</div>
+          <div class="timeline-body">
+            <strong>Утреннее окно контроля</strong>
+            <p>Система фиксирует стартовую динамику ${pollutant.label} и сравнивает районы. Приоритет — ${top.name} и ${second.name}.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:00–15:00</div>
+          <div class="timeline-body">
+            <strong>Промежуточная сверка</strong>
+            <p>Обновляется карта, оценивается устойчивость концентрации и уточняется необходимость районных уведомлений.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:00–22:00</div>
+          <div class="timeline-body">
+            <strong>Пиковый период воздействия</strong>
+            <p>При сохранении роста ${pollutant.label} активируется усиленный режим оповещений и повышенный фокус на транспортные коридоры.</p>
+          </div>
+        </div>
+      `;
+
+      const topDistrict = appData.districts[top.key];
+      document.getElementById('focusDistrictName').textContent = topDistrict.name;
+      document.getElementById('focusDistrictValue').textContent = formatValue(top[state.window]);
+      document.getElementById('focusDistrictPeak').textContent = topDistrict.peak;
+      document.getElementById('priorityDistrictNarrative').textContent = `${topDistrict.name} сейчас остаётся основным районом внимания. По активному сценарию ${pollutant.label} здесь требуется точечный мониторинг, контроль в пиковые часы и быстрая передача сводки ответственным лицам.`;
+    }
+
+    function openReport(kind = 'summary') {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      const modal = document.getElementById('reportModal');
+      const titles = {
+        'city-summary': 'Городская сводка по качеству воздуха',
+        'city-report': 'Экспортируемый пример городского отчёта',
+        'biz-report': 'Сводка по объектам предприятия',
+        'biz-pdf': 'PDF-шаблон корпоративной сводки',
+        'overview-summary': 'Оперативная сводка по текущему сценарию',
+        'overview-report': 'Демонстрационный отчёт по текущему сценарию'
+      };
+      document.getElementById('reportTitle').textContent = titles[kind] || 'Сводка';
+      document.getElementById('reportSubtitle').textContent = `Документ сформирован на основе текущего сценария: ${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}.`;
+      document.getElementById('sheetCity').textContent = appData.city;
+      document.getElementById('sheetPollutant').textContent = pollutant.label;
+      document.getElementById('sheetWindow').textContent = appData.windows[state.window];
+
+      document.getElementById('sheetHighlights').innerHTML = `
+        <div class="sheet-item">Текущее значение по городу: <strong>${formatValue(pollutant.cityValue[state.window])}</strong>. Основной район риска: <strong>${top.name}</strong>.</div>
+        <div class="sheet-item">Следующий район наблюдения: <strong>${second.name}</strong>. Динамика по лидеру: <strong>${top.trend}</strong>.</div>
+        <div class="sheet-item">${pollutant.summary}</div>
+      `;
+
+      document.getElementById('sheetActions').innerHTML = `
+        <div class="sheet-item"><strong>Для жителей:</strong> ${pollutant.actions.citizen}</div>
+        <div class="sheet-item"><strong>Для предприятий:</strong> ${pollutant.actions.business}</div>
+        <div class="sheet-item"><strong>Для города:</strong> ${pollutant.actions.government}</div>
+      `;
+
+      document.getElementById('sheetDistricts').innerHTML = `
+        <div class="sheet-item"><strong>${top.name}</strong>: ${appData.districts[top.key][state.pollutant].note}</div>
+        <div class="sheet-item"><strong>${second.name}</strong>: концентрация ниже, но район требует наблюдения в следующем сопоставимом окне.</div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeReport() {
+      document.getElementById('reportModal').classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const action = e.target.closest('[data-action]');
+      if (action) {
+        const type = action.getAttribute('data-action');
+        if (type === 'priority-map') {
+          const top = currentSortedDistricts()[0];
+          state.selectedDistrict = top.key;
+          navButtons.forEach(b => b.classList.remove('active'));
+          screens.forEach(s => s.classList.remove('active'));
+          document.querySelector('.nav button[data-screen="map"]').classList.add('active');
+          document.getElementById('map').classList.add('active');
+          updateMapDetail();
+        } else {
+          openReport(type);
+        }
+      }
+    });
+
+    document.getElementById('closeReportBtn').addEventListener('click', closeReport);
+    document.getElementById('reportModal').addEventListener('click', (e) => {
+      if (e.target.id === 'reportModal') closeReport();
+    });
+
+    updateAll();
+    setInterval(tickСейчас, 6000);
+  
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) installBtn.style.display = 'inline-flex';
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
+    }
+
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+
+    function buildScenarioTimeline() {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      document.getElementById('scenarioTimeline').innerHTML = `
+        <div class="timeline-item">
+          <div class="timeline-time">06:00–09:00</div>
+          <div class="timeline-body">
+            <strong>Утреннее окно контроля</strong>
+            <p>Система фиксирует стартовую динамику ${pollutant.label} и сравнивает районы. Приоритет — ${top.name} и ${second.name}.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:00–15:00</div>
+          <div class="timeline-body">
+            <strong>Промежуточная сверка</strong>
+            <p>Обновляется карта, оценивается устойчивость концентрации и уточняется необходимость районных уведомлений.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:00–22:00</div>
+          <div class="timeline-body">
+            <strong>Пиковый период воздействия</strong>
+            <p>При сохранении роста ${pollutant.label} активируется усиленный режим оповещений и повышенный фокус на транспортные коридоры.</p>
+          </div>
+        </div>
+      `;
+
+      const topDistrict = appData.districts[top.key];
+      document.getElementById('focusDistrictName').textContent = topDistrict.name;
+      document.getElementById('focusDistrictValue').textContent = formatValue(top[state.window]);
+      document.getElementById('focusDistrictPeak').textContent = topDistrict.peak;
+      document.getElementById('priorityDistrictNarrative').textContent = `${topDistrict.name} сейчас остаётся основным районом внимания. По активному сценарию ${pollutant.label} здесь требуется точечный мониторинг, контроль в пиковые часы и быстрая передача сводки ответственным лицам.`;
+    }
+
+    function openReport(kind = 'summary') {
+      const pollutant = getCurrentPollutant();
+      const top = currentSortedDistricts()[0];
+      const second = currentSortedDistricts()[1];
+      const modal = document.getElementById('reportModal');
+      const titles = {
+        'city-summary': 'Городская сводка по качеству воздуха',
+        'city-report': 'Экспортируемый пример городского отчёта',
+        'biz-report': 'Сводка по объектам предприятия',
+        'biz-pdf': 'PDF-шаблон корпоративной сводки',
+        'overview-summary': 'Оперативная сводка по текущему сценарию',
+        'overview-report': 'Демонстрационный отчёт по текущему сценарию'
+      };
+      document.getElementById('reportTitle').textContent = titles[kind] || 'Сводка';
+      document.getElementById('reportSubtitle').textContent = `Документ сформирован на основе текущего сценария: ${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}.`;
+      document.getElementById('sheetCity').textContent = appData.city;
+      document.getElementById('sheetPollutant').textContent = pollutant.label;
+      document.getElementById('sheetWindow').textContent = appData.windows[state.window];
+
+      document.getElementById('sheetHighlights').innerHTML = `
+        <div class="sheet-item">Текущее значение по городу: <strong>${formatValue(pollutant.cityValue[state.window])}</strong>. Основной район риска: <strong>${top.name}</strong>.</div>
+        <div class="sheet-item">Следующий район наблюдения: <strong>${second.name}</strong>. Динамика по лидеру: <strong>${top.trend}</strong>.</div>
+        <div class="sheet-item">${pollutant.summary}</div>
+      `;
+
+      document.getElementById('sheetActions').innerHTML = `
+        <div class="sheet-item"><strong>Для жителей:</strong> ${pollutant.actions.citizen}</div>
+        <div class="sheet-item"><strong>Для предприятий:</strong> ${pollutant.actions.business}</div>
+        <div class="sheet-item"><strong>Для города:</strong> ${pollutant.actions.government}</div>
+      `;
+
+      document.getElementById('sheetDistricts').innerHTML = `
+        <div class="sheet-item"><strong>${top.name}</strong>: ${appData.districts[top.key][state.pollutant].note}</div>
+        <div class="sheet-item"><strong>${second.name}</strong>: концентрация ниже, но район требует наблюдения в следующем сопоставимом окне.</div>
+      `;
+
+      modal.classList.add('open');
+    }
+
+    function closeReport() {
+      document.getElementById('reportModal').classList.remove('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const action = e.target.closest('[data-action]');
+      if (action) {
+        const type = action.getAttribute('data-action');
+        if (type === 'priority-map') {
+          const top = currentSortedDistricts()[0];
+          state.selectedDistrict = top.key;
+          navButtons.forEach(b => b.classList.remove('active'));
+          screens.forEach(s => s.classList.remove('active'));
+          document.querySelector('.nav button[data-screen="map"]').classList.add('active');
+          document.getElementById('map').classList.add('active');
+          updateMapDetail();
+        } else {
+          openReport(type);
+        }
+      }
+    });
+
+    document.getElementById('closeReportBtn').addEventListener('click', closeReport);
+    document.getElementById('reportModal').addEventListener('click', (e) => {
+      if (e.target.id === 'reportModal') closeReport();
+    });
+
+    updateAll();
   </script>
+
+  <div class="report-modal" id="reportModal">
+    <div class="report-sheet">
+      <div class="sheet-head">
+        <div>
+          <h3 id="reportTitle">Сводка</h3>
+          <p id="reportSubtitle">Демонстрационный документ для текущего сценария.</p>
+        </div>
+        <button class="ghost-btn" id="closeReportBtn">Закрыть</button>
+      </div>
+
+      <div class="sheet-grid">
+        <div class="sheet-box">
+          <div class="k">Город</div>
+          <div class="v" id="sheetCity">Ташкент</div>
+          <div class="f">Базовая зона мониторинга.</div>
+        </div>
+        <div class="sheet-box">
+          <div class="k">Загрязнитель</div>
+          <div class="v" id="sheetPollutant">AQI</div>
+          <div class="f">Активный сценарий для расчёта.</div>
+        </div>
+        <div class="sheet-box">
+          <div class="k">Временное окно</div>
+          <div class="v" id="sheetWindow">Сейчас</div>
+          <div class="f">Контекст построения сводки.</div>
+        </div>
+      </div>
+
+      <div class="sheet-section">
+        <h4>Ключевая картина</h4>
+        <div class="sheet-list" id="sheetHighlights"></div>
+      </div>
+
+      <div class="sheet-section">
+        <h4>Рекомендуемые меры</h4>
+        <div class="sheet-list" id="sheetActions"></div>
+      </div>
+
+      <div class="sheet-section">
+        <h4>Комментарий по району риска</h4>
+        <div class="sheet-list" id="sheetDistricts"></div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+(function() {
+  const WAQI_DEFAULT = "e39aa4917168a870cfbf2592cac90cd50097a16e";
+  const OWM_DEFAULT = "6a450f4c02e24a6a7c707cdd4e72a9c9";
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function setPill(id, text, cls='') {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'data-pill' + (cls ? ' ' + cls : '');
+  }
+
+  function safeUpdateAll() {
+    try {
+      if (typeof updateAll === 'function') updateAll();
+    } catch (e) {
+      console.error('updateAll failed', e);
+    }
+  }
+
+  function saveSnapshot() {
+    try {
+      if (typeof appData === 'undefined') return;
+      localStorage.setItem('airguardApiSnapshotV22', JSON.stringify({
+        city: appData.city,
+        pollutants: appData.pollutants,
+        districts: appData.districts
+      }));
+    } catch (e) {}
+  }
+
+  function restoreSnapshot() {
+    try {
+      const raw = localStorage.getItem('airguardApiSnapshotV22');
+      if (!raw || typeof appData === 'undefined') return false;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !parsed.pollutants || !parsed.districts) return false;
+      appData.city = parsed.city || appData.city;
+      appData.pollutants = parsed.pollutants;
+      appData.districts = parsed.districts;
+      setText('dataChip', 'Источник данных: сохранённый рабочий слой');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function realFetchWAQI() {
+    const token = (document.getElementById('waqiTokenInput')?.value || WAQI_DEFAULT).trim();
+    const city = (document.getElementById('waqiCityInput')?.value || 'tashkent').trim().toLowerCase();
+    if (!token) {
+      setPill('waqiStatusPill', 'WAQI: token не указан', 'pill-warn');
+      return;
+    }
+    setPill('waqiStatusPill', 'WAQI: загрузка...', 'pill-warn');
+    try {
+      const url = `https://api.waqi.info/feed/${encodeURIComponent(city)}/?token=${encodeURIComponent(token)}`;
+      const res = await fetch(url, { method: 'GET' });
+      const payload = await res.json();
+      if (!payload || payload.status !== 'ok' || !payload.data) throw new Error('WAQI returned no usable data');
+
+      const data = payload.data;
+      const iaqi = data.iaqi || {};
+      const cityName = data.city?.name || 'Ташкент';
+      const aqi = Number(data.aqi || 0) || 0;
+      const pm25 = Number(iaqi.pm25?.v || Math.max(10, Math.round(aqi * 0.45))) || Math.max(10, Math.round(aqi * 0.45));
+      const co2 = Number(iaqi.co2?.v || (650 + Math.round(aqi * 0.7))) || (650 + Math.round(aqi * 0.7));
+
+      if (typeof appData !== 'undefined') {
+        appData.city = cityName;
+        appData.pollutants.aqi.cityValue.live = aqi;
+        appData.pollutants.aqi.cityValue['24h'] = Math.max(0, Math.round(aqi * 0.97));
+        appData.pollutants.aqi.cityValue['7d'] = Math.max(0, Math.round(aqi * 0.91));
+
+        appData.pollutants.pm25.cityValue.live = pm25;
+        appData.pollutants.pm25.cityValue['24h'] = Math.max(0, Math.round(pm25 * 0.95));
+        appData.pollutants.pm25.cityValue['7d'] = Math.max(0, Math.round(pm25 * 0.87));
+
+        appData.pollutants.co2.cityValue.live = co2;
+        appData.pollutants.co2.cityValue['24h'] = Math.max(0, Math.round(co2 * 0.98));
+        appData.pollutants.co2.cityValue['7d'] = Math.max(0, Math.round(co2 * 0.95));
+
+        const factors = {
+          yunusabad: 1.06,
+          chilanzar: 0.98,
+          mirzo: 0.86,
+          bektemir: 0.72,
+        };
+        Object.keys(factors).forEach((key) => {
+          const k = factors[key];
+          appData.districts[key].aqi.live = Math.round(aqi * k);
+          appData.districts[key].aqi['24h'] = Math.round(aqi * k * 0.96);
+          appData.districts[key].aqi['7d'] = Math.round(aqi * k * 0.89);
+
+          appData.districts[key].pm25.live = Math.round(pm25 * k);
+          appData.districts[key].pm25['24h'] = Math.round(pm25 * k * 0.95);
+          appData.districts[key].pm25['7d'] = Math.round(pm25 * k * 0.87);
+
+          appData.districts[key].co2.live = Math.round(co2 * (0.95 + (k - 0.72) * 0.4));
+          appData.districts[key].co2['24h'] = Math.round(appData.districts[key].co2.live * 0.98);
+          appData.districts[key].co2['7d'] = Math.round(appData.districts[key].co2.live * 0.95);
+        });
+      }
+
+      localStorage.setItem('airguardWaqiToken', token);
+      localStorage.setItem('airguardWaqiCity', city);
+      setPill('waqiStatusPill', 'WAQI: подключен', 'pill-ok');
+      setPill('waqiUpdatedPill', 'Последнее обновление: ' + new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}));
+      setText('dataChip', 'Источник данных: WAQI + районное моделирование');
+      setText('dataModeText', 'Активен реальный городской сигнал WAQI с расчётным распределением по районам.');
+      setText('dataUpdatedText', 'Городской показатель загружается из WAQI и сразу перестраивает карту, панели и пользовательский слой.');
+      setText('validationSource', 'Активный источник: WAQI.');
+      setText('validationStructure', 'Реальный городской AQI синхронизирован с районным распределением и экранами продукта.');
+      setText('consoleSource', 'WAQI');
+      setText('consoleMode', 'Real');
+      setText('consoleState', 'Онлайн');
+      setText('mapDataStatus', 'Режим: WAQI');
+      saveSnapshot();
+      safeUpdateAll();
+    } catch (e) {
+      console.error('WAQI failed', e);
+      const restored = restoreSnapshot();
+      setPill('waqiStatusPill', restored ? 'WAQI: offline, использован снимок' : 'WAQI: ошибка подключения', restored ? 'pill-warn' : 'pill-bad');
+      setText('waqiFallbackText', restored ? 'Используется сохранённый рабочий городской сигнал.' : 'Подключение не удалось, сохранённого снимка нет.');
+      safeUpdateAll();
+    }
+  }
+
+  async function realFetchOWM() {
+    const key = (document.getElementById('owmKeyInput')?.value || OWM_DEFAULT).trim();
+    const city = (document.getElementById('owmCityInput')?.value || 'Tashkent').trim();
+    if (!key) {
+      setPill('owmStatusPill', 'OpenWeather: key не указан', 'pill-warn');
+      return;
+    }
+    setPill('owmStatusPill', 'OpenWeather: загрузка...', 'pill-warn');
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${encodeURIComponent(key)}&units=metric&lang=ru`;
+      const res = await fetch(url, { method: 'GET' });
+      const data = await res.json();
+      if (!data || !data.main) throw new Error('OpenWeather returned no usable data');
+
+      const temp = Math.round(Number(data.main.temp || 0));
+      const humidity = Math.round(Number(data.main.humidity || 0));
+      const wind = Math.round(Number(data.wind?.speed || 0));
+      const desc = data.weather?.[0]?.description || 'без описания';
+
+      setText('weatherSummaryBox', `Погодный слой активен: ${desc}. Скорость ветра ${wind} м/с, температура ${temp}°C, влажность ${humidity}%.`);
+      setText('weatherWindValue', `${wind} м/с`);
+      setText('weatherWindText', wind <= 2 ? 'Слабый ветер — риск накопления загрязнения выше' : 'Ветер помогает рассеиванию загрязнения');
+      setText('weatherTempValue', `${temp}°C`);
+      setText('weatherHumidityText', `Влажность: ${humidity}%`);
+      setPill('owmStatusPill', 'OpenWeather: подключен', 'pill-ok');
+      setPill('owmUpdatedPill', 'Последнее обновление: ' + new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}));
+      setText('owmFallbackText', 'Погодный слой обновляется из OpenWeather в реальном времени.');
+      localStorage.setItem('airguardOwmKey', key);
+      localStorage.setItem('airguardOwmCity', city);
+      saveSnapshot();
+      safeUpdateAll();
+    } catch (e) {
+      console.error('OpenWeather failed', e);
+      setPill('owmStatusPill', 'OpenWeather: ошибка подключения', 'pill-bad');
+      setText('owmFallbackText', 'Погодный слой временно недоступен. Сохраняется последний рабочий контекст.');
+    }
+  }
+
+  function bindRealButtons() {
+    const waqiTokenInput = document.getElementById('waqiTokenInput');
+    const waqiCityInput = document.getElementById('waqiCityInput');
+    const waqiBtn = document.getElementById('connectWaqiBtn');
+    const waqiClear = document.getElementById('clearWaqiBtn');
+
+    const owmKeyInput = document.getElementById('owmKeyInput');
+    const owmCityInput = document.getElementById('owmCityInput');
+    const owmBtn = document.getElementById('connectOwmBtn');
+    const owmClear = document.getElementById('clearOwmBtn');
+
+    if (waqiTokenInput) waqiTokenInput.value = localStorage.getItem('airguardWaqiToken') || WAQI_DEFAULT;
+    if (waqiCityInput) waqiCityInput.value = localStorage.getItem('airguardWaqiCity') || 'tashkent';
+    if (owmKeyInput) owmKeyInput.value = localStorage.getItem('airguardOwmKey') || OWM_DEFAULT;
+    if (owmCityInput) owmCityInput.value = localStorage.getItem('airguardOwmCity') || 'Tashkent';
+
+    if (waqiBtn) waqiBtn.onclick = function(e) { e.preventDefault(); realFetchWAQI(); };
+    if (waqiClear) waqiClear.onclick = function(e) {
+      e.preventDefault();
+      localStorage.removeItem('airguardWaqiToken');
+      localStorage.removeItem('airguardWaqiCity');
+      if (waqiTokenInput) waqiTokenInput.value = WAQI_DEFAULT;
+      if (waqiCityInput) waqiCityInput.value = 'tashkent';
+      setPill('waqiStatusPill', 'WAQI: не подключен');
+      setPill('waqiUpdatedPill', 'Последнее обновление: —');
+    };
+
+    if (owmBtn) owmBtn.onclick = function(e) { e.preventDefault(); realFetchOWM(); };
+    if (owmClear) owmClear.onclick = function(e) {
+      e.preventDefault();
+      localStorage.removeItem('airguardOwmKey');
+      localStorage.removeItem('airguardOwmCity');
+      if (owmKeyInput) owmKeyInput.value = OWM_DEFAULT;
+      if (owmCityInput) owmCityInput.value = 'Tashkent';
+      setPill('owmStatusPill', 'OpenWeather: не подключен');
+      setPill('owmUpdatedPill', 'Последнее обновление: —');
+    };
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    bindRealButtons();
+    setTimeout(function() {
+      realFetchWAQI();
+      realFetchOWM();
+    }, 500);
+  });
+})();
+</script>
+
+
+<script>
+(function() {
+  function byId(id) { return document.getElementById(id); }
+
+  function safeText(id, text) {
+    const el = byId(id);
+    if (el) el.textContent = text;
+  }
+
+  function safeHtml(id, text) {
+    const el = byId(id);
+    if (el) el.innerHTML = text;
+  }
+
+  function detectSourceLabel() {
+    const waqi = byId('waqiStatusPill')?.textContent || '';
+    const owm = byId('owmStatusPill')?.textContent || '';
+    if (waqi.includes('подключен') && owm.includes('подключен')) return 'WAQI + OpenWeather';
+    if (waqi.includes('подключен')) return 'WAQI';
+    if (owm.includes('подключен')) return 'OpenWeather';
+    if (localStorage.getItem('airguardExternalData')) return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function sourceModeText() {
+    const label = detectSourceLabel();
+    if (label === 'WAQI + OpenWeather') return 'реальные API-данные';
+    if (label === 'WAQI') return 'WAQI + районное моделирование';
+    if (label === 'OpenWeather') return 'OpenWeather';
+    if (label === 'внешний JSON') return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function formatVal(v, pollutant) {
+    if (typeof formatValue === 'function') {
+      try { return formatValue(v); } catch(e) {}
+    }
+    if (pollutant === 'co2') return Math.round(v) + ' ppm';
+    if (pollutant === 'pm25') return Math.round(v) + ' µg/m³';
+    return String(Math.round(v));
+  }
+
+  function syncTopbarSource() {
+    const chip = byId('dataChip');
+    if (chip) chip.textContent = 'Источник данных: ' + sourceModeText();
+  }
+
+  function buildScenarioAndPriority() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    if (typeof currentSortedDistricts !== 'function') return;
+
+    const sorted = currentSortedDistricts();
+    if (!sorted || !sorted.length) return;
+
+    const top = sorted[0];
+    const second = sorted[1] || sorted[0];
+    const pollutant = appData.pollutants[state.pollutant];
+    const topDistrict = appData.districts[top.key];
+
+    const timeline = byId('scenarioTimeline');
+    if (timeline) {
+      timeline.innerHTML = `
+        <div class="timeline-item">
+          <div class="timeline-time">06:00–09:00</div>
+          <div class="timeline-body">
+            <strong>Утреннее окно контроля</strong>
+            <p>Система фиксирует стартовую динамику ${pollutant.label} и сравнивает районы. Основной фокус — ${top.name}, следующий район наблюдения — ${second.name}.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">12:00–15:00</div>
+          <div class="timeline-body">
+            <strong>Промежуточная сверка</strong>
+            <p>Обновляется карта, уточняются hotspot'ы и проверяется устойчивость концентрации в приоритетных районах.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:00–22:00</div>
+          <div class="timeline-body">
+            <strong>Пиковый период воздействия</strong>
+            <p>Если рост ${pollutant.label} сохраняется, активируется усиленный режим оповещений и повышенное внимание к транспортным коридорам.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    safeText('focusDistrictName', topDistrict.name);
+    safeText('focusDistrictValue', formatVal(top[state.window], state.pollutant));
+    safeText('focusDistrictPeak', topDistrict.peak);
+    safeText('priorityDistrictNarrative', `${topDistrict.name} сейчас остаётся районом с максимальным риском по показателю ${pollutant.label}. Для этого района требуется приоритетный мониторинг, контроль в пиковое окно ${topDistrict.peak} и ранняя передача сводки ответственным лицам.`);
+  }
+
+  function syncOverviewRussian() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const pollutant = appData.pollutants[state.pollutant];
+    safeText('overviewTitle', `Оперативная аналитика по показателю ${pollutant.label} для ${appData.city}.`);
+    safeText('overviewText', `Система отслеживает текущее значение ${pollutant.label}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
+    safeText('userStatus', `Город: ${appData.city} · показатель ${pollutant.label}`);
+  }
+
+  function syncDataCardsRussian() {
+    const ws = byId('weatherSummaryBox');
+    if (ws && ws.textContent.includes('Погодный слой активен:')) {
+      // leave as is
+    }
+    const sourceNarrative = byId('sourceMixList');
+    if (sourceNarrative && sourceNarrative.innerHTML.includes('Estimated contributor share')) {
+      sourceNarrative.innerHTML = sourceNarrative.innerHTML.replaceAll('Estimated contributor share', 'Оценочная доля влияния');
+    }
+  }
+
+  function fullSync() {
+    syncTopbarSource();
+    buildScenarioAndPriority();
+    syncOverviewRussian();
+    syncDataCardsRussian();
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(fullSync, 700);
+    setTimeout(fullSync, 1800);
+
+    document.addEventListener('click', function() {
+      setTimeout(fullSync, 120);
+    });
+
+    const observer = new MutationObserver(function() {
+      fullSync();
+    });
+    const target = byId('contextChip');
+    if (target) observer.observe(target, { childList: true, subtree: true, characterData: true });
+  });
+
+  window.addEventListener('load', function() {
+    setTimeout(fullSync, 900);
+  });
+})();
+</script>
+
+
+<script>
+(function() {
+  const userProfiles = {
+    general: {
+      title: 'Обычный',
+      factor: 1.00,
+      alerts: [
+        'Следите за индексом дня и избегайте длительного пребывания у магистралей в часы пик.',
+        'Открывайте окна только если риск низкий или умеренный.'
+      ]
+    },
+    child: {
+      title: 'Ребёнок',
+      factor: 1.18,
+      alerts: [
+        'Для детей порог осторожности ниже: прогулки лучше переносить на часы с минимальной нагрузкой.',
+        'При среднем и высоком риске избегайте детских площадок рядом с дорогами.'
+      ]
+    },
+    asthma: {
+      title: 'Чувствительный',
+      factor: 1.28,
+      alerts: [
+        'Для чувствительных групп любые пики AQI важнее. Нужны ранние предупреждения и минимизация наружной активности.',
+        'При ухудшении качества воздуха держите окна закрытыми и ограничьте длительные перемещения.'
+      ]
+    },
+    sport: {
+      title: 'Спорт',
+      factor: 1.12,
+      alerts: [
+        'Для спорта критичны утренние и вечерние окна. При повышенном риске переносите тренировки в помещение.',
+        'Наиболее безопасно тренироваться только при низком риске и хорошем рассеивании.'
+      ]
+    }
+  };
+
+  function localizeCityName(raw) {
+    const t = String(raw || '').toLowerCase();
+    if (t.includes('tashkent')) return 'Ташкент';
+    return raw || 'Ташкент';
+  }
+
+  function detectSourceLabelV24() {
+    const waqi = document.getElementById('waqiStatusPill')?.textContent || '';
+    const owm = document.getElementById('owmStatusPill')?.textContent || '';
+    if (waqi.includes('подключен') && owm.includes('подключен')) return 'WAQI + OpenWeather';
+    if (waqi.includes('подключен')) return 'WAQI';
+    if (owm.includes('подключен')) return 'OpenWeather';
+    if (localStorage.getItem('airguardExternalData')) return 'внешний JSON';
+    return 'демонстрационный слой';
+  }
+
+  function getSortedDistrictsSafe() {
+    if (typeof currentSortedDistricts === 'function') {
+      try { return currentSortedDistricts(); } catch(e) {}
+    }
+    return [];
+  }
+
+  function currentProfile() {
+    return localStorage.getItem('airguardUserProfile') || 'general';
+  }
+
+  function setProfile(profileKey) {
+    localStorage.setItem('airguardUserProfile', profileKey);
+    const wrap = document.getElementById('userProfileButtons');
+    if (wrap) {
+      wrap.querySelectorAll('[data-user-profile]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.userProfile === profileKey);
+        btn.classList.toggle('user-profile-active', btn.dataset.userProfile === profileKey);
+      });
+    }
+  }
+
+  function rebuildUserLayerV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const profileKey = currentProfile();
+    const profile = userProfiles[profileKey] || userProfiles.general;
+    const aqi = Number(appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
+    const weatherWindText = document.getElementById('weatherWindText')?.textContent || '';
+    const windPenalty = weatherWindText.includes('Слабый ветер') ? 12 : 0;
+    const adjusted = Math.round(aqi * profile.factor + windPenalty);
+
+    let decision = '', walk = '', sport = '', windows = '', index = '', status = '';
+    if (adjusted < 50) {
+      decision = 'Воздух хороший. Ограничений для повседневной активности нет.';
+      walk = 'Да';
+      sport = 'Да';
+      windows = 'Можно';
+      index = '9/10';
+      status = `Профиль: ${profile.title} · низкий риск`;
+    } else if (adjusted < 100) {
+      decision = 'Риск умеренный. Можно выходить, но лучше избегать длительной активности у дорог.';
+      walk = 'Да';
+      sport = 'С осторожностью';
+      windows = 'Можно кратко';
+      index = '7/10';
+      status = `Профиль: ${profile.title} · умеренный риск`;
+    } else if (adjusted < 150) {
+      decision = 'Риск повышенный. Лучше сократить активность на улице и следить за следующими обновлениями.';
+      walk = 'Ограничить';
+      sport = 'Не рекомендуется';
+      windows = 'Осторожно';
+      index = '5/10';
+      status = `Профиль: ${profile.title} · повышенный риск`;
+    } else {
+      decision = 'Риск высокий. По возможности оставайтесь в помещении и минимизируйте наружную активность.';
+      walk = 'Нет';
+      sport = 'Нет';
+      windows = 'Закрыть';
+      index = '2/10';
+      status = `Профиль: ${profile.title} · высокий риск`;
+    }
+
+    const alerts = [
+      ...profile.alerts,
+      adjusted >= 100
+        ? 'Сейчас лучше не планировать длительные прогулки или поездки по загруженным коридорам.'
+        : 'Сейчас допустимы короткие прогулки, но лучше выбирать более спокойные зоны.'
+    ];
+
+    const alertsList = document.getElementById('userAlertsList');
+    if (alertsList) {
+      alertsList.innerHTML = alerts.map(text => `<div class="rec-item"><strong>${profile.title}</strong><p>${text}</p></div>`).join('');
+    }
+
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+    setText('userAQI', String(aqi));
+    setText('userDecision', decision);
+    setText('userWalk', walk);
+    setText('userSport', sport);
+    setText('userWindows', windows);
+    setText('userIndex', index);
+    setText('userStatus', status);
+  }
+
+  function syncOverviewSignalsV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = getSortedDistrictsSafe();
+    const top = sorted[0];
+    const pollutant = appData.pollutants?.[state.pollutant];
+    const city = localizeCityName(appData.city);
+
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+
+    setText('overviewTitle', `Оперативная аналитика по показателю ${pollutant?.label || 'AQI'} для ${city}.`);
+    setText('overviewText', `Система отслеживает текущее значение ${pollutant?.label || 'AQI'}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
+    setText('signalSourceValue', detectSourceLabelV24());
+    setText('signalCityValue', city);
+    setText('signalDistrictValue', top ? top.name : '—');
+    setText('signalModeValue', `${appData.windows?.[state.window] || 'Сейчас'} · ${pollutant?.label || 'AQI'}`);
+
+    if (top && appData.districts?.[top.key]) {
+      const topDistrict = appData.districts[top.key];
+      setText('priorityDistrictNarrative', `${topDistrict.name} сейчас остаётся районом с максимальной текущей нагрузкой. Для него требуется приоритетный мониторинг, контроль в пиковое окно ${topDistrict.peak} и ранняя передача сводки ответственным лицам.`);
+      setText('focusDistrictName', topDistrict.name);
+      setText('focusDistrictValue', typeof formatValue === 'function' ? formatValue(top[state.window]) : String(top[state.window]));
+      setText('focusDistrictPeak', topDistrict.peak);
+    }
+
+    const contextChip = document.getElementById('contextChip');
+    if (contextChip) {
+      contextChip.textContent = `${city} · ${pollutant?.label || 'AQI'} · ${appData.windows?.[state.window] || 'Сейчас'}`;
+    }
+
+    const liveClock = document.getElementById('liveClock');
+    if (liveClock) {
+      const raw = liveClock.textContent || '';
+      const timePart = raw.split('·')[0]?.trim() || new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+      liveClock.textContent = `${timePart} · ${city}`;
+    }
+  }
+
+  function syncRussianLabelsV24() {
+    const heroMainLabel = document.getElementById('heroMainLabel');
+    if (heroMainLabel && heroMainLabel.textContent.includes('Current')) {
+      heroMainLabel.textContent = 'AQI · Текущий статус';
+    }
+    const sourceList = document.getElementById('sourceMixList');
+    if (sourceList && sourceList.innerHTML.includes('Estimated contributor share')) {
+      sourceList.innerHTML = sourceList.innerHTML.replaceAll('Estimated contributor share', 'Оценочная доля влияния');
+    }
+    const summaryBoxes = document.querySelectorAll('.summary-box');
+    summaryBoxes.forEach(box => {
+      if (box.textContent.includes('Air quality is currently elevated')) {
+        box.textContent = 'В центральных районах Ташкента качество воздуха ухудшено. Вечерние часы остаются основным окном повышенного риска из-за транспортной нагрузки и слабого рассеивания.';
+      }
+    });
+  }
+
+  function rebuildScenarioTimelineV24() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = getSortedDistrictsSafe();
+    if (!sorted.length) return;
+    const top = sorted[0];
+    const second = sorted[1] || sorted[0];
+    const pollutant = appData.pollutants?.[state.pollutant];
+    const timeline = document.getElementById('scenarioTimeline');
+    if (!timeline) return;
+    timeline.innerHTML = `
+      <div class="timeline-item">
+        <div class="timeline-time">06:00–09:00</div>
+        <div class="timeline-body">
+          <strong>Утреннее окно контроля</strong>
+          <p>Система сравнивает динамику по районам и выделяет ${top.name} как основной район риска. Следующий район наблюдения — ${second.name}.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">12:00–15:00</div>
+        <div class="timeline-body">
+          <strong>Промежуточная сверка</strong>
+          <p>Карта, аналитика районов и оповещения обновляются по показателю ${pollutant?.label || 'AQI'} и текущему временному окну.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">18:00–22:00</div>
+        <div class="timeline-body">
+          <strong>Пиковое воздействие</strong>
+          <p>При сохранении роста концентрации включается усиленный режим уведомлений и повышенное внимание к транспортным коридорам.</p>
+        </div>
+      </div>`;
+  }
+
+  function bindUserProfileButtonsV24() {
+    const wrap = document.getElementById('userProfileButtons');
+    if (!wrap || wrap.dataset.bound === '1') return;
+    wrap.dataset.bound = '1';
+    wrap.querySelectorAll('[data-user-profile]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setProfile(btn.dataset.userProfile);
+        rebuildUserLayerV24();
+      });
+    });
+    setProfile(currentProfile());
+  }
+
+  function fullSyncV24() {
+    bindUserProfileButtonsV24();
+    syncOverviewSignalsV24();
+    syncRussianLabelsV24();
+    rebuildScenarioTimelineV24();
+    rebuildUserLayerV24();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(fullSyncV24, 800);
+    setTimeout(fullSyncV24, 1800);
+    document.addEventListener('click', () => setTimeout(fullSyncV24, 120));
+  });
+  window.addEventListener('load', () => setTimeout(fullSyncV24, 900));
+})();
+</script>
+
 </body>
 </html>

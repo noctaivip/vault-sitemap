@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AirGuard Uzbekistan</title>
+  <style>
+    :root{
+      --bg:#07111b;--card:#102235;--line:rgba(255,255,255,.08);--text:#eaf2ff;--muted:#9bb0c9;--accent:#43c7ff;
+    }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#06101a,#081625);color:var(--text)}
+    .app{max-width:1200px;margin:0 auto;padding:24px}
+    .top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}
+    .title{font-size:34px;font-weight:800;letter-spacing:-.03em}
+    .sub{color:var(--muted);font-size:14px;line-height:1.6}
+    .row{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+    .card{background:linear-gradient(180deg,rgba(16,34,53,.95),rgba(10,22,35,.95));border:1px solid var(--line);border-radius:24px;padding:22px}
+    .hero h1{font-size:56px;line-height:1.02;margin:10px 0 14px}
+    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .metric{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:18px}
+    .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+    .v{font-size:52px;font-weight:800;letter-spacing:-.04em}
+    .vv{font-size:34px;font-weight:700}
+    .stack{display:flex;flex-direction:column;gap:18px}
+    .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    input,button{background:#102235;border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 14px}
+    input{min-width:220px}
+    button{cursor:pointer}
+    .list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .item{padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
+    .ok{color:#91ffcd}.bad{color:#ffc8c8}
+    @media (max-width:900px){.row,.metrics,.list{grid-template-columns:1fr}.hero h1{font-size:40px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top">
+      <div>
+        <div class="title">AirGuard Uzbekistan</div>
+        <div class="sub">Реальная рабочая программа на backend proxy. Данные идут через сервер, а не напрямую из браузера.</div>
+      </div>
+      <div class="controls">
+        <input id="city" value="tashkent" placeholder="Город">
+        <button id="refresh">Обновить</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="card hero">
+        <div class="k">Оперативный обзор</div>
+        <h1 id="heroTitle">Загрузка данных...</h1>
+        <div class="sub" id="heroText">Сервер получает WAQI и OpenWeather, объединяет данные и отдаёт их как единый ответ.</div>
+        <div class="metrics">
+          <div class="metric"><div class="k">AQI</div><div class="v" id="aqi">—</div></div>
+          <div class="metric"><div class="k">PM2.5</div><div class="vv" id="pm25">—</div></div>
+          <div class="metric"><div class="k">CO2</div><div class="vv" id="co2">—</div></div>
+          <div class="metric"><div class="k">Ветер</div><div class="vv" id="wind">—</div></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="k">Погода</div>
+          <div class="vv" id="temp">—</div>
+          <div class="sub" id="weatherText">—</div>
+        </div>
+        <div class="card">
+          <div class="k">Статус</div>
+          <div class="sub" id="statusText">Ожидание запроса...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <div class="k">Что это уже решает</div>
+      <div class="list">
+        <div class="item">Ключи WAQI и OpenWeather больше не живут в клиентском JS.</div>
+        <div class="item">Запросы идут через backend и не зависят от frontend CORS-поведения.</div>
+        <div class="item">Фронтенд получает единый ответ `/api/realtime/summary`.</div>
+        <div class="item">Это реальная база для следующего этапа: карта, auth, БД, уведомления.</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    async function loadSummary() {
+      const city = document.getElementById('city').value.trim() || 'tashkent';
+      const status = document.getElementById('statusText');
+      status.textContent = 'Загрузка...';
+      try {
+        const res = await fetch(`/api/realtime/summary?city=${encodeURIComponent(city)}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'API error');
+        document.getElementById('heroTitle').textContent = `Оперативная аналитика по ${data.city.display_name}.`;
+        document.getElementById('heroText').textContent = `WAQI: индекс ${data.air.idx ?? '—'}, время ${data.air.time ?? '—'}. OpenWeather: ${data.weather.description}.`;
+        document.getElementById('aqi').textContent = data.air.aqi;
+        document.getElementById('pm25').textContent = `${data.air.pm25} µg/m³`;
+        document.getElementById('co2').textContent = `${data.air.co2} ppm`;
+        document.getElementById('wind').textContent = `${data.weather.wind_mps} м/с`;
+        document.getElementById('temp').textContent = `${data.weather.temperature_c}°C`;
+        document.getElementById('weatherText').textContent = `Влажность ${data.weather.humidity}%, ${data.weather.description}`;
+        status.innerHTML = `<span class="ok">Онлайн.</span> Сервер успешно объединил WAQI и OpenWeather.`;
+      } catch (e) {
+        status.innerHTML = `<span class="bad">Ошибка.</span> ${e.message}`;
+      }
+    }
+    document.getElementById('refresh').addEventListener('click', loadSummary);
+    loadSummary();
+  </script>
+</body>
+</html>
