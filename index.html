@@ -889,7 +889,103 @@
     }
 
     
-    .user-profile-active {
+    
+    .access-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+
+    .access-btn {
+      all: unset;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+
+    .access-btn:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+    }
+
+    .access-btn.active {
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(97,225,255,.14), rgba(97,225,255,.06));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 8px 18px rgba(32,184,232,0.10);
+    }
+
+    .access-gate {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,10,18,.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1200;
+    }
+
+    .access-gate.open { display: flex; }
+
+    .access-card {
+      width: min(560px, 100%);
+      padding: 26px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(10,19,31,.98), rgba(7,17,27,.98));
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    }
+
+    .access-card h3 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      letter-spacing: -.03em;
+    }
+
+    .access-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .access-note {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.025);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .access-error {
+      min-height: 20px;
+      color: #ffc1c1;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+.user-profile-active {
       border-color: rgba(97,225,255,.24) !important;
       background: linear-gradient(180deg, rgba(97,225,255,.10), rgba(97,225,255,.04)) !important;
       box-shadow: 0 10px 24px rgba(32,184,232,.10);
@@ -929,83 +1025,7 @@
       line-height:1.5;
     }
 
-
-    .access-panel {
-      margin-bottom: 18px;
-      padding: 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.018));
-    }
-
-    .access-head {
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:14px;
-    }
-
-    .access-head h3 {
-      margin:0 0 6px;
-      font-size:18px;
-    }
-
-    .access-grid {
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:12px;
-      align-items:center;
-    }
-
-    .access-status {
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .access-locked {
-      border-color: rgba(246,197,102,.22);
-      background: rgba(246,197,102,.08);
-      color: #ffe9bb;
-    }
-
-    .access-open {
-      border-color: rgba(82,197,146,.22);
-      background: rgba(82,197,146,.08);
-      color: #c7ffe4;
-    }
-
-    .access-protected {
-      display:none;
-    }
-
-    .access-protected.open {
-      display:block;
-    }
-
-    .access-note {
-      margin-top:12px;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.6;
-    }
-
-    .role-chip-row {
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-
-
-    .report-modal {
+.report-modal {
       position: fixed;
       inset: 0;
       background: rgba(3,10,18,.66);
@@ -1320,12 +1340,15 @@
         <div class="topbar-right">
           <div class="chip" id="contextChip">Ташкент · AQI · Сейчас</div>
           <div class="chip" id="refreshChip">Обновлено только что</div>
-          <div class="chip" id="dataChip">Источник данных: демонстрационный слой</div>
-          <div class="chip" id="accessScopeChip">Доступ: общий</div>
-          <button id="loadJsonBtn" class="ghost-btn">Загрузить JSON</button>
-          <button id="resetDataBtn" class="ghost-btn">Сбросить данные</button>
-          <button id="exportDataBtn" class="ghost-btn">Экспортировать JSON</button>
-          <input id="jsonFileInput" type="file" accept=".json,application/json" style="display:none;">
+          
+<div class="chip" id="dataChip">Источник данных: WAQI + районное моделирование</div>
+<div class="chip" id="accessChip">Доступ: пользователь</div>
+<div class="access-switch" id="accessSwitch">
+  <button class="access-btn active" data-access-target="general">Пользователь</button>
+  <button class="access-btn" data-access-target="business">Бизнес</button>
+  <button class="access-btn" data-access-target="gov">Государство</button>
+</div>
+
         </div>
       </div>
 
@@ -1409,90 +1432,21 @@
 
         
         
-        <div class="card" style="margin-top:18px;">
-          <h3>Слой данных</h3>
-          <div class="sub">Переходный этап между демонстрационным MVP и реальным продуктом. Система уже умеет принимать внешний JSON-слой без перестройки интерфейса.</div>
-          <div class="grid grid-3">
-            <div class="rec-item">
-              <strong>Текущий режим</strong>
-              <p id="dataModeText">Демонстрационный слой активен. Интерфейс работает полностью и готов к подключению внешних данных.</p>
-            </div>
-            <div class="rec-item">
-              <strong>Последнее обновление</strong>
-              <p id="dataUpdatedText">Используется встроенный набор данных, синхронизированный со всеми экранами.</p>
-            </div>
-            <div class="rec-item">
-              <strong>Подключение</strong>
-              <p>Можно загрузить собственный JSON со значениями по городу, загрязнителям и районам. После загрузки интерфейс перестраивается автоматически.</p>
-            </div>
-          </div>
+        
         </div>
 
 
         
-        <div class="card" style="margin-top:18px;">
-          <h3>Подключение реальных данных WAQI</h3>
-          <div class="sub">Подключение официального API качества воздуха. Токен сохраняется в браузере, а текущие значения подгружаются в интерфейс без смены дизайна.</div>
-          <div class="grid grid-3">
-            <div class="rec-item">
-              <strong>Токен API</strong>
-              <p><input id="waqiTokenInput" class="selector" type="text" value="e39aa4917168a870cfbf2592cac90cd50097a16e" placeholder="Вставьте WAQI token" style="width:100%;"></p>
-            </div>
-            <div class="rec-item">
-              <strong>Город запроса</strong>
-              <p><input id="waqiCityInput" class="selector" type="text" value="tashkent" placeholder="tashkent" style="width:100%;"></p>
-            </div>
-            <div class="rec-item">
-              <strong>Действия</strong>
-              <p style="display:flex;gap:10px;flex-wrap:wrap;">
-                <button id="connectWaqiBtn" class="ghost-btn">Подключить WAQI</button>
-                <button id="clearWaqiBtn" class="ghost-btn">Очистить token</button>
-              </p>
-            </div>
-          </div>
+        
           <div class="data-status-row">
             <div class="data-pill" id="waqiStatusPill">WAQI: не подключен</div>
             <div class="data-pill" id="waqiUpdatedPill">Последнее обновление: —</div>
           </div>
         </div>
 
-<div class="status-console">
-          <div class="console-card">
-            <div class="k">Источник</div>
-            <div class="v" id="consoleSource">Demo</div>
-            <div class="f">Показывает активный тип слоя данных.</div>
-          </div>
-          <div class="console-card">
-            <div class="k">Режим</div>
-            <div class="v" id="consoleMode">Master</div>
-            <div class="f">Master-режим или внешний JSON.</div>
-          </div>
-          <div class="console-card">
-            <div class="k">Состояние</div>
-            <div class="v" id="consoleState">Готов</div>
-            <div class="f">Интерфейс синхронизирован со всеми экранами.</div>
-          </div>
-        </div>
 
-        <div class="grid grid-2" style="margin-top:18px;">
-          <div class="card">
-            <h3>Готовность к пилоту</h3>
-            <div class="sub">Переход от демо-версии к пилотному контуру для города, предприятия или акселерационной подачи.</div>
-            <div class="recommend-list">
-              <div class="rec-item"><strong>Интерфейс зафиксирован</strong><p>Ключевая структура экранов и верхняя панель управления закреплены как master-слой.</p></div>
-              <div class="rec-item"><strong>Слой данных подключаемый</strong><p>Система уже принимает внешний JSON без перестройки интерфейса.</p></div>
-              <div class="rec-item"><strong>Пилотный сценарий готов</strong><p>Есть карта, прогноз, уведомления, районная аналитика, городская панель и блок для предприятий.</p></div>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Проверка слоя данных</h3>
-            <div class="sub">Контрольный блок для демонстрации того, что продукт готов к загрузке и замене данных без переделки логики.</div>
-            <div class="recommend-list">
-              <div class="rec-item"><strong>Текущий источник</strong><p id="validationSource">Демонстрационный встроенный набор данных.</p></div>
-              <div class="rec-item"><strong>Статус структуры</strong><p id="validationStructure">Структура данных согласована с картой, прогнозом, районами и панелями.</p></div>
-              <div class="rec-item"><strong>Действие</strong><p>Можно загрузить внешний JSON, проверить результат, затем сбросить данные обратно.</p></div>
-            </div>
-          </div>
+
+        
         </div>
 
 
@@ -1773,32 +1727,7 @@
           </div>
         </div>
 
-        
-        <div class="access-panel">
-          <div class="access-head">
-            <div>
-              <h3>Государственный доступ</h3>
-              <div class="sub">Этот контур предназначен для города, министерств и операторов мониторинга. Вход выполняется по ключу доступа.</div>
-            </div>
-            <div class="access-status access-locked" id="govAccessStatus">Доступ закрыт</div>
-          </div>
-          <div class="access-grid">
-            <input id="govAccessCode" class="selector" type="password" placeholder="Введите ключ государственного доступа">
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button id="govUnlockBtn" class="ghost-btn">Открыть доступ</button>
-              <button id="govLockBtn" class="ghost-btn">Закрыть</button>
-            </div>
-          </div>
-          <div class="role-chip-row">
-            <div class="chip">Контур: B2G</div>
-            <div class="chip">Назначение: город / министерство</div>
-            <div class="chip">Режим: закрытый доступ</div>
-          </div>
-          <div class="access-note">Для демо и пилота используется локальный ключ доступа. На следующем этапе это переводится на backend-auth и персональные роли.</div>
-        </div>
-
-        <div id="govProtected" class="access-protected">
-<div class="card" style="margin-bottom:18px;">
+        <div class="card" style="margin-bottom:18px;">
           <h3>Ключевые показатели по городу</h3>
           <div class="sub">Основные показатели, связанные с текущими настройками.</div>
           <div class="kpi-grid" id="govKpiGrid"></div>
@@ -1822,7 +1751,6 @@
             <div class="recommend-list" id="govActions"></div>
           </div>
         </div>
-        </div>
       </section>
 
       <section class="screen" id="business">
@@ -1840,32 +1768,7 @@
           </div>
         </div>
 
-        
-        <div class="access-panel">
-          <div class="access-head">
-            <div>
-              <h3>Доступ для предприятий</h3>
-              <div class="sub">Этот контур предназначен для объектов, работодателей и корпоративных клиентов. Вход выполняется по ключу доступа или демонстрационному паролю.</div>
-            </div>
-            <div class="access-status access-locked" id="businessAccessStatus">Доступ закрыт</div>
-          </div>
-          <div class="access-grid">
-            <input id="businessAccessCode" class="selector" type="password" placeholder="Введите ключ доступа предприятия">
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button id="businessUnlockBtn" class="ghost-btn">Открыть доступ</button>
-              <button id="businessLockBtn" class="ghost-btn">Закрыть</button>
-            </div>
-          </div>
-          <div class="role-chip-row">
-            <div class="chip">Контур: B2B</div>
-            <div class="chip">Назначение: предприятия / объекты</div>
-            <div class="chip">Режим: закрытый доступ</div>
-          </div>
-          <div class="access-note">Для демонстрации используется локальный ключ. При следующем этапе это переводится на backend-аутентификацию и отдельные учётные записи.</div>
-        </div>
-
-        <div id="businessProtected" class="access-protected">
-<div class="action-toolbar">
+        <div class="action-toolbar">
           <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
           <button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
         </div>
@@ -1913,7 +1816,6 @@
             <div class="rec-item"><strong>Подписка для предприятий</strong><p>Доступ к аналитике по объектам, оповещениям, отчетности и протоколам реагирования.</p></div>
             <div class="rec-item"><strong>Премиум для жителей</strong><p>Расширенные уведомления, персональные рекомендации и история показателей по районам.</p></div>
           </div>
-        </div>
         </div>
         </div>
       </section>
@@ -2442,44 +2344,42 @@
       `;
     }
 
-    
-function updateGov() {
+    function updateGov() {
       const pollutant = getCurrentPollutant();
       const sorted = currentSortedDistricts();
       const top = sorted[0];
       const elevatedCount = sorted.filter(row => ['orange','red'].includes(getRiskClass(row[state.window]))).length;
       document.getElementById('govWindow').textContent = pollutant.govWindow;
-      document.getElementById('govNarrative').textContent = `Городской контур объединяет ${pollutant.label}, рейтинг районов и приоритетные меры в одну операционную панель краткосрочного реагирования.`;
+      document.getElementById('govNarrative').textContent = `${pollutant.label} risk, district ranking, and intervention priorities are aggregated here for short-term operational planning.`;
       document.getElementById('govMetricHead').textContent = pollutant.label;
       document.getElementById('govKpiGrid').innerHTML = `
-        <div class="kpi"><div class="kicker">Городской ${pollutant.label}</div><div class="big">${formatValue(pollutant.cityValue[state.window])}</div><div class="foot">Текущее значение в выбранном окне</div></div>
+        <div class="kpi"><div class="kicker">Городской ${pollutant.label}</div><div class="big">${formatValue(pollutant.cityValue[state.window])}</div><div class="foot">Текущее среднее значение в выбранном окне</div></div>
         <div class="kpi"><div class="kicker">Критические районы</div><div class="big">${elevatedCount}</div><div class="foot">Выше порога повышенного риска</div></div>
-        <div class="kpi"><div class="kicker">Приоритетный район</div><div class="big">${top.name}</div><div class="foot">${formatValue(top[state.window])}</div></div>
-        <div class="kpi"><div class="kicker">Статус вмешательства</div><div class="big">${riskLabel(getRiskClass(top[state.window]))}</div><div class="foot">Рекомендуется реагирование</div></div>
+        <div class="kpi"><div class="kicker">Top district</div><div class="big">${top.name}</div><div class="foot">${formatValue(top[state.window])}</div></div>
+        <div class="kpi"><div class="kicker">Приоритет status</div><div class="big">${riskLabel(getRiskClass(top[state.window]))}</div><div class="foot">Intervention advised</div></div>
       `;
       document.getElementById('govTableBody').innerHTML = sorted.slice(0, 4).map(row => `<tr><td>${row.name}</td><td>${formatValue(row[state.window])}</td><td>${row.trend}</td><td>${riskLabel(getRiskClass(row[state.window]))}</td></tr>`).join('');
       document.getElementById('govActions').innerHTML = `
-        <div class="rec-item"><strong>Городская коммуникация</strong><p>${pollutant.actions.government}</p></div>
-        <div class="rec-item"><strong>Усиление наблюдения</strong><p>Сфокусировать наблюдение на ${top.name} и следующем районе по рейтингу при текущем сценарии ${pollutant.label}.</p></div>
-        <div class="rec-item"><strong>Районный приоритет</strong><p>Использовать сравнительную таблицу для приоритизации проверок, уведомлений и распределения ресурсов.</p></div>
+        <div class="rec-item"><strong>Public communication</strong><p>${pollutant.actions.government}</p></div>
+        <div class="rec-item"><strong>Наблюдениеing reinforcement</strong><p>Increase observation focus on ${top.name} and the next-ranked district under the current ${pollutant.label} scenario.</p></div>
+        <div class="rec-item"><strong>район review</strong><p>Use the comparison table to prioritize inspections, alerts, and resource allocation.</p></div>
       `;
     }
 
-    
-function updateBusiness() {
+    function updateBusiness() {
       const pollutant = getCurrentPollutant();
-      document.getElementById('businessNarrative').textContent = `Бизнес-контур переводит ${pollutant.label} в прикладные решения для объектов, безопасности персонала и регулярной отчётности.`;
+      document.getElementById('businessNarrative').textContent = `The business layer translates ${pollutant.label} intelligence into operational decisions, staff safety guidance, and periodic reporting value.`;
       document.getElementById('facilityTableBody').innerHTML = appData.facilities.map(f => {
         const d = appData.districts[f.district][state.pollutant];
         const cls = getRiskClass(d[state.window]);
-        const statusMap = { green: 'Стабильно', yellow: 'Наблюдение', orange: 'Нужно реагировать', red: 'Приоритетное действие' };
+        const statusMap = { green: 'Stable', yellow: 'Наблюдение', orange: 'Нужно реагировать', red: 'Приоритет action' };
         return `<tr><td>${f.name}</td><td>${appData.districts[f.district].name}</td><td>${riskLabel(cls)}</td><td>${d.trend}</td><td>${statusMap[cls]}</td></tr>`;
       }).join('');
       document.getElementById('businessOutputs').innerHTML = `
-        <div class="rec-item"><strong>Операционные уведомления</strong><p>Сообщать менеджерам, когда риск по ${pollutant.label} превышает допустимый порог для объекта.</p></div>
+        <div class="rec-item"><strong>Operational alerting</strong><p>Notify managers when ${pollutant.label} risk exceeds business-defined thresholds at tracked facilities.</p></div>
         <div class="rec-item"><strong>Безопасность персонала</strong><p>${pollutant.actions.business}</p></div>
-        <div class="rec-item"><strong>Ежемесячная отчётность</strong><p>Формировать районные сводки по нагрузке и краткие отчёты по рискам для объектов.</p></div>
-        <div class="rec-item"><strong>Сценарное планирование</strong><p>Сдвигать наружные работы и чувствительные операции вне пиковых окон воздействия.</p></div>
+        <div class="rec-item"><strong>Ежемесячная отчётность</strong><p>Формирование районных сводок по нагрузке и кратких отчётов по рискам для объектов.</p></div>
+        <div class="rec-item"><strong>Сценарное планирование</strong><p>Use current and forecast windows to shift outdoor operations away from peak exposure periods.</p></div>
       `;
     }
 
@@ -2656,75 +2556,7 @@ function updateBusiness() {
           updatedPill.textContent = `Последнее обновление: ${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}`;
         }
 
-    
-    const ACCESS_KEYS = {
-      gov: 'GOV-2030-UZ',
-      business: 'BIZ-AIR-2026'
-    };
-
-    function setProtectedState(type, isOpen) {
-      const protectedBlock = document.getElementById(type + 'Protected');
-      const statusEl = document.getElementById(type + 'AccessStatus');
-      if (protectedBlock) protectedBlock.classList.toggle('open', isOpen);
-      if (statusEl) {
-        statusEl.textContent = isOpen ? 'Доступ открыт' : 'Доступ закрыт';
-        statusEl.classList.toggle('access-open', isOpen);
-        statusEl.classList.toggle('access-locked', !isOpen);
-      }
-      localStorage.setItem('airguard_access_' + type, isOpen ? '1' : '0');
-      updateAccessScopeChip();
-    }
-
-    function updateAccessScopeChip() {
-      const chip = document.getElementById('accessScopeChip');
-      if (!chip) return;
-      const scopes = ['общий'];
-      if (localStorage.getItem('airguard_access_gov') === '1') scopes.push('B2G');
-      if (localStorage.getItem('airguard_access_business') === '1') scopes.push('B2B');
-      chip.textContent = 'Доступ: ' + scopes.join(' · ');
-    }
-
-    function bindProtectedAccess() {
-      const configs = [
-        { type: 'gov', input: 'govAccessCode', unlock: 'govUnlockBtn', lock: 'govLockBtn' },
-        { type: 'business', input: 'businessAccessCode', unlock: 'businessUnlockBtn', lock: 'businessLockBtn' }
-      ];
-
-      configs.forEach(cfg => {
-        const input = document.getElementById(cfg.input);
-        const unlockBtn = document.getElementById(cfg.unlock);
-        const lockBtn = document.getElementById(cfg.lock);
-        if (!input || !unlockBtn || !lockBtn) return;
-
-        const stored = localStorage.getItem('airguard_access_' + cfg.type) === '1';
-        setProtectedState(cfg.type, stored);
-
-        unlockBtn.addEventListener('click', () => {
-          const value = (input.value || '').trim();
-          if (value === ACCESS_KEYS[cfg.type]) {
-            setProtectedState(cfg.type, true);
-            input.value = '';
-          } else {
-            input.value = '';
-            input.placeholder = 'Неверный ключ доступа';
-          }
-        });
-
-        lockBtn.addEventListener('click', () => {
-          setProtectedState(cfg.type, false);
-        });
-
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') unlockBtn.click();
-        });
-      });
-
-      updateAccessScopeChip();
-    }
-
-
-    bindProtectedAccess();
-    updateAll();
+        updateAll();
       } catch (e) {
         if (statusPill) {
           statusPill.textContent = 'OpenWeather: ошибка подключения';
@@ -4112,5 +3944,201 @@ updateUserLayer();
 })();
 </script>
 
-</body>
-</html>
+
+<div class="access-gate" id="accessGate">
+  <div class="access-card">
+    <h3 id="accessGateTitle">Закрытый контур доступа</h3>
+    <p id="accessGateText">Этот раздел доступен только после ввода ключа доступа.</p>
+    <div class="access-note" id="accessGateNote">Пользовательский режим остаётся открытым. Для бизнес- и государственного контура требуется отдельный ключ доступа.</div>
+    <div class="access-grid">
+      <input id="accessKeyInput" class="selector" type="password" placeholder="Введите ключ доступа" style="width:100%;">
+    </div>
+    <div class="access-error" id="accessError"></div>
+    <div class="action-toolbar" style="margin-bottom:0;">
+      <button class="ghost-btn" id="accessSubmitBtn">Открыть доступ</button>
+      <button class="ghost-btn" id="accessCancelBtn">Отмена</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function() {
+  const ACCESS_KEYS = {
+    business: 'BIZ-AIR-2026',
+    gov: 'GOV-2030-UZ'
+  };
+
+  const ACCESS_LABELS = {
+    general: 'пользователь',
+    business: 'бизнес',
+    gov: 'государство'
+  };
+
+  const ACCESS_TARGET_SCREEN = {
+    general: 'overview',
+    business: 'business',
+    gov: 'gov'
+  };
+
+  let pendingMode = null;
+
+  function getAccessState() {
+    try {
+      return JSON.parse(localStorage.getItem('airguardAccessState') || '{"general":true,"business":false,"gov":false}');
+    } catch(e) {
+      return { general: true, business: false, gov: false };
+    }
+  }
+
+  function setAccessState(state) {
+    localStorage.setItem('airguardAccessState', JSON.stringify(state));
+  }
+
+  function activateMode(mode) {
+    const chip = document.getElementById('accessChip');
+    if (chip) chip.textContent = 'Доступ: ' + (ACCESS_LABELS[mode] || 'пользователь');
+
+    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.accessTarget === mode);
+    });
+
+    const targetScreen = ACCESS_TARGET_SCREEN[mode] || 'overview';
+    const btn = document.querySelector(`.nav button[data-screen="${targetScreen}"]`);
+    if (btn) btn.click();
+  }
+
+  function openGate(mode) {
+    pendingMode = mode;
+    const gate = document.getElementById('accessGate');
+    const title = document.getElementById('accessGateTitle');
+    const text = document.getElementById('accessGateText');
+    const input = document.getElementById('accessKeyInput');
+    const error = document.getElementById('accessError');
+
+    title.textContent = mode === 'gov' ? 'Доступ к государственному контуру' : 'Доступ к бизнес-контуру';
+    text.textContent = mode === 'gov'
+      ? 'Государственный контур содержит расширенный слой мониторинга, приоритетов реагирования и управленческой аналитики.'
+      : 'Бизнес-контур содержит расширенную аналитику рисков, рекомендации по объектам и операционные сценарии для предприятий.';
+    input.value = '';
+    error.textContent = '';
+    gate.classList.add('open');
+    setTimeout(() => input.focus(), 40);
+  }
+
+  function closeGate() {
+    const gate = document.getElementById('accessGate');
+    gate.classList.remove('open');
+    pendingMode = null;
+  }
+
+  function submitGate() {
+    const input = document.getElementById('accessKeyInput');
+    const error = document.getElementById('accessError');
+    if (!pendingMode) return;
+    const value = (input.value || '').trim();
+    if (value !== ACCESS_KEYS[pendingMode]) {
+      error.textContent = 'Неверный ключ доступа.';
+      return;
+    }
+
+    const state = getAccessState();
+    state[pendingMode] = true;
+    setAccessState(state);
+    closeGate();
+    activateMode(pendingMode);
+  }
+
+  function bindAccessSwitch() {
+    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.accessTarget;
+        if (mode === 'general') {
+          activateMode('general');
+          return;
+        }
+        const state = getAccessState();
+        if (!state[mode]) {
+          openGate(mode);
+          return;
+        }
+        activateMode(mode);
+      });
+    });
+
+    const businessBtn = document.querySelector('.nav button[data-screen="business"]');
+    const govBtn = document.querySelector('.nav button[data-screen="gov"]');
+
+    if (businessBtn) {
+      businessBtn.addEventListener('click', (e) => {
+        const state = getAccessState();
+        if (!state.business) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          openGate('business');
+        } else {
+          const chip = document.getElementById('accessChip');
+          if (chip) chip.textContent = 'Доступ: бизнес';
+          document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.accessTarget === 'business');
+          });
+        }
+      }, true);
+    }
+
+    if (govBtn) {
+      govBtn.addEventListener('click', (e) => {
+        const state = getAccessState();
+        if (!state.gov) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          openGate('gov');
+        } else {
+          const chip = document.getElementById('accessChip');
+          if (chip) chip.textContent = 'Доступ: государство';
+          document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.accessTarget === 'gov');
+          });
+        }
+      }, true);
+    }
+
+    document.getElementById('accessSubmitBtn')?.addEventListener('click', submitGate);
+    document.getElementById('accessCancelBtn')?.addEventListener('click', closeGate);
+    document.getElementById('accessGate')?.addEventListener('click', (e) => {
+      if (e.target.id === 'accessGate') closeGate();
+    });
+    document.getElementById('accessKeyInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitGate();
+    });
+  }
+
+  function hideDeveloperSurface() {
+    const headingsToHide = [
+      'Слой данных',
+      'Подключение реальных данных WAQI',
+      'Готовность к пилоту',
+      'Проверка слоя данных',
+      'Режим реальной работы',
+      'Как запустить по-настоящему',
+      'Управление данными пилота'
+    ];
+    document.querySelectorAll('.card').forEach(card => {
+      const h3 = card.querySelector('h3');
+      if (h3 && headingsToHide.includes(h3.textContent.trim())) {
+        card.style.display = 'none';
+      }
+    });
+    const console = document.querySelector('.status-console');
+    if (console) console.style.display = 'none';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    bindAccessSwitch();
+    hideDeveloperSurface();
+    activateMode('general');
+  });
+})();
+</script>
+
+</body></html>
