@@ -1620,7 +1620,7 @@
 <option value="24h">24 часа</option>
 <option value="7d">7 дней</option>
 </select>
-<button class="ghost-btn" id="simulateBtn">Обновить данные</button>
+<button class="ghost-btn active" id="simulateBtn">Имитация обновления: ВКЛ</button>
 <button class="ghost-btn" id="installBtn" style="display:none;">Установить приложение</button>
 </div>
 <div class="topbar-right">
@@ -2095,8 +2095,8 @@
 <div class="recommend-list" id="businessOutputs"></div>
 </div>
 </div>
-</div>
-</section><section class="screen" id="user">
+</section>
+<section class="screen" id="user">
 <div class="premium-hero">
 <h3>Пользовательский контур</h3>
 <p>Здесь остаются только те функции, которые нужны обычному человеку: понять риск, получить простое решение, увидеть прогноз и персональные уведомления.</p>
@@ -4835,216 +4835,6 @@ updateUserLayer();
     bindUserOverviewFix();
     setTimeout(userOverviewFix, 80);
     setTimeout(userOverviewFix, 400);
-  });
-})();
-</script>
-
-
-<script>
-(function () {
-  const API_ENDPOINT = '/api/realtime/summary';
-  const CITY_LABELS = { tashkent: 'Ташкент' };
-  let refreshTimer = null;
-  let inFlight = false;
-
-  function byId(id) { return document.getElementById(id); }
-  function setText(id, value) { const el = byId(id); if (el) el.textContent = value; }
-  function setHtml(id, value) { const el = byId(id); if (el) el.innerHTML = value; }
-  function nowTime() { return new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
-
-  function valueStatus(value) {
-    if (value >= 151) return { cls: 'red', label: 'Высокий' };
-    if (value >= 101) return { cls: 'orange', label: 'Повышенный' };
-    if (value >= 51) return { cls: 'yellow', label: 'Умеренный' };
-    return { cls: 'green', label: 'Низкий' };
-  }
-
-  function riskLabelFromAQI(aqi) {
-    if (aqi >= 151) return 'Высокий';
-    if (aqi >= 101) return 'Повышенный';
-    if (aqi >= 51) return 'Умеренный';
-    return 'Низкий';
-  }
-
-  function riskDotHtml(aqi) {
-    const map = valueStatus(aqi);
-    return `<i class="dot ${map.cls}"></i>Следующие 24 часа`;
-  }
-
-  function makeSeries(base, offsets) {
-    return offsets.map(v => Math.max(0, Math.round(base + v)));
-  }
-
-  function applyDistrictScaling(baseAqi, basePm25, baseCo2) {
-    const districtFactors = {
-      yunusabad: 1.05,
-      chilanzar: 0.98,
-      mirzo: 0.88,
-      bektemir: 0.72,
-    };
-    Object.entries(districtFactors).forEach(([key, factor]) => {
-      const district = appData?.districts?.[key];
-      if (!district) return;
-      const aqiLive = Math.max(0, Math.round(baseAqi * factor));
-      const pmLive = Math.max(0, Math.round(basePm25 * factor));
-      const co2Live = Math.max(0, Math.round(baseCo2 * (0.94 + (factor - 0.72) * 0.45)));
-      district.aqi.live = aqiLive;
-      district.aqi['24h'] = Math.max(0, Math.round(aqiLive * 0.97));
-      district.aqi['7d'] = Math.max(0, Math.round(aqiLive * 0.92));
-      district.aqi.series = makeSeries(aqiLive, [-13, -6, 0, -2, -8, -18, -11]);
-      district.aqi.trend = `${aqiLive >= district.aqi['24h'] ? '+' : ''}${Math.round(((aqiLive - district.aqi['24h']) / Math.max(1, district.aqi['24h'])) * 100)}%`;
-
-      district.pm25.live = pmLive;
-      district.pm25['24h'] = Math.max(0, Math.round(pmLive * 0.96));
-      district.pm25['7d'] = Math.max(0, Math.round(pmLive * 0.90));
-      district.pm25.series = makeSeries(pmLive, [-10, -4, 0, -2, -7, -16, -11]);
-      district.pm25.trend = `${pmLive >= district.pm25['24h'] ? '+' : ''}${Math.round(((pmLive - district.pm25['24h']) / Math.max(1, district.pm25['24h'])) * 100)}%`;
-
-      district.co2.live = co2Live;
-      district.co2['24h'] = Math.max(0, Math.round(co2Live * 0.985));
-      district.co2['7d'] = Math.max(0, Math.round(co2Live * 0.97));
-      district.co2.series = makeSeries(co2Live, [-24, -11, 0, -7, -16, -33, -26]);
-      district.co2.trend = `${co2Live >= district.co2['24h'] ? '+' : ''}${Math.round(((co2Live - district.co2['24h']) / Math.max(1, district.co2['24h'])) * 100)}%`;
-    });
-  }
-
-  function applyRealtimeSummary(payload) {
-    const cityCode = (window.state && state.city) || 'tashkent';
-    const cityLabel = payload?.city?.display_name || CITY_LABELS[cityCode] || cityCode;
-    const aqi = Number(payload?.air?.aqi || 0);
-    const pm25 = Number(payload?.air?.pm25 || 0);
-    const co2 = Number(payload?.air?.co2 || 0);
-    const temp = Number(payload?.weather?.temperature_c || 0);
-    const humidity = Number(payload?.weather?.humidity || 0);
-    const wind = Number(payload?.weather?.wind_mps || 0);
-    const desc = payload?.weather?.description || 'без описания';
-    const status = valueStatus(aqi);
-
-    if (window.appData && appData.pollutants) {
-      appData.city = cityLabel;
-      appData.pollutants.aqi.cityValue.live = aqi;
-      appData.pollutants.aqi.cityValue['24h'] = Math.max(0, Math.round(aqi * 0.97));
-      appData.pollutants.aqi.cityValue['7d'] = Math.max(0, Math.round(aqi * 0.92));
-      appData.pollutants.aqi.forecast = makeSeries(aqi, [-9, 0, 12, 5, -8, -19, -11]);
-      appData.pollutants.aqi.summary = `Текущее качество воздуха по ${cityLabel} обновлено по реальному API. Основной риск сейчас связан с городским трафиком, слабым рассеиванием и районными пиками воздействия.`;
-      appData.pollutants.aqi.aiSummary = `Реальный поток данных показывает, что ${cityLabel} требует постоянного мониторинга по AQI. Приоритет смещается в районы с транспортной и смешанной городской нагрузкой.`;
-      appData.pollutants.aqi.narrative = `Следующее окно контроля формируется по живым данным WAQI и погодному слою OpenWeather. При слабом ветре и вечерней нагрузке риск растёт быстрее.`;
-      appData.pollutants.aqi.confidence = 91;
-
-      appData.pollutants.pm25.cityValue.live = pm25;
-      appData.pollutants.pm25.cityValue['24h'] = Math.max(0, Math.round(pm25 * 0.96));
-      appData.pollutants.pm25.cityValue['7d'] = Math.max(0, Math.round(pm25 * 0.90));
-      appData.pollutants.pm25.forecast = makeSeries(pm25, [-8, 0, 7, 3, -6, -14, -9]);
-      appData.pollutants.pm25.summary = `Текущая концентрация PM2.5 обновлена из реального потока данных. Для чувствительных групп нужен более осторожный режим в пиковые часы.`;
-      appData.pollutants.pm25.aiSummary = `Мелкие частицы остаются ключевым фактором краткосрочной нагрузки. Наиболее уязвимы зоны плотного трафика и коридоры со слабым проветриванием.`;
-      appData.pollutants.pm25.narrative = `PM2.5 обновляется по реальному API. При слабом ветре и вечернем трафике система закладывает повышенное окно наблюдения.`;
-      appData.pollutants.pm25.confidence = 90;
-
-      appData.pollutants.co2.cityValue.live = co2;
-      appData.pollutants.co2.cityValue['24h'] = Math.max(0, Math.round(co2 * 0.985));
-      appData.pollutants.co2.cityValue['7d'] = Math.max(0, Math.round(co2 * 0.97));
-      appData.pollutants.co2.forecast = makeSeries(co2, [-26, 0, 18, 9, -14, -31, -23]);
-      appData.pollutants.co2.summary = `Городской фон CO2 обновлён через серверный слой. Плотные транспортные и смешанные коммерческие зоны требуют регулярной сверки.`;
-      appData.pollutants.co2.aiSummary = `CO2 используется как дополнительный индикатор городского накопления. Он помогает оценивать плотность и эффективность рассеивания в реальном времени.`;
-      appData.pollutants.co2.narrative = `CO2 обновляется по реальному API и используется в совокупности с AQI и PM2.5 для общей картины нагрузки.`;
-      appData.pollutants.co2.confidence = 88;
-
-      applyDistrictScaling(aqi, pm25, co2);
-    }
-
-    setText('heroMainValue', String(aqi));
-    setText('metric1Value', String(aqi));
-    setText('metricPm', String(pm25));
-    setText('metricCo2', String(co2));
-    setText('riskValue', riskLabelFromAQI(aqi));
-    setHtml('riskDot', riskDotHtml(aqi));
-    setText('overviewTitle', `Оперативная аналитика качества воздуха по ${cityLabel}.`);
-    setText('overviewText', `Интерфейс обновлён реальным API-слоем. Система получает AQI, PM2.5, CO2 и погодный контекст через серверный endpoint и пересчитывает пользовательский, бизнес- и государственный контуры.`);
-    setText('heroSummary', `Сейчас по ${cityLabel} зафиксирован показатель AQI ${aqi}. PM2.5: ${pm25} µg/m³, CO2: ${co2} ppm. Погодный контекст: ${desc}, ветер ${wind} м/с, температура ${temp}°C, влажность ${humidity}%.`);
-    setText('weatherSummaryBox', `Погодный слой активен: ${desc}. Скорость ветра ${wind} м/с, температура ${temp}°C, влажность ${humidity}%. Эти параметры используются вместе с AQI и PM2.5 в реальном сценарии.`);
-    setText('weatherWindValue', `${wind} м/с`);
-    setText('weatherWindText', wind <= 2 ? 'Слабый ветер — риск накопления загрязнения выше' : 'Ветер помогает рассеиванию загрязнения');
-    setText('weatherTempValue', `${temp}°C`);
-    setText('weatherHumidityText', `Влажность: ${humidity}%`);
-    setText('metric1Status', `${status.label}`);
-
-    const metric1Status = byId('metric1Status');
-    if (metric1Status) metric1Status.innerHTML = `<i class="dot ${status.cls}"></i>${status.label}`;
-
-    setText('contextChip', `${cityLabel} · ${(appData?.pollutants?.[state.pollutant]?.label) || 'AQI'} · ${(appData?.windows?.[state.window]) || 'Сейчас'}`);
-    setText('refreshChip', `API обновлено ${nowTime()}`);
-    setText('dataChip', 'Источник данных: серверный API · WAQI + OpenWeather');
-    setText('liveSummary', 'Система использует живой серверный endpoint и синхронизирует обзор, карту, прогноз, уведомления и контуры доступа по реальным данным.');
-
-    localStorage.setItem('airguardRealtimeSummary', JSON.stringify({ ts: Date.now(), payload }));
-
-    if (typeof updateAll === 'function') updateAll();
-    if (typeof fullSyncV24 === 'function') fullSyncV24();
-  }
-
-  async function fetchRealtimeSummary() {
-    if (inFlight) return;
-    inFlight = true;
-    const btn = byId('simulateBtn');
-    const cityCode = (window.state && state.city) || 'tashkent';
-    try {
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Обновление API...';
-      }
-      setText('refreshChip', 'Идёт обновление API...');
-      const url = `${API_ENDPOINT}?city=${encodeURIComponent(cityCode)}`;
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const payload = await response.json();
-      applyRealtimeSummary(payload);
-    } catch (error) {
-      const snapshotRaw = localStorage.getItem('airguardRealtimeSummary');
-      if (snapshotRaw) {
-        try {
-          const snapshot = JSON.parse(snapshotRaw);
-          if (snapshot?.payload) {
-            applyRealtimeSummary(snapshot.payload);
-            setText('refreshChip', `API offline · используется сохранённый снимок ${nowTime()}`);
-            setText('dataChip', 'Источник данных: сохранённый API-снимок');
-          }
-        } catch (_) {}
-      }
-      if (byId('refreshChip')?.textContent === 'Идёт обновление API...') {
-        setText('refreshChip', 'Ошибка API соединения');
-      }
-      console.error('AirGuard realtime API error:', error);
-    } finally {
-      inFlight = false;
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = 'Обновить данные';
-      }
-    }
-  }
-
-  function bindRealtimeApiLayer() {
-    const oldBtn = byId('simulateBtn');
-    if (oldBtn && !oldBtn.dataset.apiBound) {
-      const newBtn = oldBtn.cloneNode(true);
-      newBtn.dataset.apiBound = '1';
-      oldBtn.parentNode.replaceChild(newBtn, oldBtn);
-      newBtn.addEventListener('click', fetchRealtimeSummary);
-    }
-
-    const citySelect = byId('citySelect');
-    if (citySelect && !citySelect.dataset.apiBound) {
-      citySelect.dataset.apiBound = '1';
-      citySelect.addEventListener('change', () => setTimeout(fetchRealtimeSummary, 80));
-    }
-
-    if (refreshTimer) clearInterval(refreshTimer);
-    refreshTimer = setInterval(fetchRealtimeSummary, 300000);
-  }
-
-  window.addEventListener('load', () => {
-    bindRealtimeApiLayer();
-    setTimeout(fetchRealtimeSummary, 300);
   });
 })();
 </script>
