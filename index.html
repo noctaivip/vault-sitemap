@@ -5033,4 +5033,50 @@ updateUserLayer();
 })();
 </script>
 
+
+<script>
+(function() {
+  function scrollToPaneTop() {
+    const pane = document.querySelector('.content-pane');
+    if (!pane) return;
+    const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    pane.scrollTop = 0;
+  }
+
+  function bindScreenTopFix() {
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(scrollToPaneTop, 30);
+      });
+    });
+
+    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(scrollToPaneTop, 30);
+      });
+    });
+
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(scrollToPaneTop, 30);
+      });
+    });
+
+    const screens = document.querySelectorAll('.screen');
+    const observer = new MutationObserver(() => {
+      const active = document.querySelector('.screen.active');
+      if (active) {
+        setTimeout(scrollToPaneTop, 20);
+      }
+    });
+    screens.forEach(screen => observer.observe(screen, { attributes: true, attributeFilter: ['class'] }));
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    bindScreenTopFix();
+  });
+})();
+</script>
+
 </body></html>
