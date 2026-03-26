@@ -891,7 +891,212 @@
     
     
     
-    .premium-hero {
+    
+    
+    .impact-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .impact-card {
+      padding:18px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        radial-gradient(circle at 82% 12%, rgba(97,225,255,.10), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.015);
+    }
+
+    .impact-card .ey {
+      font-size:11px;
+      color: var(--muted);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .impact-card .value {
+      font-size:36px;
+      letter-spacing:-.04em;
+      margin-bottom:8px;
+    }
+
+    .impact-card .desc {
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .command-strip {
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .command-box {
+      padding:20px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.06);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+    }
+
+    .command-box h3 {
+      margin:0 0 8px;
+      font-size:20px;
+      letter-spacing:-.02em;
+    }
+
+    .command-box p {
+      margin:0;
+      color: var(--muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .command-list {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .command-item {
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.024);
+    }
+
+    .command-item strong {
+      display:block;
+      margin-bottom:6px;
+      font-size:14px;
+    }
+
+    .command-item span {
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .wow-panel {
+      position:relative;
+      overflow:hidden;
+    }
+
+    .wow-panel::after {
+      content:"";
+      position:absolute;
+      inset:auto -20% -35% auto;
+      width:240px;
+      height:240px;
+      background: radial-gradient(circle, rgba(97,225,255,.10), transparent 68%);
+      pointer-events:none;
+    }
+
+.mode-shell {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+
+    .mode-badge {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:44px;
+      height:44px;
+      padding:0 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(97,225,255,.14), rgba(97,225,255,.06));
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text);
+    }
+
+    .mode-summary {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .ops-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .ops-card {
+      padding:18px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .ops-card .ey {
+      font-size:11px;
+      color: var(--muted);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .ops-card .tt {
+      font-size:18px;
+      line-height:1.3;
+      margin-bottom:8px;
+    }
+
+    .ops-card .dd {
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      margin-bottom:12px;
+    }
+
+    .ops-list {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .ops-item {
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.022);
+    }
+
+    .ops-item strong {
+      display:block;
+      margin-bottom:6px;
+      font-size:14px;
+    }
+
+    .ops-item span {
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .compact-nav-label {
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+.premium-hero {
       padding: 18px;
       border-radius: 22px;
       border: 1px solid rgba(255,255,255,.07);
@@ -1414,6 +1619,10 @@
           <div class="chip" id="refreshChip">Обновлено только что</div>
           
 <div class="chip" id="dataChip">Источник данных: WAQI + районное моделирование</div>
+<div class="mode-shell" id="modeShell">
+  <div class="mode-badge" id="modeBadge">USER</div>
+  <div class="mode-summary" id="modeSummary">Пользовательский контур: простые решения, прогноз, карта и персональные уведомления.</div>
+</div>
 <div class="chip" id="accessChip">Доступ: пользователь</div>
 <div class="access-switch" id="accessSwitch">
   <button class="access-btn active" data-access-target="general">Пользователь</button>
@@ -1824,7 +2033,60 @@
           </div>
         </div>
 
-        <div class="card" style="margin-bottom:18px;">
+        
+        <div class="ops-grid access-guard gov-guard section-hidden-by-access" id="govOpsGrid">
+          <div class="ops-card">
+            <div class="ey">Сценарий города</div>
+            <div class="tt" id="govScenarioTitle">—</div>
+            <div class="dd" id="govScenarioDesc">—</div>
+            <div class="badge cyan" id="govResponseBadge">Режим</div>
+          </div>
+          <div class="ops-card">
+            <div class="ey">Оперативные указания</div>
+            <div class="ops-list" id="govOpsList"></div>
+          </div>
+          <div class="ops-card">
+            <div class="ey">Контур контроля</div>
+            <div class="ops-list" id="govControlList"></div>
+          </div>
+        </div>
+
+
+        <div class="impact-grid access-guard gov-guard section-hidden-by-access" id="govImpactGrid">
+          <div class="impact-card wow-panel">
+            <div class="ey">Городской контур</div>
+            <div class="value" id="govImpactValue">—</div>
+            <div class="desc" id="govImpactDesc">Интегральный статус города по текущему сценарию.</div>
+          </div>
+          <div class="impact-card wow-panel">
+            <div class="ey">Охват решений</div>
+            <div class="value" id="govCoverageValue">—</div>
+            <div class="desc">Количество контуров, на которые уже можно опираться при управленческом решении.</div>
+          </div>
+          <div class="impact-card wow-panel">
+            <div class="ey">Окно вмешательства</div>
+            <div class="value" id="govWindowValue">—</div>
+            <div class="desc">Критическое окно, где нужен ускоренный цикл коммуникации и контроля.</div>
+          </div>
+        </div>
+
+        <div class="command-strip access-guard gov-guard section-hidden-by-access" id="govCommandStrip">
+          <div class="command-box wow-panel">
+            <h3>Командный бриф для города</h3>
+            <p id="govBriefText">—</p>
+            <div class="command-list" id="govBriefList"></div>
+          </div>
+          <div class="command-box wow-panel">
+            <h3>Почему это выглядит как государственный продукт</h3>
+            <div class="command-list" id="govWhyList">
+              <div class="command-item"><strong>Приоритет районов</strong><span>Система сразу показывает, где нужен контроль и какое окно реагирования важнее всего.</span></div>
+              <div class="command-item"><strong>Оперативные меры</strong><span>Рекомендации ориентированы на реальные действия, а не просто на отображение данных.</span></div>
+              <div class="command-item"><strong>Управленческий контур</strong><span>Интерфейс выглядит как рабочая панель штаба, а не как пользовательский экран.</span></div>
+            </div>
+          </div>
+        </div>
+
+<div class="card" style="margin-bottom:18px;">
           <h3>Ключевые показатели по городу</h3>
           <div class="sub">Основные показатели, связанные с текущими настройками.</div>
           <div class="kpi-grid" id="govKpiGrid"></div>
@@ -1892,6 +2154,59 @@
           </div>
         </div>
 
+        
+        
+        <div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
+          <div class="impact-card wow-panel">
+            <div class="ey">Корпоративный контур</div>
+            <div class="value" id="bizImpactValue">—</div>
+            <div class="desc" id="bizImpactDesc">Интегральный статус корпоративного риска по текущему сценарию.</div>
+          </div>
+          <div class="impact-card wow-panel">
+            <div class="ey">Операционный охват</div>
+            <div class="value" id="bizCoverageValue">—</div>
+            <div class="desc">Количество управляемых направлений: персонал, смены, наружные работы, логистика.</div>
+          </div>
+          <div class="impact-card wow-panel">
+            <div class="ey">Критическое окно</div>
+            <div class="value" id="bizWindowValue">—</div>
+            <div class="desc">Окно, где потери эффективности и риски для персонала максимальны.</div>
+          </div>
+        </div>
+
+        <div class="command-strip access-guard biz-guard section-hidden-by-access" id="bizCommandStrip">
+          <div class="command-box wow-panel">
+            <h3>Исполнительный бриф для предприятия</h3>
+            <p id="bizBriefText">—</p>
+            <div class="command-list" id="bizBriefList"></div>
+          </div>
+          <div class="command-box wow-panel">
+            <h3>Почему это выглядит как B2B продукт</h3>
+            <div class="command-list" id="bizWhyList">
+              <div class="command-item"><strong>Связь с операциями</strong><span>Сигнал качества воздуха сразу переводится в решения по объектам, персоналу и сменам.</span></div>
+              <div class="command-item"><strong>Контроль руководства</strong><span>Режим показывает не только риск, но и конкретные действия для менеджмента.</span></div>
+              <div class="command-item"><strong>Премиальный слой</strong><span>Закрытый доступ формирует ощущение корпоративного сервиса, а не общего публичного инструмента.</span></div>
+            </div>
+          </div>
+        </div>
+
+<div class="ops-grid access-guard biz-guard section-hidden-by-access" id="bizOpsGrid">
+          <div class="ops-card">
+            <div class="ey">Режим предприятия</div>
+            <div class="tt" id="bizScenarioTitle">—</div>
+            <div class="dd" id="bizScenarioDesc">—</div>
+            <div class="badge yellow" id="bizRiskBadge">Операционный риск</div>
+          </div>
+          <div class="ops-card">
+            <div class="ey">Решения для операций</div>
+            <div class="ops-list" id="bizOpsList"></div>
+          </div>
+          <div class="ops-card">
+            <div class="ey">Контур объекта</div>
+            <div class="ops-list" id="bizControlList"></div>
+          </div>
+        </div>
+
         <div class="access-guard biz-guard section-hidden-by-access">
         <div class="action-toolbar">
           <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
@@ -1900,7 +2215,7 @@
 
         
         <div class="card" style="margin-bottom:18px;">
-          <h3>Управление данными пилота</h3>
+          <h3 id="bizDevBlock1Title">Управление данными пилота</h3>
           <div class="sub">Этот блок нужен, чтобы показать не просто красивый интерфейс, а управляемый MVP, который уже можно использовать в тестовом контуре.</div>
           <div class="grid grid-3">
             <div class="rec-item"><strong>Импорт</strong><p>Загрузка JSON из внешнего контура без перестройки интерфейса.</p></div>
@@ -1910,7 +2225,7 @@
         </div>
 
 <div class="card" style="margin-bottom:18px;">
-          <h3>Готовность к подключению внешних данных</h3>
+          <h3 id="bizDevBlock2Title">Готовность к подключению внешних данных</h3>
           <div class="sub">Предприятия и город могут подключать собственные массивы показателей без изменения структуры интерфейса.</div>
           <div class="grid grid-3">
             <div class="rec-item"><strong>Входной формат</strong><p>JSON с городом, загрязнителями, районами и временными окнами.</p></div>
@@ -2045,6 +2360,10 @@
 
 
 <section class="screen" id="user">
+  <div class="premium-hero">
+    <h3>Пользовательский контур</h3>
+    <p>Здесь остаются только те функции, которые нужны обычному человеку: понять риск, получить простое решение, увидеть прогноз и персональные уведомления.</p>
+  </div>
   <div class="hero">
     <h2>Для людей</h2>
     <p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
@@ -4344,6 +4663,373 @@ updateUserLayer();
   window.addEventListener('load', () => {
     setTimeout(syncProtectedSurfacesV23, 400);
   });
+})();
+</script>
+
+
+<script>
+(function() {
+  const MODE_CONFIG = {
+    general: {
+      badge: 'USER',
+      summary: 'Пользовательский контур: простые решения, прогноз, карта и персональные уведомления.',
+      nav: ['overview','map','forecast','alerts','user']
+    },
+    business: {
+      badge: 'B2B',
+      summary: 'Бизнес-контур: объекты, персонал, операционный риск, окна наружных работ и корпоративная отчётность.',
+      nav: ['overview','map','forecast','alerts','business']
+    },
+    gov: {
+      badge: 'B2G',
+      summary: 'Государственный контур: критические районы, меры реагирования, городской контроль и управленческие сценарии.',
+      nav: ['overview','map','forecast','districts','sources','gov']
+    }
+  };
+
+  function accessStateV24() {
+    try {
+      return JSON.parse(localStorage.getItem('airguardAccessState') || '{"general":true,"business":false,"gov":false}');
+    } catch(e) {
+      return { general: true, business: false, gov: false };
+    }
+  }
+
+  function currentModeV24() {
+    const state = accessStateV24();
+    if (state.gov) return 'gov';
+    if (state.business) return 'business';
+    return 'general';
+  }
+
+  function setCurrentMode(mode) {
+    localStorage.setItem('airguardCurrentMode', mode);
+  }
+
+  function getCurrentMode() {
+    const saved = localStorage.getItem('airguardCurrentMode');
+    const access = accessStateV24();
+    if (saved === 'gov' && access.gov) return 'gov';
+    if (saved === 'business' && access.business) return 'business';
+    return 'general';
+  }
+
+  function sortedDistrictsSafe() {
+    if (typeof currentSortedDistricts === 'function') {
+      try { return currentSortedDistricts(); } catch(e) {}
+    }
+    return [];
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function setHTML(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = value;
+  }
+
+  function localCity() {
+    if (typeof appData === 'undefined') return 'Ташкент';
+    const raw = String(appData.city || 'Ташкент');
+    return raw.toLowerCase().includes('tashkent') ? 'Ташкент' : raw;
+  }
+
+  function currentRiskClass() {
+    const v = Number(typeof appData !== 'undefined' ? appData.pollutants?.aqi?.cityValue?.[state.window] || 0 : 0);
+    if (v >= 150) return 'Высокий';
+    if (v >= 100) return 'Повышенный';
+    if (v >= 50) return 'Средний';
+    return 'Низкий';
+  }
+
+  function applyModeNavigation(mode) {
+    const config = MODE_CONFIG[mode];
+    if (!config) return;
+
+    document.querySelectorAll('.nav button').forEach(btn => {
+      const show = config.nav.includes(btn.dataset.screen);
+      btn.style.display = show ? 'flex' : 'none';
+    });
+
+    const badge = document.getElementById('modeBadge');
+    const summary = document.getElementById('modeSummary');
+    if (badge) badge.textContent = config.badge;
+    if (summary) summary.textContent = config.summary;
+
+    // keep access switch visuals
+    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.accessTarget === mode);
+    });
+
+    // ensure active screen belongs to current mode
+    const active = document.querySelector('.screen.active');
+    if (!active || !config.nav.includes(active.id)) {
+      const fallback = config.nav[0];
+      const btn = document.querySelector(`.nav button[data-screen="${fallback}"]`);
+      if (btn) btn.click();
+    }
+
+    // chip
+    const chip = document.getElementById('accessChip');
+    if (chip) {
+      chip.textContent = mode === 'gov' ? 'Доступ: государство' : mode === 'business' ? 'Доступ: бизнес' : 'Доступ: пользователь';
+    }
+
+    // overview changes
+    const title = document.getElementById('overviewTitle');
+    const text = document.getElementById('overviewText');
+    if (mode === 'general') {
+      if (title) title.textContent = `Оперативная аналитика по показателю AQI для ${localCity()}.`;
+      if (text) text.textContent = 'Пользовательский контур показывает понятное качество воздуха, прогноз, карту и простые рекомендации на каждый день.';
+    } else if (mode === 'business') {
+      if (title) title.textContent = `Операционная экологическая аналитика для бизнеса в ${localCity()}.`;
+      if (text) text.textContent = 'Бизнес-контур показывает влияние воздуха на объекты, смены, наружные работы, логистику и протоколы для персонала.';
+    } else {
+      if (title) title.textContent = `Государственный контур контроля качества воздуха по ${localCity()}.`;
+      if (text) text.textContent = 'Государственный контур показывает критические районы, окно реагирования, приоритетные меры и оперативный контроль по городу.';
+    }
+  }
+
+  function buildGovFunctions() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = sortedDistrictsSafe();
+    const top = sorted[0];
+    const second = sorted[1] || top;
+    const risk = currentRiskClass();
+    const peak = top && appData.districts?.[top.key] ? appData.districts[top.key].peak : '—';
+
+    setText('govScenarioTitle', risk === 'Высокий' ? 'Усиленный городской режим' : risk === 'Повышенный' ? 'Режим превентивного контроля' : 'Стандартный мониторинг');
+    setText('govScenarioDesc', top ? `Основной район внимания — ${top.name}. Следующий район мониторинга — ${second.name}. Система готовит меры к пиковому окну ${peak}.` : 'Контур ожидает данных.');
+    setText('govResponseBadge', risk === 'Высокий' ? 'Приоритет: высокий' : risk === 'Повышенный' ? 'Приоритет: усиленный' : 'Приоритет: стандартный');
+    setText('govPriorityDistrict', top ? top.name : '—');
+    setText('govPriorityWindow', peak);
+
+    const ops = [
+      ['Коммуникация по районам', top ? `Подготовить районное уведомление по ${top.name} до начала окна ${peak}.` : 'Ожидание сигнала.'],
+      ['Транспортный контроль', risk === 'Высокий' ? 'Усилить контроль магистралей и загруженных коридоров в ближайшие часы.' : 'Оставить режим наблюдения транспортных коридоров.'],
+      ['Социальные объекты', risk !== 'Низкий' ? 'Передать ранний advisory для школ, детских учреждений и чувствительных групп.' : 'Дополнительных ограничений для социальных объектов не требуется.']
+    ];
+    setHTML('govOpsList', ops.map(([a,b]) => `<div class="ops-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+
+    const controls = [
+      ['Контроль районов', top ? `${top.name} получает приоритет №1, ${second.name} — приоритет №2.` : 'Ожидание данных.'],
+      ['Окно реагирования', peak ? `Основное окно: ${peak}. В это время нужен ускоренный мониторинг и контроль сообщений.` : '—'],
+      ['Оперативная сводка', 'Сформировать единый digest для руководства, штаба и городских служб на текущий временной интервал.']
+    ];
+    setHTML('govControlList', controls.map(([a,b]) => `<div class="ops-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+
+    const govNarr = document.getElementById('govNarrative');
+    if (govNarr && top) {
+      govNarr.textContent = `Городской контур фиксирует район ${top.name} как главный приоритет. Система рекомендует раннюю коммуникацию, усиленный мониторинг и управленческое действие к окну ${peak}.`;
+    }
+  }
+
+  function buildBusinessFunctions() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = sortedDistrictsSafe();
+    const top = sorted[0];
+    const peak = top && appData.districts?.[top.key] ? appData.districts[top.key].peak : '—';
+    const risk = currentRiskClass();
+
+    setText('bizScenarioTitle', risk === 'Высокий' ? 'Ограничение наружных работ' : risk === 'Повышенный' ? 'Режим адаптации операций' : 'Стандартный производственный режим');
+    setText('bizScenarioDesc', top ? `Основной объект давления — зона ${top.name}. Для корпоративного контура ключевым окном остаётся ${peak}.` : 'Контур ожидает данных.');
+    setText('bizRiskBadge', risk === 'Высокий' ? 'Риск: высокий' : risk === 'Повышенный' ? 'Риск: повышенный' : 'Риск: контролируемый');
+    setText('bizCriticalObject', top ? `Площадка ${top.name}` : '—');
+    setText('bizRiskWindow', peak);
+
+    const ops = [
+      ['Персонал на улице', risk !== 'Низкий' ? 'Сократить длительные работы на открытом воздухе и перевести задачи в непиковые часы.' : 'Наружные работы допустимы в обычном графике.'],
+      ['Логистика и смены', peak ? `Перенести чувствительные операции вне окна ${peak}, чтобы снизить нагрузку на персонал.` : 'Окно уточняется по сценарию.'],
+      ['Вентиляция и фильтрация', 'Включить усиленный режим вентиляции/фильтрации на объектах, где это технически возможно.']
+    ];
+    setHTML('bizOpsList', ops.map(([a,b]) => `<div class="ops-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+
+    const controls = [
+      ['Объект №1', top ? `Зона ${top.name} получает первичный контроль по качеству воздуха и наружным операциям.` : 'Ожидание данных.'],
+      ['Контур безопасности', 'Проверить PPE, режимы перемещения персонала и длительность пребывания на открытом воздухе.'],
+      ['Руководящая сводка', 'Сформировать краткий executive digest для руководства, охраны труда и операционного менеджмента.']
+    ];
+    setHTML('bizControlList', controls.map(([a,b]) => `<div class="ops-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+
+    const narr = document.getElementById('businessNarrative');
+    if (narr && top) {
+      narr.textContent = `Бизнес-контур переводит городской сигнал в операционные действия. Наибольшая нагрузка фиксируется в зоне ${top.name}; рекомендуется адаптировать наружные работы и контроль персонала к окну ${peak}.`;
+    }
+  }
+
+
+  function hideResidualDevBlocks() {
+    ['bizDevBlock1Title','bizDevBlock2Title'].forEach(id => {
+      const card = document.getElementById(id)?.closest('.card');
+      if (card) card.style.display = 'none';
+    });
+  }
+
+  function rebuildUserMinimal() {
+    // user mode should feel simpler
+    const profileCard = document.getElementById('userProfileButtons')?.closest('.card');
+    const userAlertsCard = document.getElementById('userAlertsList')?.closest('.card');
+    if (profileCard) profileCard.style.display = 'block';
+    if (userAlertsCard) userAlertsCard.style.display = 'block';
+  }
+
+  function bindModeAccessV24() {
+    const state = accessStateV24();
+    const switchBtns = document.querySelectorAll('#accessSwitch [data-access-target]');
+    switchBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.accessTarget;
+        if (target === 'general') {
+          setCurrentMode('general');
+          applyModeNavigation('general');
+          rebuildUserMinimal();
+    hideResidualDevBlocks();
+          return;
+        }
+        if (!state[target]) return; // gate handled by previous access script
+        setCurrentMode(target);
+        applyModeNavigation(target);
+        buildGovFunctions();
+        buildBusinessFunctions();
+      });
+    });
+
+    // if protected screen clicked directly and already unlocked, sync mode
+    const govBtn = document.querySelector('.nav button[data-screen="gov"]');
+    const bizBtn = document.querySelector('.nav button[data-screen="business"]');
+    govBtn?.addEventListener('click', () => {
+      if (accessStateV24().gov) {
+        setCurrentMode('gov');
+        setTimeout(() => { applyModeNavigation('gov'); buildGovFunctions(); }, 20);
+      }
+    }, true);
+    bizBtn?.addEventListener('click', () => {
+      if (accessStateV24().business) {
+        setCurrentMode('business');
+        setTimeout(() => { applyModeNavigation('business'); buildBusinessFunctions(); }, 20);
+      }
+    }, true);
+  }
+
+  function fullV24() {
+    const mode = getCurrentMode();
+    applyModeNavigation(mode);
+    buildGovFunctions();
+    buildBusinessFunctions();
+    rebuildUserMinimal();
+    hideResidualDevBlocks();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    bindModeAccessV24();
+    setTimeout(fullV24, 120);
+    setTimeout(fullV24, 900);
+    document.addEventListener('click', () => setTimeout(fullV24, 100));
+  });
+  window.addEventListener('load', () => setTimeout(fullV24, 400));
+})();
+</script>
+
+
+<script>
+(function() {
+  function riskTextV25(v) {
+    if (v >= 150) return 'Высокий';
+    if (v >= 100) return 'Повышенный';
+    if (v >= 50) return 'Средний';
+    return 'Низкий';
+  }
+
+  function sortedDistrictsV25() {
+    if (typeof currentSortedDistricts === 'function') {
+      try { return currentSortedDistricts(); } catch(e) {}
+    }
+    return [];
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function setHTML(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = value;
+  }
+
+  function buildGovWowV25() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = sortedDistrictsV25();
+    const top = sorted[0];
+    const second = sorted[1] || top;
+    const aqi = Number(appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
+    const risk = riskTextV25(aqi);
+    const peak = top && appData.districts?.[top.key] ? appData.districts[top.key].peak : '—';
+
+    setText('govImpactValue', risk);
+    setText('govImpactDesc', top ? `Главный район внимания: ${top.name}. Следующий район: ${second.name}.` : 'Контур ожидает данные.');
+    setText('govCoverageValue', '4');
+    setText('govWindowValue', peak || '—');
+
+    setText('govBriefText', top
+      ? `Сейчас городскому контуру нужно держать в приоритете район ${top.name}. Основное окно реагирования — ${peak}. Следующий район наблюдения — ${second.name}.`
+      : 'Контур ожидает сигнал и расчёт приоритетов.'
+    );
+
+    const items = [
+      ['Район №1', top ? `${top.name} — ускоренный мониторинг, ранняя коммуникация и контроль сообщений.` : 'Ожидание данных.'],
+      ['Район №2', second ? `${second.name} — усиленное наблюдение и готовность к росту нагрузки.` : 'Ожидание данных.'],
+      ['Управленческая мера', risk === 'Высокий'
+        ? 'Подготовить оперативную коммуникацию для городских служб и чувствительных групп.'
+        : risk === 'Повышенный'
+          ? 'Держать в готовности превентивные сообщения и районный контур контроля.'
+          : 'Сохранять стандартный режим наблюдения без расширенных мер.']
+    ];
+    setHTML('govBriefList', items.map(([a,b]) => `<div class="command-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+  }
+
+  function buildBizWowV25() {
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
+    const sorted = sortedDistrictsV25();
+    const top = sorted[0];
+    const aqi = Number(appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
+    const risk = riskTextV25(aqi);
+    const peak = top && appData.districts?.[top.key] ? appData.districts[top.key].peak : '—';
+
+    setText('bizImpactValue', risk);
+    setText('bizImpactDesc', top ? `Зона основного риска для операций: ${top.name}.` : 'Контур ожидает данные.');
+    setText('bizCoverageValue', '4');
+    setText('bizWindowValue', peak || '—');
+
+    setText('bizBriefText', top
+      ? `Для предприятия ключевая зона давления — ${top.name}. Критическое окно — ${peak}. Именно в этот интервал нужно адаптировать наружные работы, смены и контроль персонала.`
+      : 'Контур ожидает сигнал и расчёт операционного риска.'
+    );
+
+    const items = [
+      ['Персонал', risk === 'Высокий'
+        ? 'Сократить длительные работы на открытом воздухе и перевести часть активности внутрь.'
+        : 'Оставить наружные операции под контролем и снизить экспозицию в пиковые часы.'],
+      ['Смены и логистика', peak ? `Подстроить смены и выезды вне окна ${peak}, чтобы снизить риск и потери эффективности.` : 'Окно будет уточнено после расчёта.'],
+      ['Руководство', 'Сформировать короткую executive-сводку по объектам, наружным работам и операционному риску.']
+    ];
+    setHTML('bizBriefList', items.map(([a,b]) => `<div class="command-item"><strong>${a}</strong><span>${b}</span></div>`).join(''));
+  }
+
+  function fullV25() {
+    buildGovWowV25();
+    buildBizWowV25();
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(fullV25, 160);
+    setTimeout(fullV25, 900);
+    document.addEventListener('click', () => setTimeout(fullV25, 90));
+  });
+  window.addEventListener('load', () => setTimeout(fullV25, 400));
 })();
 </script>
 
