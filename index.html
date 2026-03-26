@@ -230,7 +230,21 @@
       min-height: calc(100vh - 40px);
     }
 
-    .screen {
+    
+    .screen.user-overview-clean .scenario-grid,
+    .screen.user-overview-clean .grid.grid-main {
+      grid-template-columns: 1fr !important;
+    }
+
+    .screen.user-overview-clean .grid.grid-3 {
+      grid-template-columns: 1fr !important;
+    }
+
+    .screen.user-overview-clean .hide-in-user-overview {
+      display: none !important;
+    }
+
+.screen {
       display: none;
       animation: fade .32s ease;
     }
@@ -1701,7 +1715,7 @@
 <div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
 <div class="recommend-list" id="actionList"></div>
 </div>
-<div class="card" style="margin-top:18px;">
+<div class="card hide-in-user-overview" style="margin-top:18px;">
 <h3>Быстрые действия</h3>
 <div class="sub">Прикладные действия для демонстрации рабочего сценария внутри MVP.</div>
 <div class="grid grid-3">
@@ -1719,7 +1733,7 @@
 </div>
 </div>
 </div>
-<div class="scenario-grid">
+<div class="scenario-grid hide-in-user-overview">
 <div class="card">
 <h3>Операционный сценарий на сутки</h3>
 <div class="sub">Пошаговая логика того, как системой можно пользоваться в реальном режиме для города и предприятий.</div>
@@ -5017,4 +5031,53 @@ updateUserLayer();
     });
   });
 })();
-</script></body></html>
+</script>
+<script>
+(function() {
+  function getCurrentModeUserFix() {
+    try {
+      const saved = localStorage.getItem('airguardCurrentMode');
+      const access = JSON.parse(localStorage.getItem('airguardAccessState') || '{"general":true,"business":false,"gov":false}');
+      if (saved === 'gov' && access.gov) return 'gov';
+      if (saved === 'business' && access.business) return 'business';
+      return 'general';
+    } catch(e) {
+      return 'general';
+    }
+  }
+
+  function userOverviewFix() {
+    const overview = document.getElementById('overview');
+    if (!overview) return;
+    const mode = getCurrentModeUserFix();
+
+    overview.classList.toggle('user-overview-clean', mode === 'general');
+
+    if (mode === 'general') {
+      const title = document.getElementById('overviewTitle');
+      const text = document.getElementById('overviewText');
+      const heroSummary = document.getElementById('heroSummary');
+      const heroLabel = document.getElementById('heroMainLabel');
+
+      if (title) title.textContent = 'Качество воздуха для жителей Ташкента.';
+      if (text) text.textContent = 'Здесь остаётся только то, что нужно обычному человеку: текущий риск, краткий прогноз, погода и понятные рекомендации на каждый день.';
+      if (heroLabel) heroLabel.textContent = 'AQI · Сейчас для пользователя';
+      if (heroSummary) heroSummary.textContent = 'Оцените текущий уровень воздуха, посмотрите краткий прогноз и следуйте простым рекомендациям: прогулки, спорт и окна.';
+    }
+  }
+
+  function bindUserOverviewFix() {
+    document.querySelectorAll('.nav button, #accessSwitch [data-access-target]').forEach(btn => {
+      btn.addEventListener('click', () => setTimeout(userOverviewFix, 40));
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    bindUserOverviewFix();
+    setTimeout(userOverviewFix, 80);
+    setTimeout(userOverviewFix, 400);
+  });
+})();
+</script>
+
+</body></html>
