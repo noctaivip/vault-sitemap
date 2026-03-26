@@ -890,7 +890,79 @@
 
     
     
-    .access-switch {
+    
+    .premium-hero {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.07);
+      background:
+        radial-gradient(circle at 80% 15%, rgba(97,225,255,0.12), transparent 25%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
+      margin-bottom: 18px;
+    }
+
+    .premium-hero h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -.02em;
+    }
+
+    .premium-hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .vault-grid {
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .vault-card {
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.028);
+    }
+
+    .vault-card .k {
+      font-size:11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom:8px;
+    }
+
+    .vault-card .v {
+      font-size:28px;
+      letter-spacing: -.03em;
+      margin-bottom:6px;
+    }
+
+    .vault-card .f {
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .locked-note {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.024);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .section-hidden-by-access {
+      display:none !important;
+    }
+
+.access-switch {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -1353,6 +1425,10 @@
       </div>
 
       <section class="screen active" id="overview">
+        
+        <div class="locked-note access-guard-note" id="govLockedNote">
+          Государственный контур закрыт. После ввода ключа доступа открываются приоритетные меры, критические районы, прогнозное окно и управленческие сценарии для города.
+        </div>
         <div class="hero">
           <div class="hero-grid">
             <div>
@@ -1713,6 +1789,27 @@
       </section>
 
       <section class="screen" id="gov">
+        <div class="premium-hero" id="govPremiumHero">
+          <h3>Государственный контур стратегического мониторинга</h3>
+          <p>Закрытый слой для муниципальных и государственных структур: приоритетные районы, окна реагирования, прогнозный риск, управленческие меры и контур пилотного внедрения для города.</p>
+          <div class="vault-grid">
+            <div class="vault-card">
+              <div class="k">Контур доступа</div>
+              <div class="v" id="govAccessState">Закрыт</div>
+              <div class="f">Открывается только по ключу государственного доступа.</div>
+            </div>
+            <div class="vault-card">
+              <div class="k">Приоритетный район</div>
+              <div class="v" id="govPriorityDistrict">—</div>
+              <div class="f">Район с максимальным текущим давлением по активному сценарию.</div>
+            </div>
+            <div class="vault-card">
+              <div class="k">Окно реагирования</div>
+              <div class="v" id="govPriorityWindow">—</div>
+              <div class="f">Пиковое окно, где нужно раннее управленческое действие.</div>
+            </div>
+          </div>
+        </div>
         <div class="hero">
           <div class="hero-grid">
             <div>
@@ -1733,6 +1830,7 @@
           <div class="kpi-grid" id="govKpiGrid"></div>
         </div>
 
+        <div class="access-guard gov-guard section-hidden-by-access">
         <div class="action-toolbar">
           <button class="ghost-btn" data-action="city-summary">Сформировать сводку города</button>
           <button class="ghost-btn" data-action="city-report">Экспортировать пример отчёта</button>
@@ -1751,9 +1849,35 @@
             <div class="recommend-list" id="govActions"></div>
           </div>
         </div>
+              </div>
       </section>
 
       <section class="screen" id="business">
+        <div class="premium-hero" id="bizPremiumHero">
+          <h3>Корпоративный контур экологического риска</h3>
+          <p>Закрытый слой для предприятий: мониторинг объектов, влияние воздуха на операции, окна повышенного риска и рекомендации для руководства и службы безопасности.</p>
+          <div class="vault-grid">
+            <div class="vault-card">
+              <div class="k">Контур доступа</div>
+              <div class="v" id="bizAccessState">Закрыт</div>
+              <div class="f">Открывается только по ключу бизнес-доступа.</div>
+            </div>
+            <div class="vault-card">
+              <div class="k">Критический объект</div>
+              <div class="v" id="bizCriticalObject">—</div>
+              <div class="f">Объект с максимальной нагрузкой по текущему сценарию.</div>
+            </div>
+            <div class="vault-card">
+              <div class="k">Операционный риск</div>
+              <div class="v" id="bizRiskWindow">—</div>
+              <div class="f">Окно, где рекомендуется корректировка наружных работ и логистики.</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="locked-note access-guard-note" id="bizLockedNote">
+          Бизнес-контур закрыт. После ввода ключа доступа открываются расширенные рекомендации по объектам, операционный риск и сценарии для руководства.
+        </div>
         <div class="hero">
           <div class="hero-grid">
             <div>
@@ -1768,6 +1892,7 @@
           </div>
         </div>
 
+        <div class="access-guard biz-guard section-hidden-by-access">
         <div class="action-toolbar">
           <button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
           <button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
@@ -1818,6 +1943,7 @@
           </div>
         </div>
         </div>
+              </div>
       </section>
 
       <div class="footer-note">Это front-end MVP, доведённый до рабочего интерактивного состояния в рамках одного HTML-файла: навигация, сценарии, карта, прогноз, таблицы и панели связаны одной моделью данных. Следующий этап — подключение реальных источников данных и упаковка в PWA без пересборки интерфейса.</div>
@@ -4137,6 +4263,86 @@ updateUserLayer();
     bindAccessSwitch();
     hideDeveloperSurface();
     activateMode('general');
+  });
+})();
+</script>
+
+
+<script>
+(function() {
+  function accessStateV23() {
+    try {
+      return JSON.parse(localStorage.getItem('airguardAccessState') || '{"general":true,"business":false,"gov":false}');
+    } catch(e) {
+      return { general: true, business: false, gov: false };
+    }
+  }
+
+  function currentSortedV23() {
+    if (typeof currentSortedDistricts === 'function') {
+      try { return currentSortedDistricts(); } catch(e) {}
+    }
+    return [];
+  }
+
+  function syncProtectedSurfacesV23() {
+    const state = accessStateV23();
+    const sorted = currentSortedV23();
+    const top = sorted[0];
+    const second = sorted[1] || top;
+
+    document.querySelectorAll('.gov-guard').forEach(el => {
+      el.classList.toggle('section-hidden-by-access', !state.gov);
+    });
+    document.querySelectorAll('.biz-guard').forEach(el => {
+      el.classList.toggle('section-hidden-by-access', !state.business);
+    });
+
+    const govLocked = document.getElementById('govLockedNote');
+    if (govLocked) govLocked.style.display = state.gov ? 'none' : 'block';
+    const bizLocked = document.getElementById('bizLockedNote');
+    if (bizLocked) bizLocked.style.display = state.business ? 'none' : 'block';
+
+    const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+
+    setText('govAccessState', state.gov ? 'Открыт' : 'Закрыт');
+    setText('bizAccessState', state.business ? 'Открыт' : 'Закрыт');
+
+    if (top) {
+      setText('govPriorityDistrict', top.name);
+      const peak = (typeof appData !== 'undefined' && appData.districts && appData.districts[top.key]) ? appData.districts[top.key].peak : '—';
+      setText('govPriorityWindow', peak || '—');
+      setText('bizCriticalObject', `Объект ${top.name}`);
+      setText('bizRiskWindow', peak || '—');
+    }
+
+    const govNarrative = document.getElementById('govNarrative');
+    if (govNarrative && top) {
+      govNarrative.textContent = `Городской контур объединяет текущий статус, прогнозное окно и приоритетный район ${top.name}. Следующий район внимания — ${second.name}.`;
+    }
+
+    const businessNarrative = document.getElementById('businessNarrative');
+    if (businessNarrative && top) {
+      businessNarrative.textContent = `Бизнес-контур переводит городской экологический сигнал в операционные решения. Наибольшая текущая нагрузка фиксируется в зоне ${top.name}, где рекомендуется усилить контроль наружных работ и логистики.`;
+    }
+
+    // improve wow effect in access chip
+    const chip = document.getElementById('accessChip');
+    if (chip) {
+      if (state.gov) chip.textContent = 'Доступ: государство';
+      else if (state.business) chip.textContent = 'Доступ: бизнес';
+      else chip.textContent = 'Доступ: пользователь';
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(syncProtectedSurfacesV23, 120);
+    setTimeout(syncProtectedSurfacesV23, 800);
+    document.addEventListener('click', () => setTimeout(syncProtectedSurfacesV23, 80));
+  });
+
+  window.addEventListener('load', () => {
+    setTimeout(syncProtectedSurfacesV23, 400);
   });
 })();
 </script>
