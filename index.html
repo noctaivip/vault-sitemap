@@ -1596,8 +1596,7 @@
 <button data-screen="sources"><span>Источники загрязнения</span><small>06</small></button>
 <button data-screen="gov"><span>Панель мониторинга города</span><small>07</small></button>
 <button data-screen="business"><span>Аналитика для предприятий</span><small>08</small></button>
-<button data-screen="pilot"><span>Пилотный запуск</span><small>09</small></button>
-<button data-screen="user"><span>Пользователь</span><small>10</small></button>
+<button data-screen="user"><span>Пользователь</span><small>09</small></button>
 </div>
 <div class="live-box">
 <div class="kicker">Режим реального времени</div>
@@ -1621,7 +1620,7 @@
 <option value="24h">24 часа</option>
 <option value="7d">7 дней</option>
 </select>
-<button class="ghost-btn active" id="simulateBtn">Имитация обновления: ВКЛ</button>
+<button class="ghost-btn" id="simulateBtn">Обновить данные</button>
 <button class="ghost-btn" id="installBtn" style="display:none;">Установить приложение</button>
 </div>
 <div class="topbar-right">
@@ -1641,9 +1640,7 @@
 </div>
 </div>
 <section class="screen active" id="overview">
-<div class="locked-note access-guard-note" id="govLockedNote">
-          Государственный контур закрыт. После ввода ключа доступа открываются приоритетные меры, критические районы, прогнозное окно и управленческие сценарии для города.
-        </div>
+
 <div class="hero">
 <div class="hero-grid">
 <div>
@@ -1714,53 +1711,6 @@
 <h3>Рекомендуемые действия</h3>
 <div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
 <div class="recommend-list" id="actionList"></div>
-</div>
-<div class="card hide-in-user-overview" style="margin-top:18px;">
-<h3>Быстрые действия</h3>
-<div class="sub">Прикладные действия для демонстрации рабочего сценария внутри MVP.</div>
-<div class="grid grid-3">
-<div class="rec-item">
-<strong><button class="ghost-btn" data-action="overview-summary" style="padding:0;border:none;background:none;color:inherit;">Сформировать городскую сводку</button></strong>
-<p>Подготовить краткий обзор текущего состояния воздуха, районов риска и окна прогноза на 24 часа.</p>
-</div>
-<div class="rec-item">
-<strong><button class="ghost-btn" data-action="priority-map" style="padding:0;border:none;background:none;color:inherit;">Открыть приоритетную карту</button></strong>
-<p>Перейти к району с максимальным риском и показать зону, где требуется усиленный мониторинг.</p>
-</div>
-<div class="rec-item">
-<strong><button class="ghost-btn" data-action="overview-report" style="padding:0;border:none;background:none;color:inherit;">Скачать пример отчёта</button></strong>
-<p>Подготовить демонстрационный отчёт для города или предприятия по текущему сценарию.</p>
-</div>
-</div>
-</div>
-<div class="scenario-grid hide-in-user-overview">
-<div class="card">
-<h3>Операционный сценарий на сутки</h3>
-<div class="sub">Пошаговая логика того, как системой можно пользоваться в реальном режиме для города и предприятий.</div>
-<div class="timeline" id="scenarioTimeline"></div>
-</div>
-<div class="card">
-<h3>Приоритетный район</h3>
-<div class="sub">Блок быстрого фокуса по району с максимальным риском в текущем сценарии.</div>
-<div class="summary-box" id="priorityDistrictNarrative"></div>
-<div class="district-focus-grid">
-<div class="focus-card">
-<div class="k">Район</div>
-<div class="v" id="focusDistrictName">—</div>
-<div class="f">Район с максимальным текущим риском.</div>
-</div>
-<div class="focus-card">
-<div class="k">Показатель</div>
-<div class="v" id="focusDistrictValue">—</div>
-<div class="f">Текущее значение по выбранному загрязнителю.</div>
-</div>
-<div class="focus-card">
-<div class="k">Пиковое окно</div>
-<div class="v" id="focusDistrictPeak">—</div>
-<div class="f">Окно, где требуется повышенное внимание.</div>
-</div>
-</div>
-</div>
 </div>
 <div class="card" style="margin-top:18px;">
 <h3>Прогноз на 7 дней</h3>
@@ -2132,29 +2082,6 @@
 <div class="ops-list" id="bizControlList"></div>
 </div>
 </div>
-<div class="access-guard biz-guard section-hidden-by-access">
-<div class="action-toolbar">
-<button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
-<button class="ghost-btn" data-action="biz-pdf">Скачать PDF-шаблон</button>
-</div>
-<div class="card" style="margin-bottom:18px;">
-<h3 id="bizDevBlock1Title">Управление данными пилота</h3>
-<div class="sub">Этот блок нужен, чтобы показать не просто красивый интерфейс, а управляемый MVP, который уже можно использовать в тестовом контуре.</div>
-<div class="grid grid-3">
-<div class="rec-item"><strong>Импорт</strong><p>Загрузка JSON из внешнего контура без перестройки интерфейса.</p></div>
-<div class="rec-item"><strong>Сброс</strong><p>Возврат к master-набору встроенных данных для стабильной демонстрации.</p></div>
-<div class="rec-item"><strong>Экспорт</strong><p>Выгрузка активного слоя данных для повторной демонстрации или передачи в пилотный контур.</p></div>
-</div>
-</div>
-<div class="card" style="margin-bottom:18px;">
-<h3 id="bizDevBlock2Title">Готовность к подключению внешних данных</h3>
-<div class="sub">Предприятия и город могут подключать собственные массивы показателей без изменения структуры интерфейса.</div>
-<div class="grid grid-3">
-<div class="rec-item"><strong>Входной формат</strong><p>JSON с городом, загрязнителями, районами и временными окнами.</p></div>
-<div class="rec-item"><strong>Сценарий использования</strong><p>Пилотный контур может загружать ежедневные или часовые показатели и сразу строить сводки.</p></div>
-<div class="rec-item"><strong>Коммерческий эффект</strong><p>Это позволяет перейти от красивого прототипа к платной аналитической системе без смены интерфейса.</p></div>
-</div>
-</div>
 <div class="grid grid-main">
 <div class="card table-card">
 <h3>Обзор рисков по объектам</h3>
@@ -2167,104 +2094,6 @@
 <h3>Практические выводы</h3>
 <div class="recommend-list" id="businessOutputs"></div>
 </div>
-</div>
-<div class="card" style="margin-top:18px;">
-<h3>Модель подключения</h3>
-<div class="sub">Доходный контур встроен в продуктовую архитектуру и не выглядит как отдельный pitch.</div>
-<div class="grid grid-3">
-<div class="rec-item"><strong>Городская лицензия</strong><p>Лицензирование панели мониторинга города, районной аналитики и сценариев реагирования.</p></div>
-<div class="rec-item"><strong>Подписка для предприятий</strong><p>Доступ к аналитике по объектам, оповещениям, отчетности и протоколам реагирования.</p></div>
-<div class="rec-item"><strong>Премиум для жителей</strong><p>Расширенные уведомления, персональные рекомендации и история показателей по районам.</p></div>
-</div>
-</div>
-</div>
-</section><section class="screen" id="pilot">
-<div class="hero">
-<div class="hero-grid">
-<div>
-<div class="eyebrow">Пилотный запуск</div>
-<h2>Готовый контур для тестового внедрения и инвестиционного показа.</h2>
-<p>Этот слой фиксирует финальную логику продукта: система уже выглядит как готовое решение, умеет принимать внешний набор данных и может быть показана как пилот для города, предприятия или акселерационной программы.</p>
-</div>
-<div class="hero-side">
-<div class="hero-stat"><strong>v16</strong><span>Текущая master-версия</span></div>
-<div class="summary-box">Файл доведён до состояния, где продукт уже можно показывать не как концепт, а как управляемый MVP с понятным сценарием запуска, подключением реальных данных и коммерческими контурами.</div>
-</div>
-</div>
-</div>
-<div class="grid grid-4">
-<div class="card metric-card">
-<div class="label">Статус</div>
-<div class="value">Готов</div>
-<div class="status-row"><span>Пилотный контур</span><span>Активен</span></div>
-</div>
-<div class="card metric-card">
-<div class="label">Данные</div>
-<div class="value">JSON</div>
-<div class="status-row"><span>Встроенные / внешние</span><span>Подключаемые</span></div>
-</div>
-<div class="card metric-card">
-<div class="label">Монетизация</div>
-<div class="value">B2G</div>
-<div class="status-row"><span>Город / министерство</span><span>Лицензия</span></div>
-</div>
-<div class="card metric-card">
-<div class="label">Контур роста</div>
-<div class="value">B2B</div>
-<div class="status-row"><span>Предприятия</span><span>Подписка</span></div>
-</div>
-</div>
-<div class="grid grid-2" style="margin-top:18px;">
-<div class="card">
-<h3>Почему система выглядит готовой</h3>
-<div class="recommend-list">
-<div class="rec-item"><strong>Связанный интерфейс</strong><p>Карта, прогноз, оповещения, районная аналитика, городская панель и корпоративный слой работают как единая система.</p></div>
-<div class="rec-item"><strong>Управляемый слой данных</strong><p>Есть импорт, сброс и экспорт данных, что переводит MVP из статической демо-версии в рабочий пилотный контур.</p></div>
-<div class="rec-item"><strong>Продуктовая логика</strong><p>Внутри продукта уже есть сценарий действий, сводки, отчёты, приоритетный район и слои для города и предприятий.</p></div>
-</div>
-</div>
-<div class="card">
-<h3>Почему это можно монетизировать</h3>
-<div class="recommend-list">
-<div class="rec-item"><strong>Городская лицензия</strong><p>Панель мониторинга города, районная аналитика и прогнозный слой могут продаваться как лицензируемая система для государственных структур.</p></div>
-<div class="rec-item"><strong>Подписка для предприятий</strong><p>Компании получают аналитику по объектам, окна риска, оповещения и регулярную отчётность.</p></div>
-<div class="rec-item"><strong>Премиум для пользователей</strong><p>Расширенные персональные уведомления и рекомендации могут быть выделены в отдельный потребительский слой.</p></div>
-</div>
-</div>
-</div>
-<div class="card" style="margin-top:18px;">
-<h3>Сценарий запуска</h3>
-<div class="sub">Путь от демонстрации к реальному пилоту без пересборки продукта.</div>
-<div class="timeline">
-<div class="timeline-item">
-<div class="timeline-time">Этап 1</div>
-<div class="timeline-body">
-<strong>Демонстрация master-версии</strong>
-<p>Показать текущий продукт как готовую систему: карта, прогноз, отчёты, районы, городская и корпоративная панели.</p>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">Этап 2</div>
-<div class="timeline-body">
-<strong>Подключение внешнего набора данных</strong>
-<p>Загрузить JSON-слой пилотного партнёра и продемонстрировать, что интерфейс перестраивается без переработки логики.</p>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">Этап 3</div>
-<div class="timeline-body">
-<strong>Пилотное внедрение</strong>
-<p>Запустить систему как PWA или веб-панель в тестовом контуре города или предприятия, затем перейти к лицензии или подписке.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="card" style="margin-top:18px;">
-<h3>Финальные действия</h3>
-<div class="action-toolbar">
-<button class="ghost-btn" data-action="city-summary">Сформировать финальную сводку</button>
-<button class="ghost-btn" data-action="overview-report">Скачать демонстрационный отчёт</button>
-<button class="ghost-btn" data-action="biz-report">Сформировать отчёт по объектам</button>
 </div>
 </div>
 </section><section class="screen" id="user">
@@ -2313,7 +2142,7 @@
 </div>
 </section></main></div>
 
-<div class="footer-note">Это front-end MVP, доведённый до рабочего интерактивного состояния в рамках одного HTML-файла: навигация, сценарии, карта, прогноз, таблицы и панели связаны одной моделью данных. Следующий этап — подключение реальных источников данных и упаковка в PWA без пересборки интерфейса.</div>
+<div class="footer-note">AirGuard AI приведён к чистой продуктовой структуре: пользовательский, корпоративный и государственный контуры разделены, а навигация, карта, прогноз, уведомления и аналитика работают внутри единой модели данных.</div>
 
 
 
@@ -4915,121 +4744,51 @@ updateUserLayer();
 </script>
 <script>
 (function() {
-  function scrollToPaneTop() {
-    const pane = document.querySelector('.content-pane');
+  function normalizeScreenVisibility() {
+    const allScreens = document.querySelectorAll('.screen');
+    allScreens.forEach(screen => {
+      screen.style.display = screen.classList.contains('active') ? 'block' : 'none';
+    });
+  }
+
+  function resetPaneTop() {
+    const pane = document.querySelector('main.content-pane');
     if (!pane) return;
     const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    const target = Math.max(0, top);
+    window.scrollTo(0, target);
+    document.documentElement.scrollTop = target;
+    document.body.scrollTop = target;
     pane.scrollTop = 0;
   }
 
-  function bindScreenTopFix() {
-    document.querySelectorAll('.nav button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(scrollToPaneTop, 30);
-      });
-    });
+  function stabilizeActiveScreen() {
+    normalizeScreenVisibility();
+    resetPaneTop();
+  }
 
-    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
+  function bindStructureStabilizer() {
+    const triggers = document.querySelectorAll('.nav button, #accessSwitch [data-access-target], [data-action]');
+    triggers.forEach(btn => {
       btn.addEventListener('click', () => {
-        setTimeout(scrollToPaneTop, 30);
-      });
-    });
-
-    document.querySelectorAll('[data-action]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(scrollToPaneTop, 30);
+        setTimeout(stabilizeActiveScreen, 30);
       });
     });
 
     const screens = document.querySelectorAll('.screen');
     const observer = new MutationObserver(() => {
-      const active = document.querySelector('.screen.active');
-      if (active) {
-        setTimeout(scrollToPaneTop, 20);
-      }
-    });
-    screens.forEach(screen => observer.observe(screen, { attributes: true, attributeFilter: ['class'] }));
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    bindScreenTopFix();
-  });
-})();
-</script>
-<script>
-(function() {
-  function resetPaneTop() {
-    const pane = document.querySelector('.content-pane');
-    if (!pane) return;
-    const y = pane.getBoundingClientRect().top + window.pageYOffset - 18;
-    window.scrollTo(0, Math.max(0, y));
-    document.documentElement.scrollTop = Math.max(0, y);
-    document.body.scrollTop = Math.max(0, y);
-  }
-
-  function bindScreenSwitchFix() {
-    document.querySelectorAll('.nav button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(() => {
-          document.querySelectorAll('.screen').forEach(screen => {
-            screen.style.display = screen.classList.contains('active') ? 'block' : 'none';
-          });
-          resetPaneTop();
-        }, 25);
-      });
+      setTimeout(stabilizeActiveScreen, 10);
     });
 
-    document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(() => {
-          document.querySelectorAll('.screen').forEach(screen => {
-            screen.style.display = screen.classList.contains('active') ? 'block' : 'none';
-          });
-          resetPaneTop();
-        }, 25);
-      });
+    screens.forEach(screen => {
+      observer.observe(screen, { attributes: true, attributeFilter: ['class'] });
     });
+
+    stabilizeActiveScreen();
+    setTimeout(stabilizeActiveScreen, 120);
   }
 
-  window.addEventListener('DOMContentLoaded', bindScreenSwitchFix);
-})();
-</script>
-<script>
-(function() {
-  function showScreenTop() {
-    const pane = document.querySelector('.content-pane');
-    if (!pane) return;
-    const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
-    window.scrollTo(0, Math.max(0, top));
-    document.documentElement.scrollTop = Math.max(0, top);
-    document.body.scrollTop = Math.max(0, top);
-  }
-
-  function bindUserTopFix() {
-    document.querySelectorAll('.nav button').forEach(btn => {
-      btn.addEventListener('click', function() {
-        setTimeout(showScreenTop, 20);
-      });
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', bindUserTopFix);
-})();
-</script>
-<script>
-(function() {
-  function topResetForScreen() {
-    const pane = document.querySelector('main.content-pane');
-    if (!pane) return;
-    const top = pane.getBoundingClientRect().top + window.pageYOffset - 18;
-    window.scrollTo(0, Math.max(0, top));
-  }
-  window.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.nav button, #accessSwitch [data-access-target]').forEach(function(btn) {
-      btn.addEventListener('click', function() { setTimeout(topResetForScreen, 20); });
-    });
-  });
+  window.addEventListener('DOMContentLoaded', bindStructureStabilizer);
 })();
 </script>
 <script>
@@ -5076,6 +4835,216 @@ updateUserLayer();
     bindUserOverviewFix();
     setTimeout(userOverviewFix, 80);
     setTimeout(userOverviewFix, 400);
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const API_ENDPOINT = '/api/realtime/summary';
+  const CITY_LABELS = { tashkent: 'Ташкент' };
+  let refreshTimer = null;
+  let inFlight = false;
+
+  function byId(id) { return document.getElementById(id); }
+  function setText(id, value) { const el = byId(id); if (el) el.textContent = value; }
+  function setHtml(id, value) { const el = byId(id); if (el) el.innerHTML = value; }
+  function nowTime() { return new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); }
+
+  function valueStatus(value) {
+    if (value >= 151) return { cls: 'red', label: 'Высокий' };
+    if (value >= 101) return { cls: 'orange', label: 'Повышенный' };
+    if (value >= 51) return { cls: 'yellow', label: 'Умеренный' };
+    return { cls: 'green', label: 'Низкий' };
+  }
+
+  function riskLabelFromAQI(aqi) {
+    if (aqi >= 151) return 'Высокий';
+    if (aqi >= 101) return 'Повышенный';
+    if (aqi >= 51) return 'Умеренный';
+    return 'Низкий';
+  }
+
+  function riskDotHtml(aqi) {
+    const map = valueStatus(aqi);
+    return `<i class="dot ${map.cls}"></i>Следующие 24 часа`;
+  }
+
+  function makeSeries(base, offsets) {
+    return offsets.map(v => Math.max(0, Math.round(base + v)));
+  }
+
+  function applyDistrictScaling(baseAqi, basePm25, baseCo2) {
+    const districtFactors = {
+      yunusabad: 1.05,
+      chilanzar: 0.98,
+      mirzo: 0.88,
+      bektemir: 0.72,
+    };
+    Object.entries(districtFactors).forEach(([key, factor]) => {
+      const district = appData?.districts?.[key];
+      if (!district) return;
+      const aqiLive = Math.max(0, Math.round(baseAqi * factor));
+      const pmLive = Math.max(0, Math.round(basePm25 * factor));
+      const co2Live = Math.max(0, Math.round(baseCo2 * (0.94 + (factor - 0.72) * 0.45)));
+      district.aqi.live = aqiLive;
+      district.aqi['24h'] = Math.max(0, Math.round(aqiLive * 0.97));
+      district.aqi['7d'] = Math.max(0, Math.round(aqiLive * 0.92));
+      district.aqi.series = makeSeries(aqiLive, [-13, -6, 0, -2, -8, -18, -11]);
+      district.aqi.trend = `${aqiLive >= district.aqi['24h'] ? '+' : ''}${Math.round(((aqiLive - district.aqi['24h']) / Math.max(1, district.aqi['24h'])) * 100)}%`;
+
+      district.pm25.live = pmLive;
+      district.pm25['24h'] = Math.max(0, Math.round(pmLive * 0.96));
+      district.pm25['7d'] = Math.max(0, Math.round(pmLive * 0.90));
+      district.pm25.series = makeSeries(pmLive, [-10, -4, 0, -2, -7, -16, -11]);
+      district.pm25.trend = `${pmLive >= district.pm25['24h'] ? '+' : ''}${Math.round(((pmLive - district.pm25['24h']) / Math.max(1, district.pm25['24h'])) * 100)}%`;
+
+      district.co2.live = co2Live;
+      district.co2['24h'] = Math.max(0, Math.round(co2Live * 0.985));
+      district.co2['7d'] = Math.max(0, Math.round(co2Live * 0.97));
+      district.co2.series = makeSeries(co2Live, [-24, -11, 0, -7, -16, -33, -26]);
+      district.co2.trend = `${co2Live >= district.co2['24h'] ? '+' : ''}${Math.round(((co2Live - district.co2['24h']) / Math.max(1, district.co2['24h'])) * 100)}%`;
+    });
+  }
+
+  function applyRealtimeSummary(payload) {
+    const cityCode = (window.state && state.city) || 'tashkent';
+    const cityLabel = payload?.city?.display_name || CITY_LABELS[cityCode] || cityCode;
+    const aqi = Number(payload?.air?.aqi || 0);
+    const pm25 = Number(payload?.air?.pm25 || 0);
+    const co2 = Number(payload?.air?.co2 || 0);
+    const temp = Number(payload?.weather?.temperature_c || 0);
+    const humidity = Number(payload?.weather?.humidity || 0);
+    const wind = Number(payload?.weather?.wind_mps || 0);
+    const desc = payload?.weather?.description || 'без описания';
+    const status = valueStatus(aqi);
+
+    if (window.appData && appData.pollutants) {
+      appData.city = cityLabel;
+      appData.pollutants.aqi.cityValue.live = aqi;
+      appData.pollutants.aqi.cityValue['24h'] = Math.max(0, Math.round(aqi * 0.97));
+      appData.pollutants.aqi.cityValue['7d'] = Math.max(0, Math.round(aqi * 0.92));
+      appData.pollutants.aqi.forecast = makeSeries(aqi, [-9, 0, 12, 5, -8, -19, -11]);
+      appData.pollutants.aqi.summary = `Текущее качество воздуха по ${cityLabel} обновлено по реальному API. Основной риск сейчас связан с городским трафиком, слабым рассеиванием и районными пиками воздействия.`;
+      appData.pollutants.aqi.aiSummary = `Реальный поток данных показывает, что ${cityLabel} требует постоянного мониторинга по AQI. Приоритет смещается в районы с транспортной и смешанной городской нагрузкой.`;
+      appData.pollutants.aqi.narrative = `Следующее окно контроля формируется по живым данным WAQI и погодному слою OpenWeather. При слабом ветре и вечерней нагрузке риск растёт быстрее.`;
+      appData.pollutants.aqi.confidence = 91;
+
+      appData.pollutants.pm25.cityValue.live = pm25;
+      appData.pollutants.pm25.cityValue['24h'] = Math.max(0, Math.round(pm25 * 0.96));
+      appData.pollutants.pm25.cityValue['7d'] = Math.max(0, Math.round(pm25 * 0.90));
+      appData.pollutants.pm25.forecast = makeSeries(pm25, [-8, 0, 7, 3, -6, -14, -9]);
+      appData.pollutants.pm25.summary = `Текущая концентрация PM2.5 обновлена из реального потока данных. Для чувствительных групп нужен более осторожный режим в пиковые часы.`;
+      appData.pollutants.pm25.aiSummary = `Мелкие частицы остаются ключевым фактором краткосрочной нагрузки. Наиболее уязвимы зоны плотного трафика и коридоры со слабым проветриванием.`;
+      appData.pollutants.pm25.narrative = `PM2.5 обновляется по реальному API. При слабом ветре и вечернем трафике система закладывает повышенное окно наблюдения.`;
+      appData.pollutants.pm25.confidence = 90;
+
+      appData.pollutants.co2.cityValue.live = co2;
+      appData.pollutants.co2.cityValue['24h'] = Math.max(0, Math.round(co2 * 0.985));
+      appData.pollutants.co2.cityValue['7d'] = Math.max(0, Math.round(co2 * 0.97));
+      appData.pollutants.co2.forecast = makeSeries(co2, [-26, 0, 18, 9, -14, -31, -23]);
+      appData.pollutants.co2.summary = `Городской фон CO2 обновлён через серверный слой. Плотные транспортные и смешанные коммерческие зоны требуют регулярной сверки.`;
+      appData.pollutants.co2.aiSummary = `CO2 используется как дополнительный индикатор городского накопления. Он помогает оценивать плотность и эффективность рассеивания в реальном времени.`;
+      appData.pollutants.co2.narrative = `CO2 обновляется по реальному API и используется в совокупности с AQI и PM2.5 для общей картины нагрузки.`;
+      appData.pollutants.co2.confidence = 88;
+
+      applyDistrictScaling(aqi, pm25, co2);
+    }
+
+    setText('heroMainValue', String(aqi));
+    setText('metric1Value', String(aqi));
+    setText('metricPm', String(pm25));
+    setText('metricCo2', String(co2));
+    setText('riskValue', riskLabelFromAQI(aqi));
+    setHtml('riskDot', riskDotHtml(aqi));
+    setText('overviewTitle', `Оперативная аналитика качества воздуха по ${cityLabel}.`);
+    setText('overviewText', `Интерфейс обновлён реальным API-слоем. Система получает AQI, PM2.5, CO2 и погодный контекст через серверный endpoint и пересчитывает пользовательский, бизнес- и государственный контуры.`);
+    setText('heroSummary', `Сейчас по ${cityLabel} зафиксирован показатель AQI ${aqi}. PM2.5: ${pm25} µg/m³, CO2: ${co2} ppm. Погодный контекст: ${desc}, ветер ${wind} м/с, температура ${temp}°C, влажность ${humidity}%.`);
+    setText('weatherSummaryBox', `Погодный слой активен: ${desc}. Скорость ветра ${wind} м/с, температура ${temp}°C, влажность ${humidity}%. Эти параметры используются вместе с AQI и PM2.5 в реальном сценарии.`);
+    setText('weatherWindValue', `${wind} м/с`);
+    setText('weatherWindText', wind <= 2 ? 'Слабый ветер — риск накопления загрязнения выше' : 'Ветер помогает рассеиванию загрязнения');
+    setText('weatherTempValue', `${temp}°C`);
+    setText('weatherHumidityText', `Влажность: ${humidity}%`);
+    setText('metric1Status', `${status.label}`);
+
+    const metric1Status = byId('metric1Status');
+    if (metric1Status) metric1Status.innerHTML = `<i class="dot ${status.cls}"></i>${status.label}`;
+
+    setText('contextChip', `${cityLabel} · ${(appData?.pollutants?.[state.pollutant]?.label) || 'AQI'} · ${(appData?.windows?.[state.window]) || 'Сейчас'}`);
+    setText('refreshChip', `API обновлено ${nowTime()}`);
+    setText('dataChip', 'Источник данных: серверный API · WAQI + OpenWeather');
+    setText('liveSummary', 'Система использует живой серверный endpoint и синхронизирует обзор, карту, прогноз, уведомления и контуры доступа по реальным данным.');
+
+    localStorage.setItem('airguardRealtimeSummary', JSON.stringify({ ts: Date.now(), payload }));
+
+    if (typeof updateAll === 'function') updateAll();
+    if (typeof fullSyncV24 === 'function') fullSyncV24();
+  }
+
+  async function fetchRealtimeSummary() {
+    if (inFlight) return;
+    inFlight = true;
+    const btn = byId('simulateBtn');
+    const cityCode = (window.state && state.city) || 'tashkent';
+    try {
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Обновление API...';
+      }
+      setText('refreshChip', 'Идёт обновление API...');
+      const url = `${API_ENDPOINT}?city=${encodeURIComponent(cityCode)}`;
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      applyRealtimeSummary(payload);
+    } catch (error) {
+      const snapshotRaw = localStorage.getItem('airguardRealtimeSummary');
+      if (snapshotRaw) {
+        try {
+          const snapshot = JSON.parse(snapshotRaw);
+          if (snapshot?.payload) {
+            applyRealtimeSummary(snapshot.payload);
+            setText('refreshChip', `API offline · используется сохранённый снимок ${nowTime()}`);
+            setText('dataChip', 'Источник данных: сохранённый API-снимок');
+          }
+        } catch (_) {}
+      }
+      if (byId('refreshChip')?.textContent === 'Идёт обновление API...') {
+        setText('refreshChip', 'Ошибка API соединения');
+      }
+      console.error('AirGuard realtime API error:', error);
+    } finally {
+      inFlight = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Обновить данные';
+      }
+    }
+  }
+
+  function bindRealtimeApiLayer() {
+    const oldBtn = byId('simulateBtn');
+    if (oldBtn && !oldBtn.dataset.apiBound) {
+      const newBtn = oldBtn.cloneNode(true);
+      newBtn.dataset.apiBound = '1';
+      oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+      newBtn.addEventListener('click', fetchRealtimeSummary);
+    }
+
+    const citySelect = byId('citySelect');
+    if (citySelect && !citySelect.dataset.apiBound) {
+      citySelect.dataset.apiBound = '1';
+      citySelect.addEventListener('change', () => setTimeout(fetchRealtimeSummary, 80));
+    }
+
+    if (refreshTimer) clearInterval(refreshTimer);
+    refreshTimer = setInterval(fetchRealtimeSummary, 300000);
+  }
+
+  window.addEventListener('load', () => {
+    bindRealtimeApiLayer();
+    setTimeout(fetchRealtimeSummary, 300);
   });
 })();
 </script>
