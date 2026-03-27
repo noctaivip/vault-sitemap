@@ -5318,4 +5318,95 @@ updateUserLayer();
 })();
 </script>
 
+
+<script>
+(function () {
+  let deferredPrompt = null;
+
+  function showInstallMessage(message) {
+    const existing = document.getElementById('installNotice');
+    if (existing) existing.remove();
+
+    const box = document.createElement('div');
+    box.id = 'installNotice';
+    box.className = 'card';
+    box.style.marginBottom = '18px';
+    box.innerHTML = '<h3>Установка приложения</h3><div class="summary-box">' + message + '</div>';
+
+    const overview = document.getElementById('overview');
+    if (overview) {
+      overview.insertBefore(box, overview.firstChild);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      alert(message.replace(/<br>/g, '\n'));
+    }
+  }
+
+  function setInstallButtonState(text, disabled) {
+    const btn = document.getElementById('installBtn');
+    if (!btn) return;
+    btn.textContent = text;
+    btn.disabled = !!disabled;
+    btn.style.opacity = disabled ? '0.7' : '1';
+    btn.style.cursor = disabled ? 'default' : 'pointer';
+  }
+
+  function fallbackInstructions() {
+    const ua = navigator.userAgent || '';
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    const isChromeLike = /Chrome|Edg/i.test(ua);
+
+    if (isIOS && isSafari) {
+      return 'На iPhone откройте меню Share и выберите <b>Add to Home Screen</b>. Это установит одно приложение, внутри которого уже переключаются роли: пользователь, бизнес и государство.';
+    }
+
+    if (isAndroid && isChromeLike) {
+      return 'На Android откройте меню браузера и выберите <b>Установить приложение</b> или <b>Add to Home screen</b>. Если браузер считает сайт готовым к установке, значок установки также может появиться в адресной строке.';
+    }
+
+    if (isChromeLike) {
+      return 'На компьютере откройте меню браузера и выберите <b>Установить приложение</b>. Также значок установки может появиться справа в адресной строке.';
+    }
+
+    return 'Если автоматическая установка не открылась, используйте меню браузера: <b>Установить приложение</b> или <b>Add to Home Screen</b>. Это одно приложение с внутренним переключением ролей.';
+  }
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    setInstallButtonState('Скачать приложение', false);
+  });
+
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    setInstallButtonState('Приложение установлено', true);
+    showInstallMessage('Приложение установлено. Теперь его можно открывать как отдельное PWA-приложение.');
+  });
+
+  window.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('installBtn');
+    if (!btn) return;
+
+    setInstallButtonState('Скачать приложение', false);
+
+    btn.addEventListener('click', async function () {
+      if (deferredPrompt) {
+        try {
+          deferredPrompt.prompt();
+          const choice = await deferredPrompt.userChoice;
+          if (choice && choice.outcome === 'accepted') {
+            setInstallButtonState('Установка запущена', true);
+            return;
+          }
+        } catch (e) {}
+      }
+
+      showInstallMessage(fallbackInstructions());
+    });
+  });
+})();
+</script>
+
 </body></html>
