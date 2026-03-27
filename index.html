@@ -4072,7 +4072,7 @@ updateUserLayer();
 
     const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
 
-    setText('overviewTitle', `Оперативная аналитика по показателю ${pollutant?.label || 'AQI'} для ${city}.`);
+    setText('overviewTitle', 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.');
     setText('overviewText', `Система отслеживает текущее значение ${pollutant?.label || 'AQI'}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
     setText('signalSourceValue', detectSourceLabelV24());
     setText('signalCityValue', city);
@@ -5106,7 +5106,7 @@ updateUserLayer();
   }
 
   function buildOverview(d) {
-    setText('overviewTitle', `Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.`);
+    setText('overviewTitle', 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.');
     setText('overviewText', `Простой экран для обычного человека: можно ли выходить, когда лучше выйти, как вести себя сегодня и что происходит именно в районе ${d.name}.`);
     setText('heroMainValue', String(d.live));
     setText('heroMainLabel', `AQI · Сейчас для района ${d.name}`);
