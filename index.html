@@ -1991,17 +1991,7 @@
 </div>
 <div class="card">
 <h3>Рекомендуемые меры</h3>
-
-<div class="card">
-<h3>Приоритет города</h3>
-<div class="summary-box">
-Район: центральный<br>
-Окно: ухудшение через 2–3 часа<br>
-Меры: подготовить уведомления и усилить контроль
-</div>
-</div>
 <div class="recommend-list" id="govActions"></div>
-
 </div>
 </div>
 </div>
@@ -2102,29 +2092,37 @@
 </div>
 <div class="card">
 <h3>Практические выводы</h3>
-
-<div class="card">
-<h3>Executive brief</h3>
-<div class="summary-box">
-Риск: высокий<br>
-Критичный объект: центр города<br>
-Действие: сократить наружные работы и нагрузку на персонал
-</div>
-</div>
 <div class="recommend-list" id="businessOutputs"></div>
+</div>
+</div>
 </section>
 <section class="screen" id="user">
 <div class="premium-hero">
-<h3>Пользовательский контур</h3>
-<p>Здесь остаются только те функции, которые нужны обычному человеку: понять риск, получить простое решение, увидеть прогноз и персональные уведомления.</p>
+<h3>AirGuard для человека</h3>
+<p>Этот экран нужен не для просмотра цифр, а для быстрого решения: выходить сейчас или нет, открывать окна или нет, когда лучше выйти и как вести себя сегодня.</p>
 </div>
-<div class="hero">
-<h2>Для людей</h2>
-<p class="sub">Простые решения на каждый день. Без аналитики — только действия.</p>
+
+<div class="grid grid-3" style="margin-top:18px;">
+<div class="card user-profile-active">
+<h3>План дня</h3>
+<div class="sub">Главная ежедневная причина открыть приложение.</div>
+<div class="summary-box" id="userPlanDay">Сейчас: ❌ не выходить<br/>Через 2 часа: ⚠ можно кратковременно<br/>Вечером: ✅ лучшее время выйти</div>
 </div>
+<div class="card">
+<h3>Что делать сейчас</h3>
+<div class="sub">Прямой ответ без сложной аналитики.</div>
+<div class="summary-box" id="userDecision">Определяется...</div>
+</div>
+<div class="card">
+<h3>Если выйдешь сейчас</h3>
+<div class="sub">Понимание последствий до выхода на улицу.</div>
+<div class="summary-box" id="userIfGoNow">Сейчас: риск выше обычного<br/>Через 2 часа: риск снижается</div>
+</div>
+</div>
+
 <div class="card" style="margin-top:18px;">
 <h3>Профиль пользователя</h3>
-<div class="sub">Выберите профиль, чтобы рекомендации адаптировались под человека, а не были одинаковыми для всех.</div>
+<div class="sub">Выберите профиль — рекомендации автоматически подстроятся под вас.</div>
 <div class="action-toolbar" id="userProfileButtons">
 <button class="ghost-btn active" data-user-profile="general">Обычный</button>
 <button class="ghost-btn" data-user-profile="child">Ребёнок</button>
@@ -2132,42 +2130,55 @@
 <button class="ghost-btn" data-user-profile="sport">Спорт</button>
 </div>
 </div>
-<div class="grid grid-2">
+
+<div class="grid grid-2" style="margin-top:18px;">
 <div class="card">
 <h3>Сейчас рядом с вами</h3>
 <div class="value" id="userAQI" style="font-size:42px;">—</div>
 <div id="userStatus">Загрузка данных...</div>
 </div>
 <div class="card">
-<h3>Решение</h3>
-<div class="summary-box" id="userDecision">Определяется...</div>
+<h3>Индекс дня</h3>
+<div class="sub">Общее качество дня для обычных дел.</div>
+<div id="userIndex" style="font-size:32px;">—</div>
 </div>
 </div>
+
 <div class="grid grid-3" style="margin-top:18px;">
 <div class="card"><h3>Можно ли гулять</h3><div id="userWalk">—</div></div>
 <div class="card"><h3>Можно ли спорт</h3><div id="userSport">—</div></div>
 <div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
 </div>
+
+<div class="grid grid-3" style="margin-top:18px;">
+<div class="card">
+<h3>Лучшее время выйти</h3>
+<div class="sub">Короткий ориентир на день.</div>
+<div class="summary-box">Используйте это окно для прогулки, дороги и короткой активности на улице. При ухудшении воздуха приложение должно подсказывать более спокойный интервал.</div>
+</div>
+<div class="card">
+<h3>Что проверить перед выходом</h3>
+<div class="sub">Минимальный список действий.</div>
+<div class="recommend-list">
+<div class="rec-item"><strong>Текущий риск</strong><p>Посмотрите статус и решение на экране.</p></div>
+<div class="rec-item"><strong>Ваш профиль</strong><p>Убедитесь, что выбран правильный режим.</p></div>
+<div class="rec-item"><strong>Уведомления</strong><p>Проверьте персональные сигналы на ближайшие часы.</p></div>
+</div>
+</div>
+<div class="card">
+<h3>Для семьи</h3>
+<div class="sub">Польза в бытовых решениях каждый день.</div>
+<div class="summary-box">Экран помогает быстро решить: идти сейчас, подождать, сократить активность, закрыть окна или перенести спорт и прогулку.</div>
+</div>
+</div>
+
 <div class="card" style="margin-top:18px;">
 <h3>Персональные уведомления</h3>
-<div class="sub">Логика уведомлений строится на текущем AQI, погоде и выбранном профиле пользователя.</div>
+<div class="sub">Уведомления подсказывают лучшее время выйти и предупреждают об ухудшении.</div>
 <div class="recommend-list" id="userAlertsList"></div>
 </div>
-<div class="card" style="margin-top:18px;">
-
-<div class="card" style="margin-top:18px;">
-<h3>План дня</h3>
-<div class="summary-box">
-Сейчас: ⚠ ограничить активность<br>
-Через 2 часа: ⚠ можно кратковременно<br>
-Вечером: ✅ лучшее время выйти
-</div>
-</div>
-<h3>Индекс дня</h3>
-
-<div id="userIndex" style="font-size:32px;">—</div>
-</div>
-</section></main></div>
+</section>
+</main></div>
 
 <div class="footer-note">AirGuard AI приведён к чистой продуктовой структуре: пользовательский, корпоративный и государственный контуры разделены, а навигация, карта, прогноз, уведомления и аналитика работают внутри единой модели данных.</div>
 
