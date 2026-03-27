@@ -1613,7 +1613,22 @@
       .timeline-item { grid-template-columns: 1fr; }
       .report-sheet { padding: 18px; border-radius: 22px; }
     }
-  </style>
+  
+    @media (max-width: 820px) {
+      .topbar { padding: 12px; }
+      .topbar-left, .topbar-right, .topbar-status, .topbar-access, .topbar-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+      }
+      .topbar-status { grid-template-columns: 1fr; }
+      #installBtn { width: 100%; }
+      .mode-shell, .access-switch { grid-column: 1 / -1; width: 100%; }
+      .access-switch { justify-content: space-between; }
+    }
+
+</style>
 </head>
 <body>
 <div class="app-shell">
@@ -1681,6 +1696,7 @@
 <div class="topbar-status">
 <div class="chip" id="refreshChip">Обновлено: сейчас</div>
 <div class="chip" id="contextChip">Ташкент · Центр · Сейчас</div>
+<button class="ghost-btn active" id="installBtn">Скачать приложение</button>
 </div>
 <div class="topbar-access">
 <div class="mode-shell" id="modeShell">
@@ -1696,28 +1712,10 @@
 </div>
 </div>
 <section class="screen active" id="overview">
-
-<div class="hero">
-<div class="hero-grid">
-<div>
-<div class="eyebrow">Для обычного человека</div>
-<h2 id="overviewTitle">Оперативная аналитика по качеству воздуха для Ташкента.</h2>
-<p id="overviewText">Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в вашем районе.</p>
-</div>
-<div class="hero-side">
-<div class="hero-stat">
-<strong id="heroMainValue">146</strong>
-<span id="heroMainLabel">Сейчас в вашем районе</span>
-</div>
-<div class="summary-box" id="heroSummary">Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация по вашему району.</div>
-<div class="hero-tags">
-<div class="chip">Карта</div>
-<div class="chip">Прогноз</div>
-<div class="chip">Оповещения</div>
-<div class="chip">Панели решений</div>
-</div>
-</div>
-</div>
+<div class="card user-profile-active" style="margin-bottom:18px;">
+<h3>Главное сейчас</h3>
+<div class="sub">Один экран, чтобы быстро понять ситуацию в вашем районе и установить приложение на телефон или компьютер.</div>
+<div class="summary-box" id="heroSummary">Откройте приложение и сразу поймите: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация по вашему району.</div>
 </div>
 <div class="grid grid-3" style="margin-bottom:18px;">
 <div class="card user-profile-active">
@@ -4072,9 +4070,7 @@ updateUserLayer();
 
     const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
 
-    setText('overviewTitle', 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.');
-    setText('overviewText', `Система отслеживает текущее значение ${pollutant?.label || 'AQI'}, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.`);
-    setText('signalSourceValue', detectSourceLabelV24());
+            setText('signalSourceValue', detectSourceLabelV24());
     setText('signalCityValue', city);
     setText('signalDistrictValue', top ? top.name : '—');
     setText('signalModeValue', `${appData.windows?.[state.window] || 'Сейчас'} · ${pollutant?.label || 'AQI'}`);
@@ -5010,9 +5006,7 @@ updateUserLayer();
     if (!select) return;
     const cfg = DISTRICT_COPY[select.value] || DISTRICT_COPY.center;
 
-    setText('overviewTitle', cfg.title);
-    setText('overviewText', cfg.text);
-    setText('heroSummary', cfg.summary);
+            setText('heroSummary', cfg.summary);
     setText('contextChip', cfg.context);
 
     const detail = document.getElementById('mapSideTitle');
@@ -5106,11 +5100,7 @@ updateUserLayer();
   }
 
   function buildOverview(d) {
-    setText('overviewTitle', 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.');
-    setText('overviewText', `Простой экран для обычного человека: можно ли выходить, когда лучше выйти, как вести себя сегодня и что происходит именно в районе ${d.name}.`);
-    setText('heroMainValue', String(d.live));
-    setText('heroMainLabel', `AQI · Сейчас для района ${d.name}`);
-    setText('heroSummary', `${d.note} Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.`);
+                    setText('heroSummary', `${d.note} Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.`);
     setText('contextChip', `Ташкент · ${d.name} · Сейчас`);
 
     setText('metric1Value', String(d.live));
