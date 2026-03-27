@@ -316,6 +316,27 @@
     .ghost-btn:hover { background: rgba(97,225,255,0.08); border-color: rgba(97,225,255,0.22); }
     .ghost-btn.active { background: rgba(97,225,255,0.14); border-color: rgba(97,225,255,0.24); }
 
+    .selector {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(238,245,255,.9) 50%),
+        linear-gradient(135deg, rgba(238,245,255,.9) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 34px;
+    }
+
+    .selector option {
+      background: #0c1725;
+      color: #eef5ff;
+    }
+
+
     .hero {
       padding: 28px;
       border-radius: 30px;
@@ -1637,6 +1658,13 @@
 <option value="chilanzar">Чиланзар</option>
 <option value="mirzo">Мирзо-Улугбек</option>
 <option value="bektemir">Бектемир</option>
+<option value="sergeli">Сергелий</option>
+<option value="mirabad">Мирабад</option>
+<option value="yashnabad">Яшнабад</option>
+<option value="shaykhantakhur">Шайхантахур</option>
+<option value="olmazor">Олмазор</option>
+<option value="uchtepa">Учтепа</option>
+<option value="yakkasaray">Яккасарай</option>
 </select>
 <select class="selector" id="pollutantSelect">
 <option value="aqi">AQI</option>
@@ -4888,38 +4916,87 @@ updateUserLayer();
   const DISTRICT_COPY = {
     center: {
       label: 'Центр',
-      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Центр.',
-      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в центральной части города.',
-      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в центре города.',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Центральная деловая активность повышает дневную нагрузку. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
       context: 'Ташкент · Центр · Сейчас'
     },
     yunusabad: {
       label: 'Юнусабад',
-      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Юнусабад.',
-      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Юнусабаде.',
-      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Юнусабаде.',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Высокая нагрузка в часы пик и вдоль магистралей. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
       context: 'Ташкент · Юнусабад · Сейчас'
     },
     chilanzar: {
       label: 'Чиланзар',
-      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Чиланзар.',
-      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Чиланзаре.',
-      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Чиланзаре.',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Один из наиболее чувствительных районов при текущем окне. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
       context: 'Ташкент · Чиланзар · Сейчас'
     },
     mirzo: {
       label: 'Мирзо-Улугбек',
-      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Мирзо-Улугбек.',
-      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в районе Мирзо-Улугбек.',
-      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в районе Мирзо-Улугбек.',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Фон умеренный, лучше выбирать спокойные часы. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
       context: 'Ташкент · Мирзо-Улугбек · Сейчас'
     },
     bektemir: {
       label: 'Бектемир',
-      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Бектемир.',
-      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Бектемире.',
-      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Бектемире.',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Относительно спокойный фон по сравнению с перегруженными зонами. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
       context: 'Ташкент · Бектемир · Сейчас'
+    },
+    sergeli: {
+      label: 'Сергелий',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Повышение в интервалах активного транспорта и вечернего трафика. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Сергелий · Сейчас'
+    },
+    mirabad: {
+      label: 'Мирабад',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Центральная деловая активность повышает дневную нагрузку. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Мирабад · Сейчас'
+    },
+    yashnabad: {
+      label: 'Яшнабад',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Умеренно-повышенный фон с вечерним ухудшением. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Яшнабад · Сейчас'
+    },
+    shaykhantakhur: {
+      label: 'Шайхантахур',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Повышение в центре района в вечернее окно. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Шайхантахур · Сейчас'
+    },
+    olmazor: {
+      label: 'Олмазор',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Фон умеренный, но лучше избегать длинной активности в пик. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Олмазор · Сейчас'
+    },
+    uchtepa: {
+      label: 'Учтепа',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Повышенный фон вблизи транспортных коридоров. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Учтепа · Сейчас'
+    },
+    yakkasaray: {
+      label: 'Яккасарай',
+      title: 'Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.',
+      text: 'Система отслеживает текущее значение AQI, прогнозирует краткосрочный риск и формирует прикладные рекомендации для жителей, предприятий и городских служб.',
+      summary: 'Умеренный фон, но вечером становится тяжелее. Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.',
+      context: 'Ташкент · Яккасарай · Сейчас'
     }
   };
 
@@ -4950,6 +5027,303 @@ updateUserLayer();
     if (!select) return;
     applyDistrictUI();
     select.addEventListener('change', applyDistrictUI);
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  function ensureHiddenSupportNode(id, tag) {
+    if (document.getElementById(id)) return;
+    const el = document.createElement(tag || 'div');
+    el.id = id;
+    el.style.display = 'none';
+    document.body.appendChild(el);
+  }
+
+  ['dataChip','accessChip'].forEach(id => ensureHiddenSupportNode(id, 'div'));
+  ['simulateBtn','installBtn'].forEach(id => ensureHiddenSupportNode(id, 'button'));
+
+  const DISTRICTS = {
+    center:        { name: 'Центр', live: 72, d7:[68,70,74,71,75,73,72], peak:'18:00–22:00', trend:'+6%', walk:'Можно кратко', sport:'Лучше позже', windows:'Коротко', note:'Плотный городской трафик и слабое рассеивание.' },
+    yunusabad:     { name: 'Юнусабад', live: 84, d7:[79,81,82,86,88,85,84], peak:'17:00–22:00', trend:'+9%', walk:'Ограничить', sport:'Отложить', windows:'Коротко', note:'Высокая нагрузка в часы пик и вдоль магистралей.' },
+    chilanzar:     { name: 'Чиланзар', live: 91, d7:[83,86,88,92,94,93,91], peak:'16:00–21:00', trend:'+11%', walk:'Ограничить', sport:'Не рекомендуется', windows:'Коротко', note:'Один из наиболее чувствительных районов при текущем окне.' },
+    mirzo:         { name: 'Мирзо-Улугбек', live: 63, d7:[58,60,61,64,67,65,63], peak:'18:00–21:00', trend:'+4%', walk:'Можно', sport:'Можно позже', windows:'Можно', note:'Фон умеренный, лучше выбирать спокойные часы.' },
+    bektemir:      { name: 'Бектемир', live: 55, d7:[49,51,54,56,57,56,55], peak:'19:00–22:00', trend:'+3%', walk:'Можно', sport:'Можно', windows:'Можно', note:'Относительно спокойный фон по сравнению с перегруженными зонами.' },
+    sergeli:       { name: 'Сергелий', live: 77, d7:[71,73,75,78,79,78,77], peak:'17:00–21:00', trend:'+7%', walk:'Можно кратко', sport:'Лучше позже', windows:'Коротко', note:'Повышение в интервалах активного транспорта и вечернего трафика.' },
+    mirabad:       { name: 'Мирабад', live: 74, d7:[69,71,73,75,77,76,74], peak:'17:00–21:00', trend:'+6%', walk:'Можно кратко', sport:'Лучше позже', windows:'Коротко', note:'Центральная деловая активность повышает дневную нагрузку.' },
+    yashnabad:     { name: 'Яшнабад', live: 70, d7:[65,66,68,71,72,71,70], peak:'18:00–22:00', trend:'+5%', walk:'Можно кратко', sport:'Лучше позже', windows:'Коротко', note:'Умеренно-повышенный фон с вечерним ухудшением.' },
+    shaykhantakhur:{ name: 'Шайхантахур', live: 73, d7:[67,69,71,74,75,74,73], peak:'17:00–21:00', trend:'+6%', walk:'Можно кратко', sport:'Лучше позже', windows:'Коротко', note:'Повышение в центре района в вечернее окно.' },
+    olmazor:       { name: 'Олмазор', live: 66, d7:[61,63,64,67,69,68,66], peak:'18:00–21:00', trend:'+4%', walk:'Можно', sport:'Можно позже', windows:'Можно', note:'Фон умеренный, но лучше избегать длинной активности в пик.' },
+    uchtepa:       { name: 'Учтепа', live: 79, d7:[73,75,77,80,82,80,79], peak:'17:00–21:00', trend:'+8%', walk:'Ограничить', sport:'Отложить', windows:'Коротко', note:'Повышенный фон вблизи транспортных коридоров.' },
+    yakkasaray:    { name: 'Яккасарай', live: 68, d7:[63,65,66,69,70,69,68], peak:'18:00–21:00', trend:'+5%', walk:'Можно кратко', sport:'Лучше позже', windows:'Можно', note:'Умеренный фон, но вечером становится тяжелее.' }
+  };
+
+  const PROFILE_COPY = {
+    general: { title: 'Обычный', decision: 'Можно выходить кратковременно и планировать дела на более спокойный интервал.', sportBoost: 'Лучше позже' },
+    child:   { title: 'Ребёнок', decision: 'Для ребёнка лучше сократить время на улице и выбирать самые спокойные часы.', sportBoost: 'Лучше отложить' },
+    asthma:  { title: 'Чувствительный', decision: 'Для чувствительного профиля лучше минимизировать уличную активность при повышенном фоне.', sportBoost: 'Не рекомендуется' },
+    sport:   { title: 'Спорт', decision: 'Интенсивную активность лучше переносить на более чистое окно дня.', sportBoost: 'Отложить тренировку' }
+  };
+
+  const state = {
+    district: 'center',
+    pollutant: 'aqi',
+    profile: 'general'
+  };
+
+  function byId(id) { return document.getElementById(id); }
+  function setText(id, value) { const el = byId(id); if (el) el.textContent = value; }
+  function setHTML(id, value) { const el = byId(id); if (el) el.innerHTML = value; }
+
+  function riskWord(v) {
+    if (v < 50) return 'Низкий';
+    if (v < 70) return 'Умеренный';
+    if (v < 90) return 'Повышенный';
+    return 'Высокий';
+  }
+
+  function indexOfDay(v) {
+    if (v < 50) return '9/10';
+    if (v < 70) return '7/10';
+    if (v < 90) return '5/10';
+    return '3/10';
+  }
+
+  function planMarkup(d) {
+    if (d.live >= 90) {
+      return 'Сейчас: ❌ не выходить<br>Через 2 часа: ⚠ можно кратковременно<br>Вечером: ✅ лучшее время выйти';
+    }
+    if (d.live >= 70) {
+      return 'Сейчас: ⚠ ограничить активность<br>Через 2 часа: ⚠ можно кратковременно<br>Вечером: ✅ спокойнее и комфортнее';
+    }
+    return 'Сейчас: ✅ можно выходить<br>Через 2 часа: ✅ комфортно<br>Вечером: ⚠ следите за изменением фона';
+  }
+
+  function profileDecision(d) {
+    return PROFILE_COPY[state.profile].decision;
+  }
+
+  function buildOverview(d) {
+    setText('overviewTitle', `Оперативная аналитика по показателю AQI для Tashkent, Uzbekistan.`);
+    setText('overviewText', `Простой экран для обычного человека: можно ли выходить, когда лучше выйти, как вести себя сегодня и что происходит именно в районе ${d.name}.`);
+    setText('heroMainValue', String(d.live));
+    setText('heroMainLabel', `AQI · Сейчас для района ${d.name}`);
+    setText('heroSummary', `${d.note} Откройте приложение и сразу поймите: стоит ли сейчас выходить и когда лучше планировать прогулку.`);
+    setText('contextChip', `Ташкент · ${d.name} · Сейчас`);
+
+    setText('metric1Value', String(d.live));
+    setText('metric1Status', riskWord(d.live));
+    setText('metric1Foot', `Район: ${d.name}`);
+    setText('metricPm', d.walk);
+    setText('pmFoot', 'Решение для прогулки');
+    setText('metricCo2', d.windows);
+    setText('co2Foot', 'Что делать с окнами');
+    setText('riskValue', d.peak);
+    setText('confidenceFoot', 'Лучшее окно на сегодня');
+
+    setHTML('weatherSummaryBox', `Район ${d.name}: ${d.note}`);
+    setText('weatherWindValue', riskWord(d.live));
+    setText('weatherWindText', 'Короткое описание текущей ситуации');
+    setText('weatherTempValue', indexOfDay(d.live));
+    setText('weatherHumidityText', 'Комфорт дня для обычных дел');
+
+    setText('aiSummary', `В районе ${d.name} фон сейчас оценивается как ${riskWord(d.live).toLowerCase()}. Приложение показывает не сложные цифры, а понятное решение: выходить сейчас или подождать более спокойное окно.`);
+    setHTML('actionList', `
+      <div class="rec-item"><strong>План дня</strong><p>${planMarkup(d).replace(/<br>/g, ' · ')}</p></div>
+      <div class="rec-item"><strong>Что делать сейчас</strong><p>${profileDecision(d)}</p></div>
+      <div class="rec-item"><strong>Если выйти сейчас</strong><p>${d.live >= 80 ? 'Нагрузка будет выше обычной.' : 'Допустима короткая активность.'}</p></div>
+    `);
+
+    setHTML('forecastStrip', d.d7.map((v, i) => `
+      <div class="day-chip">
+        <strong>${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'][i]}</strong>
+        <div style="font-size:18px; margin-bottom:6px;">${v}</div>
+        <span>${riskWord(v)}</span>
+      </div>
+    `).join(''));
+  }
+
+  function drawForecastChart(d) {
+    const canvas = byId('forecastChart');
+    if (!canvas) return;
+    const ratio = window.devicePixelRatio || 1;
+    const w = canvas.clientWidth || 600;
+    const h = canvas.clientHeight || 320;
+    canvas.width = w * ratio;
+    canvas.height = h * ratio;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(ratio, ratio);
+    ctx.clearRect(0,0,w,h);
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    for (let i=0;i<5;i++) {
+      const y = 30 + i * ((h-60)/4);
+      ctx.beginPath(); ctx.moveTo(20,y); ctx.lineTo(w-20,y); ctx.stroke();
+    }
+
+    const vals = d.d7;
+    const minV = Math.min(...vals) - 5;
+    const maxV = Math.max(...vals) + 5;
+    const xStep = (w - 60) / (vals.length - 1);
+
+    ctx.beginPath();
+    vals.forEach((v, i) => {
+      const x = 30 + i*xStep;
+      const y = h - 30 - ((v - minV)/(maxV-minV))*(h-70);
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle = 'rgba(97,225,255,0.95)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    vals.forEach((v, i) => {
+      const x = 30 + i*xStep;
+      const y = h - 30 - ((v - minV)/(maxV-minV))*(h-70);
+      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fillStyle = 'rgba(97,225,255,1)';
+      ctx.fill();
+      ctx.fillStyle = 'rgba(238,245,255,0.9)';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(String(v), x-8, y-12);
+    });
+  }
+
+  function buildForecast(d) {
+    setText('forecastConfidence', `${Math.max(78, 92 - Math.round(d.live/6))}%`);
+    setText('forecastNarrative', `Для района ${d.name} завтра вероятен пик в интервале ${d.peak}. Сейчас приложение показывает не просто график, а когда нагрузка становится выше и когда лучше переносить активность.`);
+    setHTML('riskBriefList', `
+      <div class="rec-item"><strong>Завтра утром</strong><p>${d.live >= 80 ? 'Фон останется повышенным.' : 'Фон умеренный, но лучше следить за окном.'}</p></div>
+      <div class="rec-item"><strong>Критический интервал</strong><p>${d.peak}</p></div>
+      <div class="rec-item"><strong>Практический вывод</strong><p>${d.live >= 80 ? 'Длинную прогулку и спорт лучше перенести.' : 'Активность лучше планировать вне пикового окна.'}</p></div>
+    `);
+    drawForecastChart(d);
+  }
+
+  function buildAlerts(d) {
+    setText('alertRuleCount', '12');
+    setHTML('alertList', `
+      <div class="alert-item">
+        <div class="head"><strong>Район ${d.name}</strong><span class="badge ${d.live >= 80 ? 'red' : d.live >= 70 ? 'orange' : 'green'}">${riskWord(d.live)}</span></div>
+        <p>Сейчас фон в районе ${d.name.toLowerCase()} оценивается как ${riskWord(d.live).toLowerCase()}. ${d.live >= 80 ? 'Лучше сократить длительное пребывание на улице.' : 'Допустима короткая активность с учётом окна.'}</p>
+      </div>
+      <div class="alert-item">
+        <div class="head"><strong>Следующее окно</strong><span class="badge cyan">Прогноз</span></div>
+        <p>Пик нагрузки ожидается в интервале ${d.peak}. Приложение советует планировать выходы и дела вне этого окна.</p>
+      </div>
+      <div class="alert-item">
+        <div class="head"><strong>Профиль: ${PROFILE_COPY[state.profile].title}</strong><span class="badge yellow">Персонально</span></div>
+        <p>${PROFILE_COPY[state.profile].decision}</p>
+      </div>
+    `);
+  }
+
+  function buildMap(d) {
+    setText('mapSideTitle', d.name);
+    setText('mapSideSummary', d.note);
+    setText('mapToolbarCity', `Район: ${d.name}`);
+    setText('mapToolbarMode', 'Режим: Сейчас');
+    setText('mapToolbarPollutant', 'Загрязнитель: AQI');
+
+    const sorted = Object.entries(DISTRICTS)
+      .sort((a,b) => b[1].live - a[1].live)
+      .map(([key,val]) => ({key, ...val}));
+
+    setHTML('mapQuickGrid', sorted.map(item => `
+      <div class="map-quick-card ${item.key === state.district ? 'active' : ''}" data-district-card="${item.key}">
+        <div class="name">${item.name}</div>
+        <div class="meta">AQI: ${item.live} · Пик: ${item.peak}<br>${riskWord(item.live)}</div>
+      </div>
+    `).join(''));
+
+    setHTML('mapDetail', `
+      <div class="detail-title"><strong>${d.name}</strong><span>Текущий район</span></div>
+      <div class="detail-grid">
+        <div class="mini-metric"><div class="k">AQI</div><div class="v">${d.live}</div></div>
+        <div class="mini-metric"><div class="k">Пик</div><div class="v">${d.peak}</div></div>
+        <div class="mini-metric"><div class="k">Динамика</div><div class="v">${d.trend}</div></div>
+        <div class="mini-metric"><div class="k">Статус</div><div class="v">${riskWord(d.live)}</div></div>
+      </div>
+      <div class="summary-box">${d.note}</div>
+    `);
+
+    document.querySelectorAll('#mapQuickGrid [data-district-card]').forEach(card => {
+      card.addEventListener('click', () => {
+        const district = card.getAttribute('data-district-card');
+        const select = byId('districtSelect');
+        if (select) select.value = district;
+        state.district = district;
+        rerender();
+      });
+    });
+
+    document.querySelectorAll('.hotspot[data-district]').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const district = dot.getAttribute('data-district');
+        const select = byId('districtSelect');
+        if (select) select.value = district;
+        state.district = district;
+        rerender();
+      });
+    });
+  }
+
+  function buildUser(d) {
+    setText('userAQI', String(d.live));
+    setText('userStatus', `${d.name} · ${riskWord(d.live)} · показатель AQI`);
+    setText('userIndex', indexOfDay(d.live));
+    setText('userWalk', d.walk);
+    setText('userSport', state.profile === 'sport' ? PROFILE_COPY[state.profile].sportBoost : d.sport);
+    setText('userWindows', d.windows);
+    setHTML('userAlertsList', `
+      <div class="rec-item"><strong>${PROFILE_COPY[state.profile].title}</strong><p>${PROFILE_COPY[state.profile].decision}</p></div>
+      <div class="rec-item"><strong>Лучшее окно</strong><p>Вне интервала ${d.peak} активность переносится легче.</p></div>
+      <div class="rec-item"><strong>Район ${d.name}</strong><p>${d.note}</p></div>
+    `);
+
+    document.querySelectorAll('#userProfileButtons [data-user-profile]').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-user-profile') === state.profile);
+      btn.classList.toggle('user-profile-active', btn.getAttribute('data-user-profile') === state.profile);
+      btn.onclick = () => {
+        state.profile = btn.getAttribute('data-user-profile');
+        buildUser(DISTRICTS[state.district]);
+        buildAlerts(DISTRICTS[state.district]);
+      };
+    });
+  }
+
+  function rerender() {
+    const d = DISTRICTS[state.district] || DISTRICTS.center;
+    buildOverview(d);
+    buildMap(d);
+    buildForecast(d);
+    buildAlerts(d);
+    buildUser(d);
+    setText('liveClock', `${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})} · Ташкент`);
+    setText('liveSummary', `Активный район: ${d.name}. Риск: ${riskWord(d.live)}. Все ключевые экраны синхронизированы с этим сценарием.`);
+    setText('refreshChip', `Обновлено: ${new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'})}`);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const districtSelect = byId('districtSelect');
+    if (districtSelect) {
+      state.district = districtSelect.value || 'center';
+      districtSelect.addEventListener('change', () => {
+        state.district = districtSelect.value;
+        rerender();
+      });
+    }
+    const pollutantSelect = byId('pollutantSelect');
+    if (pollutantSelect) {
+      pollutantSelect.addEventListener('change', () => rerender());
+    }
+    const windowSelect = byId('windowSelect');
+    if (windowSelect) {
+      windowSelect.addEventListener('change', () => rerender());
+    }
+    rerender();
+    window.addEventListener('resize', () => rerender());
   });
 })();
 </script>
