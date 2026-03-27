@@ -1610,6 +1610,13 @@
 <select class="selector" id="citySelect">
 <option value="tashkent">Ташкент</option>
 </select>
+<select class="selector" id="districtSelect">
+<option value="center">Центр</option>
+<option value="yunusabad">Юнусабад</option>
+<option value="chilanzar">Чиланзар</option>
+<option value="mirzo">Мирзо-Улугбек</option>
+<option value="bektemir">Бектемир</option>
+</select>
 <select class="selector" id="pollutantSelect">
 <option value="aqi">AQI</option>
 <option value="pm25">PM2.5</option>
@@ -1644,16 +1651,16 @@
 <div class="hero">
 <div class="hero-grid">
 <div>
-<div class="eyebrow">Оперативный обзор</div>
-<h2 id="overviewTitle">Оперативная аналитика качества воздуха по Ташкенту.</h2>
-<p id="overviewText">Система отслеживает текущее состояние воздуха, прогнозирует краткосрочные риски и формирует практические рекомендации для жителей, предприятий и городских служб.</p>
+<div class="eyebrow">Для обычного человека</div>
+<h2 id="overviewTitle">Оперативная аналитика по качеству воздуха для Ташкента.</h2>
+<p id="overviewText">Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в вашем районе.</p>
 </div>
 <div class="hero-side">
 <div class="hero-stat">
 <strong id="heroMainValue">146</strong>
-<span id="heroMainLabel">AQI · Текущий статус</span>
+<span id="heroMainLabel">Сейчас в вашем районе</span>
 </div>
-<div class="summary-box" id="heroSummary">В центральных районах Ташкента качество воздуха остаётся ухудшенным. В вечерние часы ожидается дополнительный рост концентрации частиц из-за плотного трафика и слабого рассеивания.</div>
+<div class="summary-box" id="heroSummary">Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация по вашему району.</div>
 <div class="hero-tags">
 <div class="chip">Карта</div>
 <div class="chip">Прогноз</div>
@@ -1663,58 +1670,75 @@
 </div>
 </div>
 </div>
+<div class="grid grid-3" style="margin-bottom:18px;">
+<div class="card user-profile-active">
+<h3>План дня</h3>
+<div class="sub">Главная причина открыть приложение утром.</div>
+<div class="summary-box">Сейчас: ❌ не выходить<br/>Через 2 часа: ⚠ можно кратковременно<br/>Вечером: ✅ лучшее время выйти</div>
+</div>
+<div class="card">
+<h3>Что делать сейчас</h3>
+<div class="sub">Простой ответ без сложных терминов.</div>
+<div class="summary-box">Гулять: ❌ не рекомендуется<br/>Спорт: ❌ лучше отложить<br/>Окна: ⚠ открыть только на короткое время</div>
+</div>
+<div class="card">
+<h3>Если выйдешь сейчас</h3>
+<div class="sub">Понимание последствий до выхода на улицу.</div>
+<div class="summary-box">Сейчас: нагрузка выше обычной<br/>Позже: станет спокойнее и комфортнее</div>
+</div>
+</div>
 <div class="grid grid-4">
 <div class="card metric-card">
-<div class="label" id="metric1Label">Текущий AQI</div>
+<div class="label" id="metric1Label">Сейчас на улице</div>
 <div class="value" id="metric1Value">146</div>
-<div class="status-row"><span id="metric1Status"><i class="dot orange"></i>Повышенный</span><span id="metric1Foot">+12% к сопоставимому периоду</span></div>
+<div class="status-row"><span id="metric1Status"><i class="dot orange"></i>Повышенный</span><span id="metric1Foot">Ориентир по текущей ситуации</span></div>
 </div>
 <div class="card metric-card">
-<div class="label">PM2.5</div>
+<div class="label">Для прогулки</div>
 <div class="value" id="metricPm">68</div>
-<div class="status-row"><span>µg/m³</span><span id="pmFoot">Выше рекомендуемого уровня</span></div>
+<div class="status-row"><span>Короткий вывод</span><span id="pmFoot">Сейчас лучше сократить активность</span></div>
 </div>
 <div class="card metric-card">
-<div class="label">CO2</div>
+<div class="label">Окна дома</div>
 <div class="value" id="metricCo2">742</div>
-<div class="status-row"><span>ppm</span><span id="co2Foot">Городской фон растёт</span></div>
+<div class="status-row"><span>Дом и окна</span><span id="co2Foot">Проветривать коротко и по ситуации</span></div>
 </div>
 <div class="card metric-card">
-<div class="label">Прогнозный риск</div>
+<div class="label">Лучшее время выйти</div>
 <div class="value" id="riskValue">Высокий</div>
-<div class="status-row"><span id="riskDot"><i class="dot red"></i>Следующие 24 часа</span><span id="confidenceFoot">81% достоверность модели</span></div>
+<div class="status-row"><span id="riskDot"><i class="dot red"></i>Следующие 24 часа</span><span id="confidenceFoot">Окно на ближайшие часы</span></div>
 </div>
 </div>
 <div class="grid grid-3" style="margin-top:18px;">
 <div class="card">
-<h3>Погодный контекст</h3>
-<div class="summary-box" id="weatherSummaryBox">Погодный слой не подключен. После подключения OpenWeather здесь появятся ветер, температура и влажность.</div>
+<h3>Что важно обычному человеку</h3>
+<div class="summary-box" id="weatherSummaryBox">Здесь должен быть понятный вывод для пользователя: насколько сегодня комфортно, стоит ли надолго выходить и когда лучше перенести активность.</div>
 </div>
 <div class="card">
-<h3>Ветер</h3>
+<h3>Снаружи сейчас</h3>
 <div class="value" id="weatherWindValue" style="font-size:34px;">—</div>
-<div class="sub" id="weatherWindText">Нет данных</div>
+<div class="sub" id="weatherWindText">Короткое описание текущей ситуации</div>
 </div>
 <div class="card">
-<h3>Температура / влажность</h3>
+<h3>Комфорт дня</h3>
 <div class="value" id="weatherTempValue" style="font-size:34px;">—</div>
-<div class="sub" id="weatherHumidityText">Нет данных</div>
+<div class="sub" id="weatherHumidityText">Насколько комфортно находиться на улице</div>
 </div>
 </div>
 <div class="grid grid-main" style="margin-top:18px;">
 <div class="card">
-<h3>Сводка системы</h3>
-<div class="sub">Краткая аналитическая сводка по выбранному загрязнителю и временному окну.</div>
+<h3>Что это значит для вас</h3>
+<div class="sub">Простое объяснение без AQI и PM2.5.</div>
 <div class="summary-box" id="aiSummary">Система показывает усиление концентрации загрязняющих веществ в Юнусабаде, Чиланзаре и вдоль основных транспортных коридоров. В ближайшие 18–24 часа ожидается окно среднего и высокого загрязнения.</div>
 </div>
 <div class="card">
-<h3>Рекомендуемые действия</h3>
-<div class="sub">Логика рекомендаций автоматически обновляется под текущий сценарий.</div>
+<h3>Что лучше сделать сегодня</h3>
+<div class="sub">Короткие действия на сегодня и ближайшие часы.</div>
 <div class="recommend-list" id="actionList"></div>
 </div>
 <div class="card" style="margin-top:18px;">
-<h3>Прогноз на 7 дней</h3>
-<div class="sub">Краткий прогноз по выбранному загрязнителю.</div>
+<h3>Когда станет лучше</h3>
+<div class="sub">Прогноз, который помогает планировать прогулки, спорт и дорогу.</div>
 <div class="forecast-strip" id="forecastStrip"></div>
 </div>
 </div></section>
@@ -2098,31 +2122,13 @@
 </section>
 <section class="screen" id="user">
 <div class="premium-hero">
-<h3>AirGuard для человека</h3>
-<p>Этот экран нужен не для просмотра цифр, а для быстрого решения: выходить сейчас или нет, открывать окна или нет, когда лучше выйти и как вести себя сегодня.</p>
-</div>
-
-<div class="grid grid-3" style="margin-top:18px;">
-<div class="card user-profile-active">
-<h3>План дня</h3>
-<div class="sub">Главная ежедневная причина открыть приложение.</div>
-<div class="summary-box" id="userPlanDay">Сейчас: ❌ не выходить<br/>Через 2 часа: ⚠ можно кратковременно<br/>Вечером: ✅ лучшее время выйти</div>
-</div>
-<div class="card">
-<h3>Что делать сейчас</h3>
-<div class="sub">Прямой ответ без сложной аналитики.</div>
-<div class="summary-box" id="userDecision">Определяется...</div>
-</div>
-<div class="card">
-<h3>Если выйдешь сейчас</h3>
-<div class="sub">Понимание последствий до выхода на улицу.</div>
-<div class="summary-box" id="userIfGoNow">Сейчас: риск выше обычного<br/>Через 2 часа: риск снижается</div>
-</div>
+<h3>Ваш профиль и личные настройки</h3>
+<p>Этот экран нужен для персонализации: выбрать профиль, получить уведомления и настроить приложение под свой повседневный режим.</p>
 </div>
 
 <div class="card" style="margin-top:18px;">
 <h3>Профиль пользователя</h3>
-<div class="sub">Выберите профиль — рекомендации автоматически подстроятся под вас.</div>
+<div class="sub">Выберите профиль — рекомендации на обзоре автоматически подстроятся под вас.</div>
 <div class="action-toolbar" id="userProfileButtons">
 <button class="ghost-btn active" data-user-profile="general">Обычный</button>
 <button class="ghost-btn" data-user-profile="child">Ребёнок</button>
@@ -2139,7 +2145,7 @@
 </div>
 <div class="card">
 <h3>Индекс дня</h3>
-<div class="sub">Общее качество дня для обычных дел.</div>
+<div class="sub">Общая оценка дня для повседневных дел.</div>
 <div id="userIndex" style="font-size:32px;">—</div>
 </div>
 </div>
@@ -2150,31 +2156,9 @@
 <div class="card"><h3>Открывать окна</h3><div id="userWindows">—</div></div>
 </div>
 
-<div class="grid grid-3" style="margin-top:18px;">
-<div class="card">
-<h3>Лучшее время выйти</h3>
-<div class="sub">Короткий ориентир на день.</div>
-<div class="summary-box">Используйте это окно для прогулки, дороги и короткой активности на улице. При ухудшении воздуха приложение должно подсказывать более спокойный интервал.</div>
-</div>
-<div class="card">
-<h3>Что проверить перед выходом</h3>
-<div class="sub">Минимальный список действий.</div>
-<div class="recommend-list">
-<div class="rec-item"><strong>Текущий риск</strong><p>Посмотрите статус и решение на экране.</p></div>
-<div class="rec-item"><strong>Ваш профиль</strong><p>Убедитесь, что выбран правильный режим.</p></div>
-<div class="rec-item"><strong>Уведомления</strong><p>Проверьте персональные сигналы на ближайшие часы.</p></div>
-</div>
-</div>
-<div class="card">
-<h3>Для семьи</h3>
-<div class="sub">Польза в бытовых решениях каждый день.</div>
-<div class="summary-box">Экран помогает быстро решить: идти сейчас, подождать, сократить активность, закрыть окна или перенести спорт и прогулку.</div>
-</div>
-</div>
-
 <div class="card" style="margin-top:18px;">
 <h3>Персональные уведомления</h3>
-<div class="sub">Уведомления подсказывают лучшее время выйти и предупреждают об ухудшении.</div>
+<div class="sub">Здесь собраны сигналы, которые помогают не пропустить ухудшение и выбрать лучшее время выйти.</div>
 <div class="recommend-list" id="userAlertsList"></div>
 </div>
 </section>
@@ -4873,6 +4857,78 @@ updateUserLayer();
     bindUserOverviewFix();
     setTimeout(userOverviewFix, 80);
     setTimeout(userOverviewFix, 400);
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const DISTRICT_COPY = {
+    center: {
+      label: 'Центр',
+      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Центр.',
+      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в центральной части города.',
+      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в центре города.',
+      context: 'Ташкент · Центр · Сейчас'
+    },
+    yunusabad: {
+      label: 'Юнусабад',
+      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Юнусабад.',
+      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Юнусабаде.',
+      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Юнусабаде.',
+      context: 'Ташкент · Юнусабад · Сейчас'
+    },
+    chilanzar: {
+      label: 'Чиланзар',
+      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Чиланзар.',
+      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Чиланзаре.',
+      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Чиланзаре.',
+      context: 'Ташкент · Чиланзар · Сейчас'
+    },
+    mirzo: {
+      label: 'Мирзо-Улугбек',
+      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Мирзо-Улугбек.',
+      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в районе Мирзо-Улугбек.',
+      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в районе Мирзо-Улугбек.',
+      context: 'Ташкент · Мирзо-Улугбек · Сейчас'
+    },
+    bektemir: {
+      label: 'Бектемир',
+      title: 'Оперативная аналитика по качеству воздуха для Ташкента · Бектемир.',
+      text: 'Этот экран нужен не для сложных цифр, а для простого ответа: можно ли выходить, когда лучше выйти, открывать окна или нет, и как вести себя сегодня в Бектемире.',
+      summary: 'Открывайте приложение, чтобы за несколько секунд понять: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация в Бектемире.',
+      context: 'Ташкент · Бектемир · Сейчас'
+    }
+  };
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function applyDistrictUI() {
+    const select = document.getElementById('districtSelect');
+    if (!select) return;
+    const cfg = DISTRICT_COPY[select.value] || DISTRICT_COPY.center;
+
+    setText('overviewTitle', cfg.title);
+    setText('overviewText', cfg.text);
+    setText('heroSummary', cfg.summary);
+    setText('contextChip', cfg.context);
+
+    const detail = document.getElementById('mapSideTitle');
+    if (detail) detail.textContent = cfg.label;
+
+    const toolbar = document.getElementById('mapToolbarCity');
+    if (toolbar) toolbar.textContent = 'Район: ' + cfg.label;
+  }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('districtSelect');
+    if (!select) return;
+    applyDistrictUI();
+    select.addEventListener('change', applyDistrictUI);
   });
 })();
 </script>
