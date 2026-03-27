@@ -5667,4 +5667,67 @@ updateUserLayer();
 })();
 </script>
 
+
+<script>
+(function () {
+  function getSidebar() {
+    return document.querySelector('.sidebar');
+  }
+
+  function getOverlay() {
+    return document.getElementById('sidebarOverlay');
+  }
+
+  function openSidebar() {
+    const sidebar = getSidebar();
+    const overlay = getOverlay();
+    if (sidebar) sidebar.classList.add('mobile-open');
+    if (overlay) overlay.classList.add('open');
+  }
+
+  function closeSidebar() {
+    const sidebar = getSidebar();
+    const overlay = getOverlay();
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('open');
+  }
+
+  function toggleSidebar() {
+    const sidebar = getSidebar();
+    if (!sidebar) return;
+    if (sidebar.classList.contains('mobile-open')) closeSidebar();
+    else openSidebar();
+  }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('hamburgerBtn');
+    const overlay = getOverlay();
+
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', function () {
+        closeSidebar();
+      });
+    }
+
+    document.querySelectorAll('.nav button').forEach(function (item) {
+      item.addEventListener('click', function () {
+        if (window.innerWidth <= 820) closeSidebar();
+      });
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 820) closeSidebar();
+    });
+  });
+})();
+</script>
+
 </body></html>
