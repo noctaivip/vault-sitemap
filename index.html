@@ -1582,9 +1582,23 @@
 
 
     @media (max-width: 820px) {
-      .app-shell { width: min(100vw - 16px, 1540px); margin: 8px auto; gap: 10px; }
+      .app-shell { width: min(100vw - 16px, 1540px); margin: 8px auto; gap: 10px; grid-template-columns: 1fr; }
       .sidebar, .content-pane { border-radius: 22px; }
-      .sidebar { padding: 14px; }
+      .sidebar {
+        padding: 14px;
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        width: min(320px, calc(100vw - 32px));
+        max-height: calc(100vh - 16px);
+        min-height: auto;
+        overflow: auto;
+        z-index: 50;
+        transform: translateX(-110%);
+        transition: transform .22s ease;
+        box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      }
+      .sidebar.mobile-open { transform: translateX(0); }
       .content-pane { padding: 12px; min-height: auto; }
       .hero { padding: 18px; border-radius: 22px; }
       .card { padding: 16px; border-radius: 20px; }
@@ -1599,6 +1613,22 @@
       .status-console { grid-template-columns: 1fr; }
       .timeline-item { grid-template-columns: 1fr; }
       .report-sheet { padding: 18px; border-radius: 22px; }
+
+      .topbar { padding: 12px; }
+      .topbar-left, .topbar-right, .topbar-status, .topbar-access, .topbar-actions {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+      }
+      .topbar-status { grid-template-columns: 1fr; }
+      #installBtn { width: 100%; }
+      .mode-shell, .access-switch { grid-column: 1 / -1; width: 100%; }
+      .access-switch { justify-content: space-between; }
+
+      .hamburger-btn {
+        display: inline-flex;
+      }
     }
 
     @media (max-width: 1180px) {
@@ -1628,9 +1658,49 @@
       .access-switch { justify-content: space-between; }
     }
 
+
+    .hamburger-btn {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0;
+    }
+
+    .hamburger-btn span {
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 999px;
+      display: block;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,10,18,.58);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 40;
+    }
+
+    .sidebar-overlay.open {
+      display: block;
+    }
+
 </style>
 </head>
 <body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="app-shell">
 <aside class="sidebar">
 <div class="brand">
@@ -1664,6 +1734,9 @@
 <main class="content-pane">
 <div class="topbar">
 <div class="topbar-left topbar-actions">
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Открыть меню">
+  <span></span><span></span><span></span>
+</button>
 <select class="selector" id="citySelect">
 <option value="tashkent">Ташкент</option>
 </select>
