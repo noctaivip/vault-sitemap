@@ -1883,6 +1883,26 @@
     }
 
 </style>
+
+<style>
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,15,30,0.65);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+.sidebar-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hamburger-floating { z-index: 70 !important; }
+.sidebar { z-index: 80 !important; }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -5726,6 +5746,30 @@ updateUserLayer();
     window.addEventListener('resize', function () {
       if (window.innerWidth > 820) closeSidebar();
     });
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  const overlay = document.getElementById('sidebarOverlay');
+  const sidebar = document.querySelector('.sidebar');
+
+  function closeAll(){
+    if(sidebar) sidebar.classList.remove('mobile-open');
+    if(overlay) overlay.classList.remove('open');
+  }
+
+  document.addEventListener('click', function(e){
+    if(!sidebar) return;
+
+    const inside = sidebar.contains(e.target) || 
+                   e.target.closest('#hamburgerBtn');
+
+    if(!inside && window.innerWidth <= 820){
+      closeAll();
+    }
   });
 })();
 </script>
