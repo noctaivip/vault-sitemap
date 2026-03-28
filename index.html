@@ -5961,4 +5961,48 @@ updateUserLayer();
 })();
 </script>
 
+
+<script id="mobile-nav-delegation-fix">
+(function () {
+  function switchScreen(screenId) {
+    document.querySelectorAll('.nav button').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-screen') === screenId);
+    });
+    document.querySelectorAll('.screen').forEach(function (screen) {
+      screen.classList.toggle('active', screen.id === screenId);
+    });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function closeMobileMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }
+
+  function handleNavEvent(event) {
+    const btn = event.target.closest('.nav button');
+    if (!btn) return;
+    const screenId = btn.getAttribute('data-screen');
+    if (!screenId) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    switchScreen(screenId);
+
+    if (window.innerWidth <= 820) {
+      setTimeout(closeMobileMenu, 10);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('click', handleNavEvent, true);
+    document.addEventListener('touchend', handleNavEvent, { capture: true, passive: false });
+  });
+})();
+</script>
+
 </body></html>
