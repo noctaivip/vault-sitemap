@@ -5962,18 +5962,8 @@ updateUserLayer();
 </script>
 
 
-<script id="mobile-nav-delegation-fix">
+<script id="mobile-nav-touch-fix">
 (function () {
-  function switchScreen(screenId) {
-    document.querySelectorAll('.nav button').forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-screen') === screenId);
-    });
-    document.querySelectorAll('.screen').forEach(function (screen) {
-      screen.classList.toggle('active', screen.id === screenId);
-    });
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }
-
   function closeMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebarOverlay');
@@ -5982,25 +5972,26 @@ updateUserLayer();
     document.body.classList.remove('menu-open');
   }
 
-  function handleNavEvent(event) {
-    const btn = event.target.closest('.nav button');
-    if (!btn) return;
-    const screenId = btn.getAttribute('data-screen');
-    if (!screenId) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    switchScreen(screenId);
-
-    if (window.innerWidth <= 820) {
-      setTimeout(closeMobileMenu, 10);
-    }
+  function isMobile() {
+    return window.innerWidth <= 820;
   }
 
   window.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('click', handleNavEvent, true);
-    document.addEventListener('touchend', handleNavEvent, { capture: true, passive: false });
+    document.addEventListener('touchend', function (e) {
+      if (!isMobile()) return;
+
+      const btn = e.target.closest('.sidebar .nav button');
+      if (!btn) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      btn.click();
+
+      setTimeout(function () {
+        closeMobileMenu();
+      }, 30);
+    }, { capture: true, passive: false });
   });
 })();
 </script>
