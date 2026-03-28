@@ -2088,15 +2088,14 @@
 </style>
 
 
-<style id="b2b-polish-styles">
-  .biz-hero-grid {
+<style id="gov-polish-styles">
+  .gov-hero-grid {
     display: grid;
     grid-template-columns: 1.05fr .95fr;
     gap: 18px;
     margin-top: 18px;
   }
-
-  .biz-shell-card {
+  .gov-shell-card {
     padding: 22px;
     border-radius: 24px;
     border: 1px solid rgba(255,255,255,.07);
@@ -2105,28 +2104,24 @@
       linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.01);
   }
-
-  .biz-shell-card h3 {
+  .gov-shell-card h3 {
     margin: 0 0 8px;
     font-size: 22px;
     letter-spacing: -.02em;
   }
-
-  .biz-shell-card p {
+  .gov-shell-card p {
     margin: 0;
     color: var(--muted);
     font-size: 14px;
     line-height: 1.7;
   }
-
-  .biz-money-grid {
+  .gov-priority-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0,1fr));
     gap: 14px;
     margin-top: 18px;
   }
-
-  .biz-money-card {
+  .gov-priority-card {
     padding: 20px;
     border-radius: 22px;
     border: 1px solid rgba(255,255,255,.07);
@@ -2136,62 +2131,53 @@
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.01);
     min-height: 220px;
   }
-
-  .biz-money-card .ey {
+  .gov-priority-card .ey {
     font-size: 11px;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: .08em;
     margin-bottom: 10px;
   }
-
-  .biz-money-card .big {
-    font-size: 40px;
-    line-height: 1;
+  .gov-priority-card .big {
+    font-size: 34px;
+    line-height: 1.02;
     letter-spacing: -.04em;
     margin-bottom: 12px;
   }
-
-  .biz-money-card .desc {
+  .gov-priority-card .desc {
     color: var(--muted);
     font-size: 13px;
     line-height: 1.65;
     margin-bottom: 14px;
   }
-
-  .biz-mini-stack {
+  .gov-mini-stack {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-
-  .biz-mini-chip {
+  .gov-mini-chip {
     padding: 12px 14px;
     border-radius: 16px;
     border: 1px solid rgba(255,255,255,.06);
     background: rgba(255,255,255,.028);
   }
-
-  .biz-mini-chip strong {
+  .gov-mini-chip strong {
     display: block;
     margin-bottom: 4px;
     font-size: 14px;
   }
-
-  .biz-mini-chip span {
+  .gov-mini-chip span {
     color: var(--muted);
     font-size: 12px;
     line-height: 1.5;
   }
-
-  .biz-wide-grid {
+  .gov-wide-grid {
     display: grid;
     grid-template-columns: 1.15fr .85fr;
     gap: 18px;
     margin-top: 18px;
   }
-
-  .biz-exec-card {
+  .gov-command-card {
     padding: 22px;
     border-radius: 24px;
     border: 1px solid rgba(255,255,255,.07);
@@ -2199,65 +2185,56 @@
       radial-gradient(circle at 90% 8%, rgba(139,135,255,.08), transparent 26%),
       linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.018));
   }
-
-  .biz-exec-head {
+  .gov-command-card .value {
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -.04em;
+  }
+  .gov-command-head {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
     margin-bottom: 14px;
   }
-
-  .biz-exec-head .value {
-    font-size: 42px;
-    line-height: 1;
-    letter-spacing: -.04em;
-  }
-
-  .biz-exec-head .meta {
+  .gov-command-head .meta {
     color: var(--muted);
     font-size: 12px;
     line-height: 1.5;
     text-align: right;
   }
-
-  .biz-exec-list {
+  .gov-command-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
-
-  .biz-exec-item {
+  .gov-command-item {
     padding: 14px 16px;
     border-radius: 18px;
     border: 1px solid rgba(255,255,255,.06);
     background: rgba(255,255,255,.028);
   }
-
-  .biz-exec-item strong {
+  .gov-command-item strong {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
   }
-
-  .biz-exec-item span {
+  .gov-command-item span {
     color: var(--muted);
     font-size: 13px;
     line-height: 1.55;
   }
-
   @media (max-width: 1180px) {
-    .biz-hero-grid,
-    .biz-money-grid,
-    .biz-wide-grid {
+    .gov-hero-grid,
+    .gov-priority-grid,
+    .gov-wide-grid {
       grid-template-columns: 1fr;
     }
   }
-
   @media (max-width: 820px) {
-    .biz-money-card .big,
-    .biz-exec-head .value {
-      font-size: 32px;
+    .gov-priority-card .big,
+    .gov-command-card .value {
+      font-size: 30px;
     }
   }
 </style>
@@ -2349,6 +2326,11 @@
 </div>
 </div>
 <section class="screen active" id="overview">
+<div class="card user-profile-active" style="margin-bottom:18px;">
+<h3>Главное сейчас</h3>
+<div class="sub">Один экран, чтобы быстро понять ситуацию в вашем районе и установить приложение на телефон или компьютер.</div>
+<div class="summary-box" id="heroSummary">Откройте приложение и сразу поймите: стоит ли сейчас выходить, когда лучше запланировать прогулку и как меняется ситуация по вашему району.</div>
+</div>
 <div class="grid grid-3" style="margin-bottom:18px;">
 <div class="card user-profile-active">
 <h3>План дня</h3>
@@ -2593,8 +2575,8 @@
 </section>
 <section class="screen" id="gov">
 <div class="premium-hero" id="govPremiumHero">
-<h3>Государственный контур стратегического мониторинга</h3>
-<p>Закрытый слой для муниципальных и государственных структур: приоритетные районы, окна реагирования, прогнозный риск, управленческие меры и контур пилотного внедрения для города.</p>
+<h3>Government Risk Control Layer</h3>
+<p>Закрытый слой для муниципальных и государственных структур: приоритетные районы, окна реагирования, управленческие меры, прогнозные пики и экономический эффект городских решений.</p>
 <div class="vault-grid">
 <div class="vault-card">
 <div class="k">Контур доступа</div>
@@ -2613,19 +2595,77 @@
 </div>
 </div>
 </div>
-<div class="hero">
-<div class="hero-grid">
-<div>
-<div class="eyebrow">Панель мониторинга города</div>
-<h2>Единая панель для мониторинга и планирования реагирования по городу.</h2>
-<p>Этот раздел оставляет только прикладные функции: риск по городу, критические районы, краткосрочные пики и рекомендуемые меры.</p>
+
+<div class="gov-hero-grid">
+  <div class="gov-shell-card">
+    <div class="eyebrow">Для города и штаба реагирования</div>
+    <h3>Государственный контур управления риском, а не просто мониторинг воздуха.</h3>
+    <p>Этот экран показывает городу не только текущую нагрузку, но и то, где проблема сейчас, какие районы критичны, какие меры нужны немедленно и какой эффект даст реакция уже сегодня.</p>
+  </div>
+  <div class="gov-shell-card">
+    <div class="gov-command-head">
+      <div class="value" id="govImpactValue">—</div>
+      <div class="meta">городской статус<br>по активному сценарию</div>
+    </div>
+    <div class="summary-box" id="govNarrative">Государственный слой объединяет текущий статус, прогнозный риск, рейтинг районов, контур транспорта, городские меры и ожидаемый экономический эффект.</div>
+  </div>
 </div>
-<div class="hero-side">
-<div class="hero-stat"><strong id="govWindow">72h</strong><span>критическое окно прогноза</span></div>
-<div class="summary-box" id="govNarrative">Командный слой объединяет текущий статус, прогнозный риск, рейтинг районов и приоритетные меры в единую операционную панель.</div>
+
+<div class="gov-priority-grid">
+  <div class="gov-priority-card">
+    <div class="ey">Ситуация сейчас</div>
+    <div class="big">3 района</div>
+    <div class="desc">В зоне повышенной нагрузки по активному окну. Интерфейс показывает не просто уровень AQI, а фактический объём зон, где уже нужно принимать меры.</div>
+    <div class="gov-mini-stack">
+      <div class="gov-mini-chip"><strong>Статус города</strong><span>Повышенный риск в ключевых транспортных и плотных районах.</span></div>
+      <div class="gov-mini-chip"><strong>Окно ухудшения</strong><span>Утро и вечер — главные интервалы для реагирования.</span></div>
+    </div>
+  </div>
+
+  <div class="gov-priority-card">
+    <div class="ey">Критические зоны</div>
+    <div class="big" id="govCoverageValue">Юнусабад / Чиланзар / Мирабад</div>
+    <div class="desc">Карта и аналитика районов превращаются в понятный список приоритетов для штаба, транспорта и надзорного блока.</div>
+    <div class="gov-mini-stack">
+      <div class="gov-mini-chip"><strong>Причина</strong><span>Транспортная плотность, слабое рассеивание и повторяющиеся пики нагрузки.</span></div>
+      <div class="gov-mini-chip"><strong>Фокус</strong><span>Район → мера → прогнозируемый эффект.</span></div>
+    </div>
+  </div>
+
+  <div class="gov-priority-card">
+    <div class="ey">Экономический эффект</div>
+    <div class="big" id="govWindowValue">$120k / день</div>
+    <div class="desc">Оценка эффекта от своевременных городских решений: снижение перегрузки транспорта, сокращение операционных потерь и снижение риска для населения.</div>
+    <div class="gov-mini-stack">
+      <div class="gov-mini-chip"><strong>Транспорт</strong><span>Снижение пиковой нагрузки до -18% при корректировке режима.</span></div>
+      <div class="gov-mini-chip"><strong>Риск населения</strong><span>Потенциальное снижение воздействия до -22% в критических зонах.</span></div>
+    </div>
+  </div>
 </div>
+
+<div class="gov-wide-grid">
+  <div class="gov-command-card">
+    <div class="gov-command-head">
+      <div>
+        <div class="eyebrow" style="margin-bottom:8px;">Что делать сейчас</div>
+        <div style="font-size:22px; line-height:1.2;">Решения для штаба, транспорта и городских служб</div>
+      </div>
+      <div class="meta">оперативный режим · город · 24/7</div>
+    </div>
+    <p id="govBriefText" style="margin:0 0 14px; color: var(--muted); line-height:1.7;">Короткий управленческий бриф: где проблема сейчас, какие районы критичны, какое окно реагирования главное и какие меры нужно принять немедленно.</p>
+    <div class="command-list" id="govBriefList"></div>
+  </div>
+
+  <div class="gov-command-card">
+    <div class="eyebrow" style="margin-bottom:8px;">Почему это полезно государству</div>
+    <div class="gov-command-list" id="govWhyList">
+      <div class="gov-command-item"><strong>Район → действие</strong><span>Система сразу показывает, где нужен контроль и какая мера приоритетнее всего.</span></div>
+      <div class="gov-command-item"><strong>Управление, а не отчёт</strong><span>Интерфейс даёт оперативные решения по транспорту, стройке и надзорным мерам.</span></div>
+      <div class="gov-command-item"><strong>Экономический эффект</strong><span>Город видит не только риск, но и ожидаемое снижение потерь и нагрузки.</span></div>
+    </div>
+  </div>
 </div>
-</div>
+
 <div class="ops-grid access-guard gov-guard section-hidden-by-access" id="govOpsGrid">
 <div class="ops-card">
 <div class="ey">Сценарий города</div>
@@ -2642,43 +2682,13 @@
 <div class="ops-list" id="govControlList"></div>
 </div>
 </div>
-<div class="impact-grid access-guard gov-guard section-hidden-by-access" id="govImpactGrid">
-<div class="impact-card wow-panel">
-<div class="ey">Городской контур</div>
-<div class="value" id="govImpactValue">—</div>
-<div class="desc" id="govImpactDesc">Интегральный статус города по текущему сценарию.</div>
-</div>
-<div class="impact-card wow-panel">
-<div class="ey">Охват решений</div>
-<div class="value" id="govCoverageValue">—</div>
-<div class="desc">Количество контуров, на которые уже можно опираться при управленческом решении.</div>
-</div>
-<div class="impact-card wow-panel">
-<div class="ey">Окно вмешательства</div>
-<div class="value" id="govWindowValue">—</div>
-<div class="desc">Критическое окно, где нужен ускоренный цикл коммуникации и контроля.</div>
-</div>
-</div>
-<div class="command-strip access-guard gov-guard section-hidden-by-access" id="govCommandStrip">
-<div class="command-box wow-panel">
-<h3>Командный бриф для города</h3>
-<p id="govBriefText">—</p>
-<div class="command-list" id="govBriefList"></div>
-</div>
-<div class="command-box wow-panel">
-<h3>Почему это выглядит как государственный продукт</h3>
-<div class="command-list" id="govWhyList">
-<div class="command-item"><strong>Приоритет районов</strong><span>Система сразу показывает, где нужен контроль и какое окно реагирования важнее всего.</span></div>
-<div class="command-item"><strong>Оперативные меры</strong><span>Рекомендации ориентированы на реальные действия, а не просто на отображение данных.</span></div>
-<div class="command-item"><strong>Управленческий контур</strong><span>Интерфейс выглядит как рабочая панель штаба, а не как пользовательский экран.</span></div>
-</div>
-</div>
-</div>
-<div class="card" style="margin-bottom:18px;">
+
+<div class="card" style="margin:18px 0;">
 <h3>Ключевые показатели по городу</h3>
-<div class="sub">Основные показатели, связанные с текущими настройками.</div>
+<div class="sub">Основные показатели, связанные с текущими настройками и управленческим сценарием.</div>
 <div class="kpi-grid" id="govKpiGrid"></div>
 </div>
+
 <div class="access-guard gov-guard section-hidden-by-access">
 <div class="action-toolbar">
 <button class="ghost-btn" data-action="city-summary">Сформировать сводку города</button>
@@ -2686,7 +2696,8 @@
 </div>
 <div class="split">
 <div class="card table-card">
-<h3>районы с максимальным риском</h3>
+<h3>Районы с максимальным риском</h3>
+<div class="sub">Приоритетный список для немедленного реагирования.</div>
 <table>
 <thead><tr><th>район</th><th id="govMetricHead">AQI</th><th>Динамика</th><th>Приоритет</th></tr></thead>
 <tbody id="govTableBody"></tbody>
@@ -2694,6 +2705,7 @@
 </div>
 <div class="card">
 <h3>Рекомендуемые меры</h3>
+<div class="sub">Меры, которые должны быть видны за несколько секунд.</div>
 <div class="recommend-list" id="govActions"></div>
 </div>
 </div>
@@ -2701,8 +2713,8 @@
 </section>
 <section class="screen" id="business">
 <div class="premium-hero" id="bizPremiumHero">
-<h3>Business Control Layer</h3>
-<p>Закрытый корпоративный слой для компаний: контроль объектов, операционный риск, окна повышенной нагрузки и решения для руководителя, которые напрямую влияют на график, персонал и эффективность.</p>
+<h3>Корпоративный контур экологического риска</h3>
+<p>Закрытый слой для предприятий: мониторинг объектов, влияние воздуха на операции, окна повышенного риска и рекомендации для руководства и службы безопасности.</p>
 <div class="vault-grid">
 <div class="vault-card">
 <div class="k">Контур доступа</div>
@@ -2710,97 +2722,74 @@
 <div class="f">Открывается только по ключу бизнес-доступа.</div>
 </div>
 <div class="vault-card">
-<div class="k">Критичный объект</div>
+<div class="k">Критический объект</div>
 <div class="v" id="bizCriticalObject">—</div>
-<div class="f">Объект с максимальной нагрузкой в текущем сценарии.</div>
+<div class="f">Объект с максимальной нагрузкой по текущему сценарию.</div>
 </div>
 <div class="vault-card">
-<div class="k">Окно риска</div>
+<div class="k">Операционный риск</div>
 <div class="v" id="bizRiskWindow">—</div>
-<div class="f">Интервал, где руководителю нужно принимать решение по операциям.</div>
+<div class="f">Окно, где рекомендуется корректировка наружных работ и логистики.</div>
 </div>
 </div>
 </div>
-
-<div class="biz-hero-grid">
-  <div class="biz-shell-card">
-    <div class="eyebrow">Для руководителя и operations</div>
-    <h3>Операционный риск для бизнеса, а не просто данные о воздухе.</h3>
-    <p>Этот экран показывает, где компания теряет эффективность, какие объекты критичны сегодня и какие действия нужно принять прямо сейчас. Логика экрана построена как управленческий инструмент: риск → решение → экономический эффект.</p>
-  </div>
-  <div class="biz-shell-card">
-    <div class="biz-exec-head">
-      <div class="value" id="bizImpactValue">—</div>
-      <div class="meta">текущий статус компании<br>по активному сценарию</div>
-    </div>
-    <div class="summary-box" id="businessNarrative">Business-слой переводит экологический сигнал в корпоративные решения: графики, наружные работы, нагрузку на персонал, вентиляцию и режим объекта.</div>
-  </div>
+<div class="locked-note access-guard-note" id="bizLockedNote">
+          Бизнес-контур закрыт. После ввода ключа доступа открываются расширенные рекомендации по объектам, операционный риск и сценарии для руководства.
+        </div>
+<div class="hero">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">Аналитика для предприятий</div>
+<h2>Оценка экологических рисков для объектов и операционной деятельности предприятий.</h2>
+<p>Бизнес-слой сфокусирован на практическом применении: риски для объектов, решения по безопасности сотрудников и периодическая аналитика.</p>
 </div>
-
-<div class="biz-money-grid">
-  <div class="biz-money-card">
-    <div class="ey">Влияние на операции</div>
-    <div class="big">-10% / -15%</div>
-    <div class="desc">Падение продуктивности, рост ошибок и повышение нагрузки на персонал при неблагоприятном окне по району и времени.</div>
-    <div class="biz-mini-stack">
-      <div class="biz-mini-chip"><strong>Продуктивность</strong><span>Снижается при наружных и смешанных операциях.</span></div>
-      <div class="biz-mini-chip"><strong>Ошибки</strong><span>Растут в плотных транспортных и производственных коридорах.</span></div>
-    </div>
-  </div>
-
-  <div class="biz-money-card">
-    <div class="ey">Оценка потерь</div>
-    <div class="big">$800 – $2,200</div>
-    <div class="desc">Типовая дневная потеря для объекта с 15–30 сотрудниками при работе в неблагоприятное окно без корректировки режима.</div>
-    <div class="biz-mini-stack">
-      <div class="biz-mini-chip"><strong>Источник потерь</strong><span>Срывы наружных работ, снижение темпа и рост операционного шума.</span></div>
-      <div class="biz-mini-chip"><strong>Тип объекта</strong><span>Склад, стройка, логистика, смешанный офисно-операционный контур.</span></div>
-    </div>
-  </div>
-
-  <div class="biz-money-card">
-    <div class="ey">Эффект решения</div>
-    <div class="big">$600 – $1,400</div>
-    <div class="desc">Потенциальная экономия после корректировки смен, переноса наружных операций и снижения нагрузки в критическое окно.</div>
-    <div class="biz-mini-stack">
-      <div class="biz-mini-chip"><strong>Снижение риска</strong><span>Высокий → умеренный при правильном переносе работ.</span></div>
-      <div class="biz-mini-chip"><strong>Режим</strong><span>Перенос операций после 18:00 и усиление внутреннего контура.</span></div>
-    </div>
-  </div>
+<div class="hero-side">
+<div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
+<div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
 </div>
-
-<div class="biz-wide-grid">
-  <div class="biz-exec-card">
-    <div class="biz-exec-head">
-      <div>
-        <div class="eyebrow" style="margin-bottom:8px;">Executive Brief</div>
-        <div style="font-size:22px; line-height:1.2;">Решения, которые нужны бизнесу сегодня</div>
-      </div>
-      <div class="meta">руководитель · operations · HSE</div>
-    </div>
-    <p id="bizBriefText" style="margin:0 0 14px; color: var(--muted); line-height:1.7;">Короткий управленческий бриф: статус компании, критичный объект, окно риска и действие, которое нужно принять сегодня.</p>
-    <div class="command-list" id="bizBriefList"></div>
-  </div>
-
-  <div class="biz-exec-card">
-    <div class="eyebrow" style="margin-bottom:8px;">Почему за это платит бизнес</div>
-    <div class="biz-exec-list" id="bizWhyList">
-      <div class="biz-exec-item"><strong>Контроль объектов</strong><span>Компания видит, какой объект уязвим сильнее всего и где нужно вмешательство.</span></div>
-      <div class="biz-exec-item"><strong>Снижение операционного риска</strong><span>Решения помогают снизить ошибки, перегрузку персонала и срывы наружных работ.</span></div>
-      <div class="biz-exec-item"><strong>Прямая прикладная польза</strong><span>Это не аналитика ради аналитики, а управленческий инструмент для ежедневных решений.</span></div>
-    </div>
-  </div>
 </div>
-
+</div>
+<div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
+<div class="impact-card wow-panel">
+<div class="ey">Корпоративный контур</div>
+<div class="value" id="bizImpactValue">—</div>
+<div class="desc" id="bizImpactDesc">Интегральный статус корпоративного риска по текущему сценарию.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Операционный охват</div>
+<div class="value" id="bizCoverageValue">—</div>
+<div class="desc">Количество управляемых направлений: персонал, смены, наружные работы, логистика.</div>
+</div>
+<div class="impact-card wow-panel">
+<div class="ey">Критическое окно</div>
+<div class="value" id="bizWindowValue">—</div>
+<div class="desc">Окно, где потери эффективности и риски для персонала максимальны.</div>
+</div>
+</div>
+<div class="command-strip access-guard biz-guard section-hidden-by-access" id="bizCommandStrip">
+<div class="command-box wow-panel">
+<h3>Исполнительный бриф для предприятия</h3>
+<p id="bizBriefText">—</p>
+<div class="command-list" id="bizBriefList"></div>
+</div>
+<div class="command-box wow-panel">
+<h3>Почему это выглядит как B2B продукт</h3>
+<div class="command-list" id="bizWhyList">
+<div class="command-item"><strong>Связь с операциями</strong><span>Сигнал качества воздуха сразу переводится в решения по объектам, персоналу и сменам.</span></div>
+<div class="command-item"><strong>Контроль руководства</strong><span>Режим показывает не только риск, но и конкретные действия для менеджмента.</span></div>
+<div class="command-item"><strong>Премиальный слой</strong><span>Закрытый доступ формирует ощущение корпоративного сервиса, а не общего публичного инструмента.</span></div>
+</div>
+</div>
+</div>
 <div class="ops-grid access-guard biz-guard section-hidden-by-access" id="bizOpsGrid">
 <div class="ops-card">
-<div class="ey">Статус компании</div>
+<div class="ey">Режим предприятия</div>
 <div class="tt" id="bizScenarioTitle">—</div>
 <div class="dd" id="bizScenarioDesc">—</div>
 <div class="badge yellow" id="bizRiskBadge">Операционный риск</div>
 </div>
 <div class="ops-card">
-<div class="ey">Что делать сегодня</div>
+<div class="ey">Решения для операций</div>
 <div class="ops-list" id="bizOpsList"></div>
 </div>
 <div class="ops-card">
@@ -2808,19 +2797,16 @@
 <div class="ops-list" id="bizControlList"></div>
 </div>
 </div>
-
-<div class="grid grid-main" style="margin-top:18px;">
+<div class="grid grid-main">
 <div class="card table-card">
-<h3>Риски по объектам</h3>
-<div class="sub">Список показывает, какие объекты компании наиболее чувствительны в текущем сценарии.</div>
+<h3>Обзор рисков по объектам</h3>
 <table>
 <thead><tr><th>Объект</th><th>район</th><th>Риск</th><th>Динамика</th><th>Статус</th></tr></thead>
 <tbody id="facilityTableBody"></tbody>
 </table>
 </div>
 <div class="card">
-<h3>Решения для руководителя</h3>
-<div class="sub">Практический вывод по персоналу, операциям, наружным работам и режиму объекта.</div>
+<h3>Практические выводы</h3>
 <div class="recommend-list" id="businessOutputs"></div>
 </div>
 </div>
