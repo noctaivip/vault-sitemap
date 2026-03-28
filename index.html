@@ -2007,6 +2007,73 @@
 }
 </style>
 
+
+<style id="mobile-menu-final-safe-fix">
+@media (max-width: 820px) {
+  body.menu-open {
+    overflow: hidden !important;
+  }
+
+  .app-shell {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .content-pane {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 72px 12px 12px !important;
+    border-radius: 0 !important;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: min(320px, calc(100vw - 56px)) !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    transform: translateX(-110%) !important;
+    transition: transform .22s ease !important;
+    z-index: 80 !important;
+    border-radius: 0 22px 22px 0 !important;
+    box-shadow: 0 24px 80px rgba(0,0,0,.45) !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  #sidebarOverlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(5,15,30,0.45) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity .2s ease !important;
+    z-index: 70 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #sidebarOverlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  #hamburgerBtn {
+    display: inline-flex !important;
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 90 !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -5799,6 +5866,9 @@ updateUserLayer();
 
 
 
+
+
+
 <script>
 (function () {
   function sidebar() { return document.querySelector('.sidebar'); }
@@ -5809,20 +5879,13 @@ updateUserLayer();
     return window.innerWidth <= 820;
   }
 
-  function openMenu() {
+  function setMenu(open) {
     const s = sidebar();
     const o = overlay();
-    if (s) s.classList.add('mobile-open');
-    if (o) o.classList.add('open');
-    document.body.classList.add('menu-open');
-  }
-
-  function closeMenu() {
-    const s = sidebar();
-    const o = overlay();
-    if (s) s.classList.remove('mobile-open');
-    if (o) o.classList.remove('open');
-    document.body.classList.remove('menu-open');
+    if (!s || !o) return;
+    s.classList.toggle('mobile-open', open);
+    o.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
   }
 
   function toggleMenu(e) {
@@ -5833,34 +5896,33 @@ updateUserLayer();
     if (!isMobile()) return;
     const s = sidebar();
     if (!s) return;
-    if (s.classList.contains('mobile-open')) closeMenu();
-    else openMenu();
+    setMenu(!s.classList.contains('mobile-open'));
   }
 
   window.addEventListener('DOMContentLoaded', function () {
-    closeMenu();
+    setMenu(false);
 
     const btn = button();
     const o = overlay();
 
     if (btn) {
-      btn.onclick = toggleMenu;
-      btn.addEventListener('touchstart', toggleMenu, { passive: false });
+      btn.addEventListener('click', toggleMenu);
     }
 
     if (o) {
-      o.onclick = closeMenu;
-      o.addEventListener('touchstart', closeMenu, { passive: true });
+      o.addEventListener('click', function () {
+        setMenu(false);
+      });
     }
 
     document.querySelectorAll('.nav button').forEach(function (item) {
       item.addEventListener('click', function () {
-        if (isMobile()) closeMenu();
+        if (isMobile()) setMenu(false);
       });
     });
 
     window.addEventListener('resize', function () {
-      if (!isMobile()) closeMenu();
+      if (!isMobile()) setMenu(false);
     });
   });
 })();
