@@ -4062,6 +4062,84 @@
   .ghost-btn.active, .access-btn.active, .nav button.active { filter: saturate(1.08); }
 </style>
 
+
+<style id="mobile-ui-operational-fix-v2">
+@media (max-width: 820px) {
+  .topbar-right {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .topbar-access {
+    order: -5 !important;
+    justify-content: stretch !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+  }
+
+  .topbar-status {
+    order: 2 !important;
+  }
+
+  .access-switch {
+    width: 100% !important;
+    padding: 4px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+  }
+
+  .access-btn {
+    min-height: 38px !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .hero-side .hero-stat {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  #mapSideTitle {
+    display: block !important;
+    line-height: 1.04 !important;
+    margin: 0 !important;
+  }
+
+  #mapSideMode {
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+  }
+
+  .legend {
+    min-height: 76px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  .legend .row {
+    display: none !important;
+  }
+
+  .legend h4 {
+    margin: 0 !important;
+  }
+
+  .district-label {
+    display: none !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -6519,51 +6597,139 @@ updateUserLayer();
     }
   }
 
-  function rebuildUserLayerV24() {
+  
+function rebuildUserLayerV24() {
     if (typeof appData === 'undefined' || typeof state === 'undefined') return;
     const profileKey = currentProfile();
     const profile = userProfiles[profileKey] || userProfiles.general;
-    const aqi = Number(appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
+    const pollutantKey = state.pollutant || 'aqi';
+    const pollutantLive = Number(appData.pollutants?.[pollutantKey]?.cityValue?.[state.window] || appData.pollutants?.aqi?.cityValue?.[state.window] || 0);
     const weatherWindText = document.getElementById('weatherWindText')?.textContent || '';
     const windPenalty = weatherWindText.includes('Слабый ветер') ? 12 : 0;
-    const adjusted = Math.round(aqi * profile.factor + windPenalty);
 
-    let decision = '', walk = '', sport = '', windows = '', index = '', status = '';
-    if (adjusted < 50) {
-      decision = 'Воздух хороший. Ограничений для повседневной активности нет.';
-      walk = 'Да';
-      sport = 'Да';
-      windows = 'Можно';
-      index = '9/10';
-      status = `Профиль: ${profile.title} · низкий риск`;
-    } else if (adjusted < 100) {
-      decision = 'Риск умеренный. Можно выходить, но лучше избегать длительной активности у дорог.';
-      walk = 'Да';
-      sport = 'С осторожностью';
-      windows = 'Можно кратко';
-      index = '7/10';
-      status = `Профиль: ${profile.title} · умеренный риск`;
-    } else if (adjusted < 150) {
-      decision = 'Риск повышенный. Лучше сократить активность на улице и следить за следующими обновлениями.';
-      walk = 'Ограничить';
-      sport = 'Не рекомендуется';
-      windows = 'Осторожно';
-      index = '5/10';
-      status = `Профиль: ${profile.title} · повышенный риск`;
+    const profileOffsets = {
+      general: 0,
+      child: 14,
+      asthma: 22,
+      sport: 10
+    };
+
+    const adjusted = Math.round(pollutantLive * profile.factor + windPenalty + (profileOffsets[profileKey] || 0));
+
+    let decision = '';
+    let walk = '';
+    let sport = '';
+    let windows = '';
+    let index = '';
+    let status = '';
+
+    if (profileKey === 'child') {
+      if (adjusted < 70) {
+        decision = 'Для ребёнка день в целом допустим, но прогулки лучше планировать вне дорог и пиковых часов.';
+        walk = 'Коротко и вне дорог';
+        sport = 'Только лёгкая активность';
+        windows = 'Можно кратко';
+        index = '7/10';
+        status = 'Профиль: Ребёнок · нужен более осторожный режим';
+      } else if (adjusted < 120) {
+        decision = 'Для ребёнка фон уже чувствительный. Прогулки лучше сократить и перенести на более спокойное окно.';
+        walk = 'Ограничить';
+        sport = 'Не рекомендуется';
+        windows = 'Кратко';
+        index = '5/10';
+        status = 'Профиль: Ребёнок · повышенное внимание';
+      } else {
+        decision = 'Для ребёнка наружную активность лучше минимизировать до улучшения окна.';
+        walk = 'Нет';
+        sport = 'Нет';
+        windows = 'Закрыть';
+        index = '3/10';
+        status = 'Профиль: Ребёнок · высокий риск';
+      }
+    } else if (profileKey === 'asthma') {
+      if (adjusted < 60) {
+        decision = 'Для чувствительного профиля условия приемлемы только при коротких выходах и контроле самочувствия.';
+        walk = 'Коротко';
+        sport = 'В помещении';
+        windows = 'Кратко';
+        index = '6/10';
+        status = 'Профиль: Чувствительный · осторожный режим';
+      } else if (adjusted < 100) {
+        decision = 'Для чувствительного профиля уже нужен щадящий режим и минимум времени рядом с дорогами.';
+        walk = 'Только по необходимости';
+        sport = 'Не рекомендуется';
+        windows = 'Осторожно';
+        index = '4/10';
+        status = 'Профиль: Чувствительный · риск выше среднего';
+      } else {
+        decision = 'Для чувствительного профиля текущий фон неблагоприятный. Лучше оставаться в помещении.';
+        walk = 'Нет';
+        sport = 'Нет';
+        windows = 'Закрыть';
+        index = '2/10';
+        status = 'Профиль: Чувствительный · высокий риск';
+      }
+    } else if (profileKey === 'sport') {
+      if (adjusted < 65) {
+        decision = 'Для спорта окно условно подходит, но интенсивную нагрузку лучше переносить на более чистый интервал.';
+        walk = 'Да';
+        sport = 'Лёгкая тренировка';
+        windows = 'Можно';
+        index = '7/10';
+        status = 'Профиль: Спорт · умеренно допустимо';
+      } else if (adjusted < 110) {
+        decision = 'Для спорта текущее окно слабое. Наружную тренировку лучше перенести или упростить.';
+        walk = 'Да';
+        sport = 'Лучше перенести';
+        windows = 'Кратко';
+        index = '5/10';
+        status = 'Профиль: Спорт · нагрузку снизить';
+      } else {
+        decision = 'Для спорта наружная нагрузка сейчас не подходит. Безопаснее тренироваться в помещении.';
+        walk = 'Ограничить';
+        sport = 'Нет';
+        windows = 'Закрыть';
+        index = '3/10';
+        status = 'Профиль: Спорт · неблагоприятное окно';
+      }
     } else {
-      decision = 'Риск высокий. По возможности оставайтесь в помещении и минимизируйте наружную активность.';
-      walk = 'Нет';
-      sport = 'Нет';
-      windows = 'Закрыть';
-      index = '2/10';
-      status = `Профиль: ${profile.title} · высокий риск`;
+      if (adjusted < 50) {
+        decision = 'Воздух хороший. Ограничений для повседневной активности нет.';
+        walk = 'Да';
+        sport = 'Да';
+        windows = 'Можно';
+        index = '9/10';
+        status = 'Профиль: Обычный · низкий риск';
+      } else if (adjusted < 100) {
+        decision = 'Риск умеренный. Можно выходить, но лучше избегать длительной активности у дорог.';
+        walk = 'Да';
+        sport = 'С осторожностью';
+        windows = 'Можно кратко';
+        index = '7/10';
+        status = 'Профиль: Обычный · умеренный риск';
+      } else if (adjusted < 150) {
+        decision = 'Риск повышенный. Лучше сократить активность на улице и следить за следующими обновлениями.';
+        walk = 'Ограничить';
+        sport = 'Не рекомендуется';
+        windows = 'Осторожно';
+        index = '5/10';
+        status = 'Профиль: Обычный · повышенный риск';
+      } else {
+        decision = 'Риск высокий. По возможности оставайтесь в помещении и минимизируйте наружную активность.';
+        walk = 'Нет';
+        sport = 'Нет';
+        windows = 'Закрыть';
+        index = '2/10';
+        status = 'Профиль: Обычный · высокий риск';
+      }
     }
 
     const alerts = [
       ...profile.alerts,
-      adjusted >= 100
-        ? 'Сейчас лучше не планировать длительные прогулки или поездки по загруженным коридорам.'
-        : 'Сейчас допустимы короткие прогулки, но лучше выбирать более спокойные зоны.'
+      decision,
+      adjusted >= 110
+        ? 'Сейчас не стоит планировать долгие маршруты по загруженным коридорам.'
+        : 'Сейчас лучше выбирать более спокойные зоны и короткие выходы.'
     ];
 
     const alertsList = document.getElementById('userAlertsList');
@@ -6572,7 +6738,7 @@ updateUserLayer();
     }
 
     const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
-    setText('userAQI', String(aqi));
+    setText('userAQI', String(adjusted));
     setText('userDecision', decision);
     setText('userWalk', walk);
     setText('userSport', sport);
