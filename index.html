@@ -4161,6 +4161,8 @@
 <div class="data-status-row" style="margin-top:10px;">
 <div class="data-pill">Live sync: <strong id="liveAutoState" style="margin-left:6px; color:var(--text);">ВКЛ</strong></div>
 <div class="data-pill" id="liveScenarioMeta">Юнусабад · AQI · Сейчас · синхронизация включена</div>
+<div class="data-pill">Роль: <strong id="operatorRole" style="margin-left:6px; color:var(--text);">Городской оператор</strong></div>
+<div class="data-pill">Обновлено: <strong id="liveUpdatedAt" style="margin-left:6px; color:var(--text);">09:42</strong></div>
 </div>
 </div>
 </div>
@@ -4190,6 +4192,8 @@
 </div>
 <div class="mini-action-row">
 <button class="ghost-btn active" id="liveAutoBtn">Live sync: ВКЛ</button>
+<button class="ghost-btn" id="applyMeasuresBtn">Применить меры</button>
+<div class="data-pill" id="measuresStatePill">Статус мер: <strong id="measuresState" style="margin-left:6px; color:var(--text);">Готово к применению</strong></div>
 <div class="data-pill">Живой продуктовый сценарий</div>
 </div>
 </div>
@@ -9038,5 +9042,55 @@ updateUserLayer();
     }
   }
 </style>
+
+
+<script id="grant-ops-activation">
+(function(){
+  const applyBtn = document.getElementById('applyMeasuresBtn');
+  const measuresState = document.getElementById('measuresState');
+  const liveUpdatedAt = document.getElementById('liveUpdatedAt');
+  const liveMeta = document.getElementById('liveScenarioMeta');
+  const districtSelect = document.getElementById('districtSelect');
+  function setNow(){
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    if(liveUpdatedAt) liveUpdatedAt.textContent = `${hh}:${mm}`;
+  }
+  function resetMeasuresState(){
+    if(measuresState) measuresState.textContent = 'Готово к применению';
+    if(applyBtn){
+      applyBtn.classList.remove('active');
+      applyBtn.textContent = 'Применить меры';
+    }
+  }
+  if(applyBtn){
+    applyBtn.addEventListener('click', function(){
+      const isApplied = applyBtn.classList.contains('active');
+      if(isApplied){
+        applyBtn.classList.remove('active');
+        applyBtn.textContent = 'Применить меры';
+        if(measuresState) measuresState.textContent = 'Готово к применению';
+      } else {
+        applyBtn.classList.add('active');
+        applyBtn.textContent = 'Меры применены';
+        if(measuresState) measuresState.textContent = 'Применено';
+      }
+      setNow();
+    });
+  }
+  if(districtSelect){
+    districtSelect.addEventListener('change', function(){
+      resetMeasuresState();
+      setNow();
+      if(liveMeta && districtSelect.options[districtSelect.selectedIndex]){
+        const districtName = districtSelect.options[districtSelect.selectedIndex].textContent.trim();
+        liveMeta.textContent = `${districtName} · AQI · Сейчас · синхронизация включена`;
+      }
+    });
+  }
+  setNow();
+})();
+</script>
 
 </body></html>
