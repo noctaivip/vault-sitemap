@@ -1904,6 +1904,110 @@
 </style>
 
 
+<style id="mobile-menu-hard-fix">
+@media (max-width: 820px) {
+  body.menu-open {
+    overflow: hidden !important;
+  }
+
+  #sidebarOverlay {
+    display: block !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    background: rgba(5,15,30,0.55) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    transition: opacity .2s ease !important;
+    z-index: 50 !important;
+  }
+
+  #sidebarOverlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .sidebar {
+    transform: translateX(-110%) !important;
+    transition: transform .22s ease !important;
+    z-index: 80 !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  #hamburgerBtn {
+    z-index: 90 !important;
+    display: inline-flex !important;
+  }
+}
+</style>
+
+
+<style id="final-mobile-menu-fix">
+@media (max-width: 820px) {
+  .app-shell {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .content-pane {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 72px 12px 12px !important;
+    border-radius: 0 !important;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: min(320px, calc(100vw - 56px)) !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    transform: translateX(-110%) !important;
+    transition: transform .22s ease !important;
+    z-index: 80 !important;
+    border-radius: 0 22px 22px 0 !important;
+    box-shadow: 0 24px 80px rgba(0,0,0,.45) !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  #sidebarOverlay {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(5,15,30,0.55) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity .2s ease !important;
+    z-index: 70 !important;
+  }
+
+  #sidebarOverlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  #hamburgerBtn {
+    display: inline-flex !important;
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 90 !important;
+  }
+}
+</style>
+
+
 <style id="mobile-menu-final-safe-fix">
 @media (max-width: 820px) {
   body.menu-open {
@@ -2521,10 +2625,570 @@
 </style>
 
 
+<style id="apple-stripe-premium-upgrade">
+  :root {
+    --glass-top: rgba(255,255,255,0.095);
+    --glass-bottom: rgba(255,255,255,0.035);
+    --edge-strong: rgba(166, 233, 255, 0.18);
+    --edge-soft: rgba(166, 233, 255, 0.10);
+    --panel-lift:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 0 0 1px rgba(166,233,255,0.04),
+      0 24px 70px rgba(4,12,22,0.22);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 14% 16%, rgba(87, 182, 255, 0.20), transparent 24%),
+      radial-gradient(circle at 86% 14%, rgba(89, 231, 255, 0.14), transparent 22%),
+      radial-gradient(circle at 70% 78%, rgba(139, 135, 255, 0.11), transparent 22%),
+      linear-gradient(180deg, #0c1824 0%, #102335 44%, #0b1723 100%) !important;
+  }
+
+  .sidebar,
+  .content-pane {
+    background:
+      linear-gradient(180deg, rgba(18,32,48,0.84), rgba(18,32,48,0.76)) !important;
+    border: 1px solid var(--edge-soft) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 0 0 1px rgba(255,255,255,0.015),
+      0 32px 90px rgba(3,10,20,0.24) !important;
+  }
+
+  .topbar,
+  .hero,
+  .card,
+  .premium-hero,
+  .status-box,
+  .live-box,
+  .summary-box,
+  .vault-card,
+  .ops-card,
+  .impact-card,
+  .command-box,
+  .biz-shell-card,
+  .biz-money-card,
+  .biz-exec-card,
+  .gov-shell-card,
+  .gov-priority-card,
+  .gov-command-card,
+  .signal-card,
+  .scenario-card,
+  .console-card,
+  .map-detail,
+  .mini-metric,
+  .day-chip,
+  .district-row,
+  .rec-item,
+  .alert-item,
+  .source-item,
+  .command-item,
+  .ops-item,
+  .map-quick-card,
+  .sheet-box,
+  .kpi,
+  .legend {
+    background:
+      linear-gradient(180deg, var(--glass-top), var(--glass-bottom)) !important;
+    border: 1px solid var(--edge-soft) !important;
+    box-shadow: var(--panel-lift) !important;
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+  }
+
+  .hero,
+  .premium-hero {
+    background:
+      radial-gradient(circle at 84% 14%, rgba(130, 238, 255, 0.16), transparent 22%),
+      radial-gradient(circle at 18% 84%, rgba(139,135,255,0.08), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 0 0 1px rgba(166,233,255,0.05),
+      0 28px 80px rgba(4,12,22,0.24) !important;
+  }
+
+  .brand-mark,
+  .hero-side,
+  .access-card,
+  .report-sheet {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 0 0 1px rgba(166,233,255,0.05),
+      0 24px 70px rgba(4,12,22,0.24) !important;
+  }
+
+  .nav button,
+  .selector,
+  .ghost-btn,
+  .chip,
+  .mode-shell,
+  .access-switch,
+  .access-btn,
+  .pill {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)) !important;
+    border-color: rgba(166,233,255,0.12) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.03) inset,
+      0 10px 24px rgba(4,12,22,0.08);
+  }
+
+  .nav button.active,
+  .access-btn.active,
+  .ghost-btn.active {
+    background:
+      linear-gradient(180deg, rgba(129, 232, 255, 0.24), rgba(120, 235, 255, 0.07)) !important;
+    border-color: rgba(166,233,255,0.24) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 0 0 1px rgba(120,235,255,0.08),
+      0 18px 38px rgba(62,200,255,0.16) !important;
+  }
+
+  .nav button:hover,
+  .selector:hover,
+  .ghost-btn:hover,
+  .access-btn:hover,
+  .map-quick-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(166,233,255,0.20) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 16px 34px rgba(62,200,255,0.12) !important;
+  }
+
+  #installBtn {
+    background:
+      linear-gradient(180deg, rgba(93, 226, 255, 1), rgba(36, 190, 255, 0.92)) !important;
+    color: #03111d !important;
+    border-color: rgba(255,255,255,0.30) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.35) inset,
+      0 0 0 1px rgba(120,235,255,0.12),
+      0 18px 42px rgba(62,200,255,0.28) !important;
+    text-shadow: none !important;
+  }
+
+  .hero h2,
+  .premium-hero h3 {
+    font-weight: 650 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  .card h3,
+  .biz-shell-card h3,
+  .biz-exec-card h3,
+  .gov-shell-card h3,
+  .gov-command-card h3 {
+    font-weight: 620 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .metric-card .value,
+  .hero-stat strong,
+  .impact-card .value,
+  .vault-card .v,
+  .kpi .big,
+  .big,
+  .biz-money-card .big,
+  .gov-priority-card .big {
+    color: #97f1ff !important;
+    text-shadow:
+      0 0 24px rgba(151,241,255,0.10),
+      0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  .summary-box,
+  .hero p,
+  .sub,
+  .status-box span,
+  .live-box p,
+  .rec-item p,
+  .alert-item p,
+  .source-item p,
+  .district-row p,
+  .command-item span,
+  .ops-item span,
+  .gov-mini-chip span,
+  .biz-mini-chip span,
+  .tiny {
+    color: #c7d6e4 !important;
+  }
+
+  .table-card table th {
+    color: #d7e8f7 !important;
+    font-weight: 550 !important;
+  }
+
+  .table-card table td {
+    color: #f0f7ff !important;
+  }
+
+  .table-card th,
+  .table-card td {
+    border-bottom-color: rgba(166,233,255,0.08) !important;
+  }
+
+  .city-map {
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      radial-gradient(circle at 36% 34%, rgba(255,99,99,0.24), transparent 10%),
+      radial-gradient(circle at 61% 48%, rgba(255,159,87,0.24), transparent 12%),
+      radial-gradient(circle at 26% 72%, rgba(246,197,102,0.18), transparent 10%),
+      radial-gradient(circle at 80% 20%, rgba(82,197,146,0.12), transparent 10%),
+      linear-gradient(180deg, rgba(17,31,47,0.94), rgba(12,24,38,0.98)) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 0 0 1px rgba(166,233,255,0.05),
+      0 24px 60px rgba(0,0,0,.18) !important;
+  }
+
+  .badge.red,
+  .badge.orange,
+  .badge.yellow,
+  .badge.green,
+  .badge.cyan {
+    box-shadow: 0 8px 20px rgba(4,12,22,0.10);
+  }
+
+  .screen#overview > .grid.grid-3:first-of-type .card,
+  .screen#business .biz-money-grid .biz-money-card,
+  .screen#gov .gov-priority-grid .gov-priority-card {
+    background:
+      radial-gradient(circle at 88% 10%, rgba(151,241,255,0.12), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.038)) !important;
+    border-color: rgba(166,233,255,0.18) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 0 0 1px rgba(151,241,255,0.05),
+      0 22px 56px rgba(62,200,255,0.12) !important;
+  }
+
+  .screen#overview > .grid.grid-3:first-of-type .card h3 {
+    font-size: 20px !important;
+  }
+
+  .screen#overview > .grid.grid-3:first-of-type .summary-box {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+  }
+
+  .hamburger-floating {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)) !important;
+    border-color: rgba(166,233,255,0.14) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 18px 40px rgba(0,0,0,.24) !important;
+  }
+
+  @media (max-width: 820px) {
+    .topbar,
+    .hero,
+    .card,
+    .premium-hero {
+      border-radius: 24px !important;
+    }
+  }
+</style>
 
 
+<style id="institutional-premium-tighten-v5">
+  :root {
+    --bg: #dce6f1 !important;
+    --bg-2: #eef4fa !important;
+    --panel: rgba(246, 250, 254, 0.94) !important;
+    --panel-2: rgba(238, 245, 252, 0.96) !important;
+    --line: rgba(30, 67, 112, 0.14) !important;
+    --text: #11233a !important;
+    --muted: #566f8c !important;
+    --soft: #7a8fa8 !important;
+    --cyan: #0b74d1 !important;
+    --cyan-2: #075db0 !important;
+    --shadow: 0 28px 72px rgba(12, 31, 56, 0.10) !important;
+  }
 
+  body {
+    background:
+      radial-gradient(circle at 12% 16%, rgba(73, 138, 214, 0.16), transparent 24%),
+      radial-gradient(circle at 88% 14%, rgba(16, 116, 209, 0.08), transparent 22%),
+      linear-gradient(180deg, #e3ebf4 0%, #d8e3ee 46%, #d3dfea 100%) !important;
+  }
 
+  body::before {
+    opacity: .24 !important;
+    background-image:
+      linear-gradient(rgba(18, 42, 71, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 42, 71, 0.035) 1px, transparent 1px) !important;
+  }
+
+  .sidebar,
+  .content-pane {
+    background: linear-gradient(180deg, rgba(247, 250, 253, 0.95), rgba(241, 246, 251, 0.94)) !important;
+    border: 1px solid rgba(27, 63, 108, 0.12) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.85) inset,
+      0 0 0 1px rgba(255,255,255,0.30),
+      0 28px 80px rgba(14, 32, 56, 0.10) !important;
+  }
+
+  .topbar,
+  .hero,
+  .card,
+  .premium-hero,
+  .status-box,
+  .live-box,
+  .summary-box,
+  .vault-card,
+  .ops-card,
+  .impact-card,
+  .command-box,
+  .biz-shell-card,
+  .biz-money-card,
+  .biz-exec-card,
+  .gov-shell-card,
+  .gov-priority-card,
+  .gov-command-card,
+  .signal-card,
+  .scenario-card,
+  .console-card,
+  .map-detail,
+  .mini-metric,
+  .day-chip,
+  .district-row,
+  .rec-item,
+  .alert-item,
+  .source-item,
+  .command-item,
+  .ops-item,
+  .map-quick-card,
+  .sheet-box,
+  .kpi,
+  .legend,
+  .hero-side,
+  .selector,
+  .ghost-btn,
+  .chip,
+  .mode-shell,
+  .access-switch,
+  .access-btn,
+  .pill,
+  .nav button {
+    background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(241,246,251,0.94)) !important;
+    border-color: rgba(27, 63, 108, 0.11) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.92) inset,
+      0 12px 28px rgba(14, 32, 56, 0.06) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .hero,
+  .premium-hero {
+    background:
+      radial-gradient(circle at 84% 16%, rgba(11,116,209,0.08), transparent 22%),
+      linear-gradient(180deg, rgba(255,255,255,0.95), rgba(241,246,251,0.94)) !important;
+  }
+
+  .brand {
+    border-bottom-color: rgba(27, 63, 108, 0.10) !important;
+  }
+
+  .brand-mark {
+    background: linear-gradient(180deg, rgba(235,244,252,1), rgba(220,236,248,1)) !important;
+    border-color: rgba(11,116,209,0.14) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 10px 24px rgba(11,116,209,0.10) !important;
+  }
+
+  .brand h1,
+  .hero h2,
+  .premium-hero h3,
+  .card h3,
+  .biz-shell-card h3,
+  .biz-exec-card h3,
+  .gov-shell-card h3,
+  .gov-command-card h3,
+  .gov-priority-card .big,
+  .biz-money-card .big,
+  .metric-card .value,
+  .impact-card .value,
+  .vault-card .v,
+  .kpi .big,
+  .hero-stat strong,
+  .detail-title strong,
+  .mini-metric .v,
+  .sheet-box .v,
+  .console-card .v,
+  .signal-card .v,
+  .focus-card .v,
+  .scenario-card .metric,
+  .live-engine-panel .big,
+  .live-engine-status .big,
+  .gov-command-card .value {
+    color: #11233a !important;
+    text-shadow: none !important;
+  }
+
+  .eyebrow,
+  .live-engine-kicker,
+  .gov-priority-card .ey,
+  .gov-shell-card .ey,
+  .impact-card .ey,
+  .ops-card .ey,
+  .kpi .kicker,
+  .metric-card .label,
+  .sheet-box .k,
+  .signal-card .k,
+  .focus-card .k,
+  .mini-metric .k,
+  .live-engine-status .ey,
+  .live-engine-panel .ey,
+  .mode-summary,
+  .tiny,
+  .brand p,
+  .sub,
+  .hero p,
+  .summary-box,
+  .status-box span,
+  .live-box p,
+  .rec-item p,
+  .alert-item p,
+  .source-item p,
+  .district-row p,
+  .command-item span,
+  .ops-item span,
+  .gov-mini-chip span,
+  .biz-mini-chip span,
+  .table-card th,
+  .table-card td,
+  .selector,
+  .ghost-btn,
+  .chip,
+  .pill,
+  .status-row,
+  .hero-stat span,
+  .day-chip span {
+    color: #58718d !important;
+  }
+
+  .nav button {
+    color: #18324f !important;
+    font-weight: 500 !important;
+  }
+
+  .nav button:hover,
+  .map-quick-card:hover,
+  .ghost-btn:hover,
+  .access-btn:hover {
+    border-color: rgba(11,116,209,0.18) !important;
+    background: linear-gradient(180deg, rgba(246,251,255,1), rgba(233,242,250,1)) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 14px 30px rgba(11,116,209,0.08) !important;
+    transform: translateY(-1px);
+  }
+
+  .nav button.active,
+  .access-btn.active,
+  .ghost-btn.active,
+  .map-quick-card.active {
+    color: #0f2a47 !important;
+    border-color: rgba(11,116,209,0.22) !important;
+    background: linear-gradient(180deg, rgba(227,240,252,1), rgba(214,231,246,1)) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.96) inset,
+      0 16px 34px rgba(11,116,209,0.10) !important;
+  }
+
+  #installBtn {
+    background: linear-gradient(180deg, #0d73cd, #085eaf) !important;
+    border-color: rgba(8, 79, 150, 0.36) !important;
+    color: #ffffff !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.18) inset,
+      0 18px 36px rgba(11,116,209,0.24) !important;
+    font-weight: 700 !important;
+  }
+
+  .chip, .pill, .selector, .ghost-btn, .access-btn, .mode-shell, .access-switch {
+    border-radius: 16px !important;
+  }
+
+  .badge.red { background: rgba(255,99,99,.12) !important; color: #af3535 !important; }
+  .badge.orange { background: rgba(255,159,87,.12) !important; color: #ad5e1e !important; }
+  .badge.yellow { background: rgba(246,197,102,.14) !important; color: #9b6b00 !important; }
+  .badge.green { background: rgba(82,197,146,.14) !important; color: #2f7c5a !important; }
+  .badge.cyan { background: rgba(11,116,209,.10) !important; color: #0b74d1 !important; }
+
+  .table-card th, .table-card td {
+    border-bottom-color: rgba(27, 63, 108, 0.08) !important;
+  }
+
+  .city-map {
+    background:
+      linear-gradient(90deg, rgba(16,44,74,0.035) 1px, transparent 1px),
+      linear-gradient(rgba(16,44,74,0.035) 1px, transparent 1px),
+      radial-gradient(circle at 36% 34%, rgba(224,82,82,0.24), transparent 10%),
+      radial-gradient(circle at 61% 48%, rgba(224,138,69,0.22), transparent 12%),
+      radial-gradient(circle at 26% 72%, rgba(226,181,80,0.18), transparent 10%),
+      radial-gradient(circle at 80% 20%, rgba(82,197,146,0.12), transparent 10%),
+      linear-gradient(180deg, rgba(235,242,248,0.98), rgba(223,233,242,0.98)) !important;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.92) inset,
+      0 12px 26px rgba(14, 32, 56, 0.08) !important;
+  }
+
+  .legend,
+  .district-label {
+    background: linear-gradient(180deg, rgba(251,253,255,0.96), rgba(239,245,250,0.96)) !important;
+    color: #17314e !important;
+    border-color: rgba(27,63,108,0.12) !important;
+  }
+
+  .dot.cyan, .green, .yellow, .orange, .red, .cyan {
+    filter: saturate(1.08);
+  }
+
+  .hero h2 {
+    font-size: clamp(34px, 4vw, 54px) !important;
+    line-height: 1.02 !important;
+    font-weight: 700 !important;
+  }
+
+  .hero p {
+    font-size: 16px !important;
+    line-height: 1.72 !important;
+  }
+
+  .status-box strong,
+  .live-box h3,
+  .rec-item strong,
+  .alert-item strong,
+  .source-item strong,
+  .command-item strong,
+  .ops-item strong,
+  .scenario-card .title,
+  .gov-mini-chip strong {
+    color: #15304f !important;
+  }
+
+  @media (max-width: 820px) {
+    body {
+      background: linear-gradient(180deg, #dfe7f0 0%, #d5e0ea 100%) !important;
+    }
+    .sidebar, .content-pane {
+      box-shadow: none !important;
+    }
+    .topbar, .hero, .card, .premium-hero {
+      border-radius: 22px !important;
+    }
+  }
+</style>
 
 <style id="airguard-fix-brand-access-v7">
   .brand {
@@ -2673,117 +3337,127 @@
 </style>
 
 
-<style id="step3-topbar-firstscreen-upgrade">
-  .topbar {
-    gap: 14px !important;
+<style id="grant-next-step-upgrade">
+  .decision-strip, .business-money-strip, .gov-command-strip-next {
+    display:grid;
+    gap:18px;
+    margin:18px 0;
   }
-
-  .topbar-right {
-    display: grid !important;
-    grid-template-columns: 1fr auto;
-    gap: 12px !important;
-    align-items: start !important;
+  .decision-strip { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .business-money-strip { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .gov-command-strip-next { grid-template-columns: 1.15fr .85fr; }
+  .scenario-command-card, .no-action-card, .biz-money-next, .gov-next-card {
+    padding:22px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(circle at 84% 12%, rgba(97,225,255,.10), transparent 28%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    box-shadow: 0 18px 42px rgba(10,24,40,.22);
   }
-
-  .topbar-status {
-    display: flex !important;
-    flex-wrap: wrap;
-    gap: 10px !important;
-    align-items: center !important;
+  .scenario-command-card h3, .no-action-card h3, .biz-money-next h3, .gov-next-card h3 {
+    margin:0 0 8px;
+    font-size:20px;
+    letter-spacing:-.02em;
   }
-
-  .topbar-access {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 10px !important;
+  .scenario-command-card .sub, .no-action-card .sub, .biz-money-next .sub, .gov-next-card .sub {
+    margin-bottom:14px;
   }
-
-  #installBtn {
-    min-width: 190px;
-    font-weight: 600;
+  .mini-bullets { display:flex; flex-direction:column; gap:10px; }
+  .mini-bullets .item {
+    padding:14px 16px; border-radius:18px; border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.028); color:var(--muted); font-size:13px; line-height:1.6;
   }
-
-  #liveProductHero {
-    margin-bottom: 20px !important;
+  .mini-bullets .item strong { display:block; color:var(--text); margin-bottom:5px; font-size:14px; }
+  .strip-value { font-size:34px; line-height:1; letter-spacing:-.04em; color:#97f1ff; margin-bottom:10px; }
+  .strip-meta { color:var(--muted); font-size:13px; line-height:1.6; }
+  .sync-panel {
+    margin-top:14px; display:flex; flex-wrap:wrap; gap:10px;
   }
-
-  #liveProductHero .live-engine-title {
-    max-width: 960px;
+  .sync-pill {
+    padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03); color:var(--muted); font-size:12px;
   }
-
-  #liveProductHero .live-engine-panel {
-    border-color: rgba(97,225,255,.12) !important;
+  .sync-pill strong { color:var(--text); margin-left:6px; }
+  @media (max-width:1180px) {
+    .decision-strip, .business-money-strip, .gov-command-strip-next { grid-template-columns:1fr; }
   }
+</style>
 
-  .decision-highlight .summary-box {
-    border-color: rgba(97,225,255,.14) !important;
-    box-shadow: 0 12px 28px rgba(32,184,232,.08);
-  }
 
-  .decision-strip-grid {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr .8fr;
-    gap: 18px;
+<style id="grant-step-cleanup">
+  .decision-strip, .business-money-strip, .gov-command-strip-next, .sources-strip {
     margin-bottom: 18px;
   }
 
-  .decision-strip-grid .card {
-    min-height: 100%;
+  .sources-strip { display:grid; grid-template-columns: 1fr; gap:18px; }
+  .source-status-card, .gov-next-card, .biz-money-next, .scenario-command-card, .no-action-card {
+    padding: 20px;
+    border-radius: 24px;
+    border: 1px solid rgba(166,233,255,0.12);
+    background:
+      radial-gradient(circle at 84% 12%, rgba(130,238,255,0.12), transparent 26%),
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 0 0 1px rgba(166,233,255,0.04),
+      0 22px 60px rgba(4,12,22,0.18);
   }
 
-  .decision-strip-grid .summary-box {
-    min-height: 186px;
+  .sources-mini-grid {
+    display:grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap:12px;
+    margin-top:14px;
   }
 
-  .decision-strip-grid h3,
-  .decision-core-title {
-    letter-spacing: -.02em;
+  .source-mini-item {
+    padding:14px 16px;
+    border-radius:18px;
+    border:1px solid rgba(166,233,255,0.10);
+    background: rgba(255,255,255,0.03);
   }
 
-  .decision-kicker {
-    color: var(--cyan);
-    text-transform: uppercase;
-    letter-spacing: .10em;
-    font-size: 11px;
-    margin-bottom: 8px;
+  .source-mini-item strong {
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
   }
 
-  .decision-core-box {
-    margin-top: 14px;
+  .source-mini-item span {
+    color: var(--muted);
+    font-size:13px;
+    line-height:1.55;
   }
+
+  #overview .topbar { margin-bottom: 12px !important; }
+  #overview .live-engine-bar { margin-bottom: 14px !important; padding: 16px !important; }
+  #overview .live-engine-head { margin-bottom: 12px !important; }
+  #overview .live-engine-title { font-size: 22px !important; line-height: 1.08 !important; }
+  #overview .live-engine-desc { font-size: 13px !important; line-height: 1.58 !important; }
+  #overview .live-engine-status .big { font-size: 24px !important; }
+  #overview .live-engine-status .sub { margin-bottom: 0 !important; }
+  #overview .live-scenario-grid { gap: 10px !important; }
+  #overview .scenario-switch { padding: 14px !important; }
+  #overview .scenario-switch .tt { font-size: 17px !important; margin-bottom: 6px !important; }
+  #overview .scenario-switch .dd { font-size: 12px !important; }
+  #overview > .grid.grid-3:first-of-type { gap: 14px !important; margin-bottom: 14px !important; }
+  #overview > .grid.grid-3:first-of-type .card { padding: 18px !important; }
+  #overview > .grid.grid-3:first-of-type .summary-box { padding: 14px !important; }
+  #overview > .card[style*="margin-bottom:18px"] { margin-bottom: 14px !important; }
+  #overview .decision-strip { gap: 14px !important; }
+  #overview .data-status-row { gap: 8px !important; }
+  #overview .data-pill { color: var(--text) !important; }
+  #overview .data-pill strong { text-transform: uppercase; }
 
   @media (max-width: 1180px) {
-    .topbar-right {
-      grid-template-columns: 1fr !important;
-    }
-
-    .topbar-access {
-      justify-content: flex-start !important;
-    }
-
-    .decision-strip-grid {
-      grid-template-columns: 1fr !important;
-    }
+    .sources-mini-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   }
-
   @media (max-width: 820px) {
-    .topbar-right,
-    .topbar-status,
-    .topbar-access {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      width: 100% !important;
-    }
-
-    #installBtn {
-      width: 100% !important;
-      min-width: 0 !important;
-    }
-
-    .decision-strip-grid {
-      grid-template-columns: 1fr !important;
-    }
+    .sources-mini-grid { grid-template-columns: 1fr; }
+    #overview .live-engine-title { font-size: 20px !important; }
+    #overview .live-engine-bar { padding: 14px !important; }
+    #overview > .grid.grid-3:first-of-type .card { padding: 16px !important; }
   }
 </style>
 
@@ -2856,9 +3530,9 @@
 </div>
 <div class="topbar-right">
 <div class="topbar-status">
-<div class="chip" id="refreshChip">Система активна · 12 районов онлайн · модель v1.2</div>
-<div class="chip" id="contextChip">Локация: Ташкент · Район: Центр · Метрика: AQI · Окно: Сейчас</div>
-<div class="chip" id="accessModeChip">Контур: Пользователь</div>
+<div class="chip" id="refreshChip">Обновлено: сейчас</div>
+<div class="chip" id="contextChip">Ташкент · Центр · Сейчас</div>
+<button class="ghost-btn active" id="installBtn">Скачать приложение</button>
 </div>
 <div class="topbar-access">
 <div class="access-switch" id="accessSwitch">
@@ -2866,7 +3540,6 @@
 <button class="access-btn" data-access-target="business">Бизнес</button>
 <button class="access-btn" data-access-target="gov">Государство</button>
 </div>
-<button class="ghost-btn active" id="installBtn">Запросить доступ</button>
 </div>
 </div>
 </div>
@@ -2877,20 +3550,17 @@
 <div class="live-engine-head">
 <div>
 <div class="live-engine-kicker"><span class="live-dot"></span> AirGuard live system</div>
-<h2 class="live-engine-title" id="overviewTitle">Район · риск · действие · эффект.</h2>
-<p class="live-engine-desc" id="overviewText">AirGuard переводит экологический сигнал в решение: человеку — когда безопасно, бизнесу — где деньги теряются, городу — какие меры запускать прямо сейчас.</p>
+<h2 class="live-engine-title" id="overviewTitle">Понять ситуацию за 3 секунды.</h2>
+<p class="live-engine-desc" id="overviewText">AirGuard показывает не просто воздух и цифры. Он сразу переводит ситуацию в решение для человека, бизнеса и города: можно ли выйти, где потери, где риск и что делать прямо сейчас.</p>
 </div>
 <div class="live-engine-status">
 <div class="ey">Статус продукта</div>
 <div class="big" id="liveScenarioName">Утренний транспортный пик</div>
 <p class="sub" id="liveScenarioDesc">Система связывает район, показатель, временное окно и решения для всех трёх контуров в одном живом сценарии.</p>
 <div class="data-status-row" style="margin-top:10px;">
-<div class="data-pill">Live sync: <strong id="liveAutoState" style="margin-left:6px; color:var(--text);">ВКЛ</strong></div>
-<div class="data-pill" id="liveScenarioMeta">Юнусабад · AQI · Сейчас · синхронизация включена</div>
-<div class="data-pill">Роль: <strong id="operatorRole" style="margin-left:6px; color:var(--text);">Городской оператор</strong></div>
-<div class="data-pill">Обновлено: <strong id="liveUpdatedAt" style="margin-left:6px; color:var(--text);">09:42</strong></div>
-<div class="data-pill">Районы онлайн: <strong id="districtsOnline" style="margin-left:6px; color:var(--text);">12</strong></div>
-<div class="data-pill">Модель: <strong id="modelStatus" style="margin-left:6px; color:var(--text);">v1.2</strong></div>
+<div class="data-pill">Live режим: <strong id="liveAutoState" style="margin-left:6px; color:var(--text);">активен</strong></div>
+<div class="data-pill">Синхронизация: <strong id="syncTopState" style="margin-left:6px; color:var(--text);">включена</strong></div>
+<div class="data-pill" id="liveScenarioMeta">Юнусабад · AQI · Сейчас · единая система</div>
 </div>
 </div>
 </div>
@@ -2916,69 +3586,89 @@
 <div>
 <div class="ey">Главный вывод сейчас</div>
 <div class="big">Что делать прямо сейчас</div>
-<div class="dd" id="heroSummary">Система уже переводит сигнал в действие: человеку — сократить выходы, бизнесу — перенести наружные операции, городу — включить меры до начала пикового окна.</div>
+<div class="dd" id="heroSummary">Сейчас лучше сократить выходы на улицу, перенести прогулки на вечер и избегать длинных маршрутов вдоль магистралей.</div>
 </div>
 <div class="mini-action-row">
-<button class="ghost-btn active" id="liveAutoBtn">Live sync: ВКЛ</button>
-<button class="ghost-btn" id="applyMeasuresBtn">Применить меры</button>
-<div class="data-pill" id="measuresStatePill">Статус мер: <strong id="measuresState" style="margin-left:6px; color:var(--text);">Готово к применению</strong></div>
-<div class="data-pill" id="measuresEffectPill">Эффект: <strong id="measuresEffect" style="margin-left:6px; color:var(--text);">Ожидание эффекта</strong></div>
+<button class="ghost-btn active" id="liveAutoBtn">Live режим: активен</button>
 <div class="data-pill">Живой продуктовый сценарий</div>
 </div>
 </div>
 </div>
 </div>
-
-<div class="decision-strip-grid decision-highlight">
-<div class="card user-profile-active">
-<div class="decision-kicker">USER · решение</div>
-<h3 class="decision-core-title">Что делать человеку прямо сейчас</h3>
-<div class="sub">Первый ответ без скролла: можно ли выйти, когда лучше выйти и как снизить риск в ближайшие часы.</div>
-<div class="summary-box decision-core-box" id="userDecisionBox">Сейчас: ❌ не выходить<br/>Через 2 часа: ⚠ можно кратковременно<br/>Вечером: ✅ лучшее время выйти</div>
-</div>
-<div class="card">
-<div class="decision-kicker">BUSINESS · деньги</div>
-<h3 class="decision-core-title">Потери и экономия за сегодня</h3>
-<div class="sub">Бизнес-контур сразу показывает денежный эффект и решение на текущую смену.</div>
-<div class="summary-box decision-core-box" id="businessDecisionBox">Потери сегодня: -$42,000<br/>Решение: перенести наружные операции на вечер<br/>Экономия сегодня: +$28,000<br/>Подписка: от $2,000 / месяц / объект</div>
-</div>
-<div class="card">
-<div class="decision-kicker">GOV · команда</div>
-<h3 class="decision-core-title">Штабное действие по району</h3>
-<div class="sub">Город получает район, команду и ожидаемый эффект без лишней аналитической нагрузки.</div>
-<div class="summary-box decision-core-box" id="govDecisionBox">Приоритетный район: Юнусабад<br/>Команда: ограничить транспортный поток<br/>Окно: 08:00–20:00<br/>Эффект: снижение AQI и городской нагрузки</div>
-</div>
-</div>
-
 <div class="grid grid-3" style="margin-bottom:18px;">
-
-<div class="card">
-<h3>Сценарий управления сейчас</h3>
-<div class="sub">Решение → действие → эффект. Один район, один сценарий, три контура.</div>
-<div class="summary-box" id="managementScenarioBox">Район: Юнусабад<br/>Риск: Повышенный<br/>Причина: транспорт + слабое рассеивание<br/><br/>Что делать сейчас:<br/>— Ограничить поток грузового транспорта на 18%<br/>— Перенести строительные работы на вечер<br/>— Увеличить частоту полива дорог<br/><br/>Ожидаемый эффект:<br/>— AQI ↓ на 12–18% за 3–5 часов<br/>— нагрузка на медслужбы ↓<br/>— жалобы населения ↓</div>
+<div class="card user-profile-active">
+<h3>Что делать сегодня</h3>
+<div class="sub">Главное решение для обычного человека за несколько секунд.</div>
+<div class="summary-box">Сейчас: ❌ не выходить<br/>Через 2 часа: ⚠ можно кратковременно<br/>Вечером: ✅ лучшее время выйти</div>
 </div>
 <div class="card">
-<h3>Если ничего не делать</h3>
-<div class="sub">Критический блок для штаба, города и бизнеса.</div>
-<div class="summary-box" id="noActionBox">— AQI +22% к вечеру<br/>— нагрузка на транспорт ↑<br/>— жалобы населения ↑<br/>— эффективность города ↓</div>
+<h3>Понятно без терминов</h3>
+<div class="sub">Без AQI и сложной аналитики — только полезное решение.</div>
+<div class="summary-box">Гулять: ❌ не рекомендуется<br/>Спорт: ❌ лучше отложить<br/>Окна: ⚠ открыть только на короткое время</div>
 </div>
 <div class="card">
-<h3>Единая синхронизация системы</h3>
-<div class="sub">При смене района USER, BUSINESS и GOV обновляются одновременно.</div>
-<div class="summary-box" id="syncDecisionBox">При смене района:<br/>USER → меняется рекомендация<br/>BUSINESS → меняются потери и экономия<br/>GOV → меняется сценарий, команда и эффект</div>
+<h3>Почему приложение полезно</h3>
+<div class="sub">Оно сразу показывает: когда выйти, когда подождать и как не попасть в плохое окно.</div>
+<div class="summary-box">Сейчас: нагрузка выше обычной<br/>Позже: станет спокойнее и комфортнее</div>
 </div>
 </div>
-
 <div class="card" style="margin-bottom:18px;">
-<h3>Источники данных</h3>
-<div class="sub">Блок отвечает на первый вопрос на презентации: откуда берутся сигналы для сценария решения.</div>
-<div class="grid grid-2">
-<div class="summary-box">Городские станции мониторинга<br/>Локальные районные замеры и сигналы по магистралям.</div>
-<div class="summary-box">Спутниковые данные<br/>Фоновая концентрация и региональная динамика.</div>
-<div class="summary-box">Локальные сенсоры<br/>Точечные сигналы возле объектов, дорог и плотных зон.</div>
-<div class="summary-box">Прогнозные модели<br/>Окно ухудшения и ожидаемый эффект от мер.</div>
+<h3>Операционный сценарий сейчас</h3>
+<div class="sub">Не просто показатели, а цепочка принятия решений для пользователя, бизнеса и города в одном экране.</div>
+<div class="grid grid-3">
+<div class="summary-box">
+<strong style="display:block; margin-bottom:8px; color:var(--text);">Пользователь</strong>
+Сейчас ограничить длительные выходы, сократить маршруты вдоль магистралей и сместить активность на вечернее окно.
+</div>
+<div class="summary-box">
+<strong style="display:block; margin-bottom:8px; color:var(--text);">Бизнес</strong>
+Перенести наружные операции, защитить критичные объекты и сократить скрытые потери в пиковое окно.
+</div>
+<div class="summary-box">
+<strong style="display:block; margin-bottom:8px; color:var(--text);">Город</strong>
+Приоритет: район, транспорт, надзор и информирование населения с оценкой эффекта в течение текущего окна.
+</div>
+
 </div>
 </div>
+
+<div class="decision-strip" id="decisionStrip">
+  <div class="scenario-command-card">
+    <h3>Сценарий управления сейчас</h3>
+    <div class="sub">Решение → действие → эффект. Один район, один сценарий, три контура.</div>
+    <div class="mini-bullets" id="scenarioCommandList"></div>
+  </div>
+  <div class="no-action-card">
+    <h3>Если ничего не делать</h3>
+    <div class="sub">Ключевой блок для города, штаба и бизнеса.</div>
+    <div class="mini-bullets" id="noActionList"></div>
+  </div>
+  <div class="scenario-command-card">
+    <h3>Единая синхронизация системы</h3>
+    <div class="sub">При смене района все уровни решения меняются одновременно.</div>
+    <div class="mini-bullets" id="syncImpactList"></div>
+    <div class="sync-panel">
+      <div class="sync-pill">USER<strong id="syncUserState">обновлён</strong></div>
+      <div class="sync-pill">BUSINESS<strong id="syncBizState">обновлён</strong></div>
+      <div class="sync-pill">GOV<strong id="syncGovState">обновлён</strong></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="sources-strip" id="sourcesStrip">
+  <div class="source-status-card">
+    <h3>Источники данных</h3>
+    <div class="sub">Блок отвечает на первый вопрос на презентации: откуда берутся сигналы для сценария решения.</div>
+    <div class="sources-mini-grid">
+      <div class="source-mini-item"><strong>Городские станции мониторинга</strong><span>Текущие замеры по районам и магистралям.</span></div>
+      <div class="source-mini-item"><strong>Спутниковые данные</strong><span>Контур фоновой концентрации и региональная динамика.</span></div>
+      <div class="source-mini-item"><strong>Локальные сенсоры</strong><span>Точечные сигналы возле объектов, дорог и плотных зон.</span></div>
+      <div class="source-mini-item"><strong>Прогнозные модели</strong><span>Оценка окна ухудшения и ожидаемого эффекта от мер.</span></div>
+    </div>
+  </div>
+</div>
+
 <div class="grid grid-4">
 <div class="card metric-card">
 <div class="label" id="metric1Label">Сейчас на улице</div>
@@ -3225,6 +3915,20 @@
 <div class="f">Пиковое окно, где нужно раннее управленческое действие.</div>
 </div>
 </div>
+
+</div>
+
+<div class="gov-command-strip-next">
+  <div class="gov-next-card">
+    <h3>Штабной сценарий управления</h3>
+    <div class="sub">Район, тип ситуации, окно реагирования и пакет мер без длинных объяснений.</div>
+    <div class="mini-bullets" id="govScenarioNowList"></div>
+  </div>
+  <div class="gov-next-card">
+    <h3>Контроль эффекта</h3>
+    <div class="strip-value" id="govExpectedEffect">-12% AQI</div>
+    <div class="mini-bullets" id="govEffectList"></div>
+  </div>
 </div>
 
 <div class="gov-hero-grid">
@@ -3378,8 +4082,28 @@
 <div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
 <div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
 </div>
+
 </div>
 </div>
+
+<div class="business-money-strip">
+  <div class="biz-money-next">
+    <h3>Потери сегодня</h3>
+    <div class="strip-value" id="bizLossToday">-$42,000</div>
+    <div class="mini-bullets" id="bizLossList"></div>
+  </div>
+  <div class="biz-money-next">
+    <h3>Решение</h3>
+    <div class="sub">Что нужно сделать сегодня, чтобы не терять деньги в пиковое окно.</div>
+    <div class="mini-bullets" id="bizSolutionList"></div>
+  </div>
+  <div class="biz-money-next">
+    <h3>Экономия за день</h3>
+    <div class="strip-value" id="bizSavingsDay">+$28,000</div>
+    <div class="strip-meta" id="bizSavingsMeta">Эффект от переноса операций, смены окна и перераспределения логистики.</div>
+  </div>
+</div>
+
 <div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
 <div class="impact-card wow-panel">
 <div class="ey">Корпоративный контур</div>
@@ -3687,17 +4411,11 @@
 
     function updateTopbar() {
       const pollutant = getCurrentPollutant();
-      const timeNow = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-      const onlineDistricts = Object.keys(appData.districts || {}).length;
-      document.getElementById('contextChip').textContent = `Локация: ${cityLabel || 'Ташкент'} · Район: ${districtLabel || 'Центр'} · Метрика: ${pollutantLabel || 'AQI'} · Окно: ${windowLabel || 'Сейчас'}`;
-      document.getElementById('refreshChip').textContent = 'Система активна · 12 районов онлайн · модель v1.2';
-      document.getElementById('liveClock').textContent = `${timeNow} · ${appData.city}`;
+      document.getElementById('contextChip').textContent = `${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}`;
+      document.getElementById('refreshChip').textContent = `Обновлено ${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}`;
+      document.getElementById('liveClock').textContent = `${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })} · ${appData.city}`;
       document.getElementById('liveSummary').textContent = `Активный режим: ${pollutant.label}, окно ${appData.windows[state.window]}. Все ключевые экраны синхронизированы с этим сценарием.`;
       document.getElementById('dataChip').textContent = `Источник данных: городской агрегированный поток · ${pollutant.label}`;
-      const onlineNode = document.getElementById('districtsOnline');
-      if (onlineNode) onlineNode.textContent = String(onlineDistricts);
-      const liveUpdated = document.getElementById('liveUpdatedAt');
-      if (liveUpdated) liveUpdated.textContent = timeNow;
     }
 
     function updateOverview() {
@@ -5360,7 +6078,7 @@ updateUserLayer();
 
     const contextChip = document.getElementById('contextChip');
     if (contextChip) {
-      contextChip.textContent = `Локация: ${cityLabel || 'Ташкент'} · Район: ${districtLabel || 'Центр'} · Метрика: ${pollutantLabel || 'AQI'} · Окно: ${windowLabel || 'Сейчас'}`;
+      contextChip.textContent = `${city} · ${pollutant?.label || 'AQI'} · ${appData.windows?.[state.window] || 'Сейчас'}`;
     }
 
     const liveClock = document.getElementById('liveClock');
@@ -5702,11 +6420,11 @@ updateUserLayer();
     }
 
     // improve wow effect in access chip
-    const modeChip = document.getElementById('accessModeChip');
-    if (modeChip) {
-      if (state.gov) modeChip.textContent = 'Контур: Государство';
-      else if (state.business) modeChip.textContent = 'Контур: Бизнес';
-      else modeChip.textContent = 'Контур: Пользователь';
+    const chip = document.getElementById('accessChip');
+    if (chip) {
+      if (state.gov) chip.textContent = 'Доступ: государство';
+      else if (state.business) chip.textContent = 'Доступ: бизнес';
+      else chip.textContent = 'Доступ: пользователь';
     }
   }
 
@@ -5827,9 +6545,9 @@ updateUserLayer();
     }
 
     // chip
-    const modeChip = document.getElementById('accessModeChip');
-    if (modeChip) {
-      modeChip.textContent = mode === 'gov' ? 'Контур: Государство' : mode === 'business' ? 'Контур: Бизнес' : 'Контур: Пользователь';
+    const chip = document.getElementById('accessChip');
+    if (chip) {
+      chip.textContent = mode === 'gov' ? 'Доступ: государство' : mode === 'business' ? 'Доступ: бизнес' : 'Доступ: пользователь';
     }
 
     // overview changes
@@ -6651,7 +7369,7 @@ updateUserLayer();
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    setInstallButtonState('Запросить доступ', false);
+    setInstallButtonState('Скачать приложение', false);
   });
 
   window.addEventListener('appinstalled', function () {
@@ -6664,7 +7382,7 @@ updateUserLayer();
     const btn = document.getElementById('installBtn');
     if (!btn) return;
 
-    setInstallButtonState('Запросить доступ', false);
+    setInstallButtonState('Скачать приложение', false);
 
     btn.addEventListener('click', async function () {
       if (deferredPrompt) {
@@ -6785,7 +7503,7 @@ updateUserLayer();
       name: 'Утренний транспортный пик',
       desc: 'Сценарий показывает, как система за секунды переводит городской транспортный пик в действия для населения, объектов бизнеса и городских служб.',
       meta: { district: 'yunusabad', pollutant: 'aqi', window: 'live' },
-      userSummary: 'Система уже переводит сигнал в действие: человеку — сократить выходы, бизнесу — перенести наружные операции, городу — включить меры до начала пикового окна.',
+      userSummary: 'Сейчас лучше сократить выходы на улицу, перенести прогулки на вечер и избегать длинных маршрутов вдоль магистралей.',
       business: {
         impactValue: 'Высокий риск',
         narrative: 'Транспортная перегрузка вокруг ключевых коридоров снижает темп наружных операций, повышает ошибки и увеличивает потери в объектах логистики и mixed-use зонах.',
@@ -7031,7 +7749,7 @@ updateUserLayer();
     if (autoBtn) {
       autoBtn.addEventListener('click', function () {
         liveAuto = !liveAuto;
-        autoBtn.textContent = 'Live sync: ' + (liveAuto ? 'ВКЛ' : 'ВЫКЛ');
+        autoBtn.textContent = 'Live режим: ' + (liveAuto ? 'активен' : 'пауза');
         autoBtn.classList.toggle('active', liveAuto);
         setText('liveAutoState', liveAuto ? 'ВКЛ' : 'ВЫКЛ');
         startAuto();
@@ -7047,6 +7765,368 @@ updateUserLayer();
 
 
 
+<style id="final-product-premium-v2">
+  :root {
+    --bg: #eef4fb;
+    --bg-2: #dfe9f5;
+    --panel: rgba(255,255,255,0.78);
+    --panel-2: rgba(248,251,255,0.92);
+    --line: rgba(17, 64, 104, 0.08);
+    --text: #0d1b2a;
+    --muted: #5d7187;
+    --soft: #7e91a6;
+    --cyan: #1383d6;
+    --cyan-2: #0f6bb0;
+    --green: #23936d;
+    --yellow: #b78013;
+    --orange: #cf6d1f;
+    --red: #c64b55;
+    --purple: #635bff;
+    --shadow: 0 20px 60px rgba(12, 31, 53, 0.08);
+  }
+
+  body {
+    color: var(--text) !important;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(95, 160, 255, 0.16), transparent 24%),
+      radial-gradient(circle at 86% 12%, rgba(87, 206, 255, 0.12), transparent 22%),
+      radial-gradient(circle at 74% 82%, rgba(99, 91, 255, 0.08), transparent 22%),
+      linear-gradient(180deg, #f7fbff 0%, #edf4fb 48%, #eaf1f8 100%) !important;
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(rgba(13,27,42,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,27,42,0.028) 1px, transparent 1px) !important;
+    opacity: .36 !important;
+  }
+
+  .sidebar,
+  .content-pane,
+  .access-card,
+  .report-sheet {
+    background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(247,251,255,0.80)) !important;
+    border: 1px solid rgba(17,64,104,0.08) !important;
+    box-shadow: 0 18px 50px rgba(12,31,53,0.08), 0 1px 0 rgba(255,255,255,0.65) inset !important;
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+  }
+
+  .topbar,
+  .hero,
+  .premium-hero,
+  .card,
+  .status-box,
+  .live-box,
+  .summary-box,
+  .vault-card,
+  .ops-card,
+  .impact-card,
+  .command-box,
+  .biz-shell-card,
+  .biz-money-card,
+  .biz-exec-card,
+  .gov-shell-card,
+  .gov-priority-card,
+  .gov-command-card,
+  .signal-card,
+  .scenario-card,
+  .console-card,
+  .map-detail,
+  .mini-metric,
+  .day-chip,
+  .district-row,
+  .rec-item,
+  .alert-item,
+  .source-item,
+  .command-item,
+  .ops-item,
+  .map-quick-card,
+  .sheet-box,
+  .kpi,
+  .legend,
+  .live-engine-bar,
+  .live-engine-panel,
+  .live-engine-status,
+  .scenario-switch,
+  .data-pill,
+  .access-switch,
+  .mode-shell,
+  .chip,
+  .pill,
+  .selector,
+  .ghost-btn {
+    background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(245,249,254,0.84)) !important;
+    border: 1px solid rgba(17,64,104,0.08) !important;
+    box-shadow: 0 14px 36px rgba(12,31,53,0.06), 0 1px 0 rgba(255,255,255,0.75) inset !important;
+    color: var(--text) !important;
+  }
+
+  .hero,
+  .premium-hero,
+  .live-engine-bar {
+    background:
+      radial-gradient(circle at 85% 12%, rgba(84, 187, 255, 0.12), transparent 24%),
+      radial-gradient(circle at 14% 88%, rgba(99, 91, 255, 0.05), transparent 22%),
+      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(243,248,253,0.88)) !important;
+  }
+
+  .brand,
+  .status-box,
+  .live-box,
+  .nav button,
+  .selector,
+  .ghost-btn,
+  .chip,
+  .pill,
+  .access-btn,
+  .map-quick-card,
+  .scenario-switch {
+    transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+
+  .brand {
+    border-bottom-color: rgba(17,64,104,0.08) !important;
+  }
+
+  .brand-mark {
+    background: linear-gradient(135deg, rgba(74,173,255,0.16), rgba(99,91,255,0.10)) !important;
+    border-color: rgba(17,64,104,0.08) !important;
+    box-shadow: 0 12px 28px rgba(16,86,147,0.08), inset 0 1px 0 rgba(255,255,255,0.65) !important;
+  }
+
+  .nav button {
+    background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(246,250,254,0.72)) !important;
+  }
+
+  .nav button.active,
+  .access-btn.active,
+  .ghost-btn.active,
+  .scenario-switch.active,
+  .map-quick-card.active {
+    background: linear-gradient(180deg, rgba(226,242,255,0.98), rgba(212,234,252,0.90)) !important;
+    border-color: rgba(19,131,214,0.20) !important;
+    box-shadow: 0 16px 34px rgba(19,131,214,0.10), 0 1px 0 rgba(255,255,255,0.8) inset !important;
+  }
+
+  .nav button:hover,
+  .access-btn:hover,
+  .ghost-btn:hover,
+  .scenario-switch:hover,
+  .map-quick-card:hover {
+    border-color: rgba(19,131,214,0.16) !important;
+    box-shadow: 0 14px 30px rgba(19,131,214,0.08), 0 1px 0 rgba(255,255,255,0.8) inset !important;
+    transform: translateY(-1px);
+  }
+
+  .hero h2,
+  .premium-hero h3,
+  .card h3,
+  .biz-shell-card h3,
+  .biz-exec-card h3,
+  .gov-shell-card h3,
+  .gov-command-card h3,
+  .live-engine-title {
+    color: #0c1b2b !important;
+    font-weight: 650 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .hero p,
+  .premium-hero p,
+  .live-engine-desc,
+  .summary-box,
+  .sub,
+  .status-box span,
+  .live-box p,
+  .rec-item p,
+  .alert-item p,
+  .source-item p,
+  .district-row p,
+  .command-item span,
+  .ops-item span,
+  .gov-mini-chip span,
+  .biz-mini-chip span,
+  .tiny,
+  .day-chip span,
+  .gov-command-head .meta,
+  .live-engine-status .sub,
+  .live-engine-panel .dd,
+  .scenario-switch .dd,
+  .scenario-switch .ey {
+    color: var(--muted) !important;
+  }
+
+  .metric-card .value,
+  .hero-stat strong,
+  .impact-card .value,
+  .vault-card .v,
+  .kpi .big,
+  .big,
+  .biz-money-card .big,
+  .gov-priority-card .big,
+  .live-engine-status .big,
+  .live-engine-panel .big {
+    color: #0f6bb0 !important;
+    text-shadow: none !important;
+  }
+
+  .eyebrow,
+  .live-engine-kicker,
+  .live-engine-panel .ey,
+  .live-engine-status .ey,
+  .impact-card .ey,
+  .ops-card .ey,
+  .vault-card .k,
+  .kpi .kicker,
+  .gov-priority-card .ey,
+  .gov-mini-chip strong,
+  .scenario-switch .ey {
+    color: #4f7b9f !important;
+  }
+
+  .badge.red { background: rgba(198,75,85,0.10) !important; color: #9c3342 !important; }
+  .badge.orange { background: rgba(207,109,31,0.10) !important; color: #9d4f14 !important; }
+  .badge.yellow { background: rgba(183,128,19,0.10) !important; color: #8c6512 !important; }
+  .badge.green { background: rgba(35,147,109,0.10) !important; color: #196f50 !important; }
+  .badge.cyan { background: rgba(19,131,214,0.10) !important; color: #0d66ab !important; }
+
+  .dot { box-shadow: 0 0 0 6px rgba(15,107,176,0.06); }
+
+  #installBtn {
+    background: linear-gradient(180deg, #1785d7, #0f6bb0) !important;
+    color: #ffffff !important;
+    border-color: rgba(15,107,176,0.20) !important;
+    box-shadow: 0 16px 34px rgba(15,107,176,0.18) !important;
+    font-weight: 700 !important;
+  }
+
+  .city-map {
+    background:
+      linear-gradient(90deg, rgba(13,27,42,0.045) 1px, transparent 1px),
+      linear-gradient(rgba(13,27,42,0.045) 1px, transparent 1px),
+      radial-gradient(circle at 36% 34%, rgba(198,75,85,0.18), transparent 10%),
+      radial-gradient(circle at 61% 48%, rgba(207,109,31,0.18), transparent 12%),
+      radial-gradient(circle at 26% 72%, rgba(183,128,19,0.14), transparent 10%),
+      radial-gradient(circle at 80% 20%, rgba(35,147,109,0.10), transparent 10%),
+      linear-gradient(180deg, rgba(248,251,255,0.96), rgba(237,244,250,0.98)) !important;
+    box-shadow: inset 0 0 0 1px rgba(17,64,104,0.06), 0 18px 40px rgba(12,31,53,0.06) !important;
+  }
+
+  .district-label {
+    background: rgba(255,255,255,0.92) !important;
+    border-color: rgba(17,64,104,0.08) !important;
+    color: var(--text) !important;
+  }
+
+  .road.one, .road.two {
+    background: rgba(17,64,104,0.10) !important;
+  }
+
+  .ring.one, .ring.two, .flow-line {
+    border-color: rgba(17,64,104,0.10) !important;
+  }
+
+  .table-card th,
+  .table-card td {
+    border-bottom-color: rgba(17,64,104,0.08) !important;
+    color: var(--text) !important;
+  }
+
+  .table-card th {
+    color: #55718c !important;
+    font-weight: 600 !important;
+  }
+
+  .forecast-strip {
+    gap: 10px !important;
+  }
+
+  #overview .grid.grid-3:first-of-type .card,
+  #overview .grid.grid-4 .card,
+  #business .impact-grid .impact-card,
+  #gov .gov-priority-grid .gov-priority-card {
+    border-color: rgba(19,131,214,0.10) !important;
+  }
+
+  .locked-note {
+    background: linear-gradient(180deg, rgba(248,251,255,0.92), rgba(242,247,252,0.84)) !important;
+    border-color: rgba(17,64,104,0.08) !important;
+    color: var(--muted) !important;
+  }
+
+  .footer-note {
+    display: none !important;
+  }
+
+  @media (max-width: 820px) {
+    .content-pane {
+      padding: 70px 10px 12px !important;
+    }
+
+    .topbar,
+    .live-engine-bar,
+    .hero,
+    .premium-hero,
+    .card {
+      border-radius: 18px !important;
+    }
+
+    .topbar,
+    .live-engine-bar,
+    #overview .grid,
+    #business .grid,
+    #gov .grid {
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .live-engine-bar {
+      padding: 14px !important;
+      margin-bottom: 12px !important;
+    }
+
+    .live-engine-title {
+      font-size: 24px !important;
+      line-height: 1.08 !important;
+    }
+
+    .live-engine-desc,
+    #heroSummary {
+      font-size: 13px !important;
+      line-height: 1.55 !important;
+    }
+
+    .scenario-switch {
+      padding: 14px !important;
+    }
+
+    #overview .grid.grid-3:first-of-type .summary-box,
+    #overview .grid.grid-main .summary-box,
+    #overview .grid.grid-3:first-of-type .sub,
+    #overview .grid.grid-3:last-of-type .sub {
+      font-size: 12px !important;
+      line-height: 1.48 !important;
+    }
+
+    .metric-card .value,
+    .hero-stat strong,
+    .impact-card .value,
+    .vault-card .v,
+    .kpi .big,
+    .big,
+    .live-engine-status .big,
+    .live-engine-panel .big {
+      font-size: 24px !important;
+    }
+
+    .map-card,
+    .city-map {
+      min-height: 300px !important;
+      height: 300px !important;
+    }
+  }
+</style>
 
 
 <style id="institutional-dark-saturation-v6">
@@ -7422,68 +8502,567 @@ updateUserLayer();
 </style>
 
 
-<script id="grant-ops-activation">
-(function(){
-  const applyBtn = document.getElementById('applyMeasuresBtn');
-  const measuresState = document.getElementById('measuresState');
-  const measuresEffect = document.getElementById('measuresEffect');
-  const liveUpdatedAt = document.getElementById('liveUpdatedAt');
-  const liveMeta = document.getElementById('liveScenarioMeta');
-  const refreshChip = document.getElementById('refreshChip');
-  const contextChip = document.getElementById('contextChip');
-  const districtsOnline = document.getElementById('districtsOnline');
-  const modelStatus = document.getElementById('modelStatus');
-  const districtSelect = document.getElementById('districtSelect');
-  function currentTime(){
-    const now = new Date();
-    const hh = String(now.getHours()).padStart(2,'0');
-    const mm = String(now.getMinutes()).padStart(2,'0');
-    return `${hh}:${mm}`;
+<style id="mobile-precision-fixes-v3">
+  #riskBriefList .rec-item strong,
+  #riskBriefList .alert-item strong,
+  #riskBriefList .command-item strong {
+    color: #eef8ff !important;
+    opacity: 1 !important;
+    text-shadow: 0 0 18px rgba(120,235,255,0.12);
   }
-  function syncTopChips(){
-    const time = currentTime();
-    if(liveUpdatedAt) liveUpdatedAt.textContent = time;
-    if(refreshChip) refreshChip.textContent = 'Система активна · 12 районов онлайн · модель v1.2';
-    if(contextChip) contextChip.textContent = `Локация: ${cityLabel || 'Ташкент'} · Район: ${districtLabel || 'Центр'} · Метрика: ${pollutantLabel || 'AQI'} · Окно: ${windowLabel || 'Сейчас'}`;
-    if(districtsOnline) districtsOnline.textContent = '12';
-    if(modelStatus) modelStatus.textContent = 'v1.2';
+
+  #riskBriefList .rec-item p {
+    color: #d5e5f3 !important;
   }
-  function resetMeasuresState(){
-    if(measuresState) measuresState.textContent = 'Готово к применению';
-    if(measuresEffect) measuresEffect.textContent = 'Ожидание эффекта';
-    if(applyBtn){
-      applyBtn.classList.remove('active');
-      applyBtn.textContent = 'Применить меры';
+
+  .access-switch {
+    padding: 4px !important;
+    gap: 4px !important;
+    border-radius: 14px !important;
+  }
+
+  .access-btn {
+    min-height: 38px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .city-map {
+    border-color: rgba(120,235,255,0.14) !important;
+  }
+
+  .city-map .ring {
+    border-color: rgba(120,235,255,0.16) !important;
+    opacity: .8 !important;
+  }
+
+  .city-map .hotspot {
+    box-shadow: 0 0 0 0 rgba(120,235,255,.42) !important;
+    animation: pulseRiskStrong 1.8s infinite !important;
+  }
+
+  .city-map .hotspot::after {
+    opacity: .34 !important;
+  }
+
+  @keyframes pulseRiskStrong {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(120,235,255,.34); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(120,235,255,0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(120,235,255,0); }
+  }
+
+  @media (max-width: 820px) {
+    .topbar {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+    }
+
+    .topbar-right {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      width: 100% !important;
+      order: -2 !important;
+    }
+
+    .topbar-access {
+      order: -3 !important;
+      width: 100% !important;
+      display: block !important;
+      margin-bottom: 2px !important;
+    }
+
+    .topbar-access .access-switch {
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      align-items: center !important;
+    }
+
+    .topbar-status {
+      order: 2 !important;
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+
+    .topbar-left {
+      order: 3 !important;
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 10px !important;
+    }
+
+    .topbar-actions {
+      width: 100% !important;
+    }
+
+    .topbar-access .access-btn {
+      min-height: 34px !important;
+      padding: 7px 8px !important;
+      font-size: 11px !important;
+      letter-spacing: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .topbar-access .access-btn.active {
+      box-shadow: 0 8px 18px rgba(62,200,255,0.14) !important;
+    }
+
+    .city-map {
+      background:
+        radial-gradient(circle at 36% 34%, rgba(255,99,99,0.24), transparent 10%),
+        radial-gradient(circle at 61% 48%, rgba(255,159,87,0.26), transparent 12%),
+        radial-gradient(circle at 26% 72%, rgba(246,197,102,0.22), transparent 10%),
+        radial-gradient(circle at 80% 20%, rgba(120,235,255,0.18), transparent 10%),
+        linear-gradient(180deg, rgba(14,28,43,0.96), rgba(10,22,35,0.98)) !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(120,235,255,0.06),
+        0 16px 36px rgba(0,0,0,.18) !important;
+    }
+
+    .city-map .road.one,
+    .city-map .road.two {
+      display: none !important;
+    }
+
+    .city-map .ring.one,
+    .city-map .ring.two {
+      border-width: 1.5px !important;
+    }
+
+    .city-map .district-label {
+      display: none !important;
     }
   }
-  if(applyBtn){
-    applyBtn.addEventListener('click', function(){
-      const isApplied = applyBtn.classList.contains('active');
-      if(isApplied){
-        applyBtn.classList.remove('active');
-        applyBtn.textContent = 'Применить меры';
-        if(measuresState) measuresState.textContent = 'Готово к применению';
-        if(measuresEffect) measuresEffect.textContent = 'Ожидание эффекта';
-      } else {
-        applyBtn.classList.add('active');
-        applyBtn.textContent = 'Меры применены';
-        if(measuresState) measuresState.textContent = 'Применено';
-        if(measuresEffect) measuresEffect.textContent = 'AQI ↓ 14% · нагрузка ↓ 9% · сценарий применён';
+</style>
+
+<script id="mobile-precision-fixes-script-v3">
+(function () {
+  function placeAccessSwitchOnTop() {
+    var isMobile = window.innerWidth <= 820;
+    var topbar = document.querySelector('.topbar');
+    var accessWrap = document.querySelector('.topbar-access');
+    var topbarRight = document.querySelector('.topbar-right');
+    if (!topbar || !accessWrap || !topbarRight) return;
+
+    if (isMobile) {
+      if (topbar.firstElementChild !== topbarRight) {
+        topbar.insertBefore(topbarRight, topbar.firstElementChild);
       }
-      syncTopChips();
+      if (topbarRight.firstElementChild !== accessWrap) {
+        topbarRight.insertBefore(accessWrap, topbarRight.firstElementChild);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', placeAccessSwitchOnTop);
+  } else {
+    placeAccessSwitchOnTop();
+  }
+  window.addEventListener('resize', placeAccessSwitchOnTop);
+})();
+</script>
+
+
+<style id="text-visibility-final-fix">
+  :root {
+    --text: #f8fcff !important;
+    --muted: #d5e3f1 !important;
+    --soft: #afc3d7 !important;
+  }
+
+  body,
+  .content-pane,
+  .sidebar,
+  .card,
+  .summary-box,
+  .live-box,
+  .status-box,
+  .sheet-box,
+  .console-card,
+  .scenario-card,
+  .signal-card,
+  .mini-metric,
+  .kpi,
+  .impact-card,
+  .ops-card,
+  .vault-card,
+  .rec-item,
+  .alert-item,
+  .source-item,
+  .district-row,
+  .command-item,
+  .ops-item,
+  .gov-mini-chip,
+  .biz-mini-chip,
+  .gov-command-item,
+  .gov-shell-card,
+  .gov-priority-card,
+  .gov-command-card,
+  .biz-shell-card,
+  .biz-money-card,
+  .biz-exec-card,
+  .topbar,
+  .hero,
+  .premium-hero {
+    color: var(--text) !important;
+  }
+
+  h1, h2, h3, h4,
+  .hero h2,
+  .premium-hero h3,
+  .card h3,
+  .biz-shell-card h3,
+  .biz-exec-card h3,
+  .gov-shell-card h3,
+  .gov-command-card h3,
+  .live-box h3,
+  .status-box strong,
+  .scenario-card .title,
+  .rec-item strong,
+  .alert-item strong,
+  .source-item strong,
+  .command-item strong,
+  .ops-item strong,
+  .gov-mini-chip strong,
+  .biz-mini-chip strong,
+  .sheet-head h3,
+  .sheet-section h4,
+  .map-detail h4,
+  .legend h4,
+  .detail-title strong,
+  .map-quick-card .name,
+  .nav button,
+  .access-btn,
+  .ghost-btn,
+  .selector,
+  .chip,
+  .pill,
+  .data-pill,
+  .mode-summary,
+  .mode-badge {
+    color: #ffffff !important;
+  }
+
+  .sub,
+  .hero p,
+  .summary-box,
+  .status-box span,
+  .live-box p,
+  .source-item p,
+  .rec-item p,
+  .alert-item p,
+  .district-row p,
+  .command-item span,
+  .ops-item span,
+  .gov-mini-chip span,
+  .biz-mini-chip span,
+  .sheet-head p,
+  .sheet-box .f,
+  .signal-card .f,
+  .console-card .f,
+  .focus-card .f,
+  .scenario-card .desc,
+  .impact-card .desc,
+  .ops-card .dd,
+  .vault-card .f,
+  .kpi .foot,
+  .day-chip span,
+  .table-card td,
+  .timeline-body p,
+  .command-box p,
+  .premium-hero p,
+  .gov-shell-card p,
+  .gov-priority-card .desc,
+  .gov-command-item span,
+  .gov-command-head .meta,
+  .tiny,
+  .detail-title span,
+  .map-quick-card .meta,
+  .locked-note,
+  .access-card p,
+  .access-note,
+  .mode-summary,
+  .hero-stat span,
+  .status-row,
+  .legend .row,
+  .mini-row,
+  .live-engine-desc,
+  .live-engine-panel .dd,
+  .live-engine-status .sub,
+  .scenario-switch .dd,
+  .topbar .tiny,
+  .sheet-item {
+    color: var(--muted) !important;
+  }
+
+  small,
+  .nav button small,
+  .metric-card .label,
+  .kpi .kicker,
+  .console-card .k,
+  .signal-card .k,
+  .focus-card .k,
+  .impact-card .ey,
+  .ops-card .ey,
+  .vault-card .k,
+  .sheet-box .k,
+  .gov-priority-card .ey,
+  .live-engine-kicker,
+  .live-engine-status .ey,
+  .live-engine-panel .ey,
+  .scenario-switch .ey,
+  .ey,
+  .eyebrow {
+    color: var(--soft) !important;
+  }
+
+  .metric-card .value,
+  .hero-stat strong,
+  .impact-card .value,
+  .vault-card .v,
+  .kpi .big,
+  .big,
+  .biz-money-card .big,
+  .gov-priority-card .big,
+  .sheet-box .v,
+  .signal-card .v,
+  .focus-card .v,
+  .console-card .v,
+  .mini-metric .v,
+  .scenario-card .metric,
+  .hero-side strong,
+  .live-engine-status .big,
+  .live-engine-panel .big,
+  .gov-command-card .value {
+    color: #9df2ff !important;
+    text-shadow: 0 0 18px rgba(120,235,255,0.16) !important;
+  }
+
+  .table-card th,
+  .sheet-section h4,
+  .legend h4,
+  .map-detail h4 {
+    color: #e6f2ff !important;
+  }
+</style>
+
+
+<script id="grant-next-step-script">
+(function(){
+  if (window.__grantNextStepLoaded) return;
+  window.__grantNextStepLoaded = true;
+
+  const decisionTemplates = {
+    aqi: {
+      userNow: '❌ не выходить',
+      userLater: '⏱ через 2 часа можно кратковременно',
+      userEvening: '✅ вечером лучшее окно',
+      govType: 'транспортный пик',
+      factor: 'транспорт + слабое рассеивание'
+    },
+    pm25: {
+      userNow: '⚠ сократить активность на улице',
+      userLater: '⏱ выходить коротко и с защитой',
+      userEvening: '✅ позднее окно безопаснее',
+      govType: 'взвешенные частицы / пыль',
+      factor: 'дорожная пыль + стройка + трафик'
+    },
+    co2: {
+      userNow: '⚠ не находиться долго вдоль магистралей',
+      userLater: '⏱ краткие выходы допустимы',
+      userEvening: '✅ лучше выбирать проветриваемые зоны',
+      govType: 'городское накопление',
+      factor: 'плотный поток + низкая циркуляция'
+    }
+  };
+
+  function currentDistrictData(){
+    const sorted = currentSortedDistricts();
+    const fallback = sorted[0];
+    const key = (state.selectedDistrict && appData.districts[state.selectedDistrict]) ? state.selectedDistrict : fallback.key;
+    return { key, district: appData.districts[key], metric: appData.districts[key][state.pollutant], top: fallback };
+  }
+
+  function calcBusiness(metricValue){
+    const loss = Math.round(metricValue * 290);
+    const save = Math.round(loss * 0.67);
+    const productivity = Math.min(24, Math.max(9, Math.round(metricValue / 8)));
+    return { loss, save, productivity };
+  }
+
+  function calcGovEffect(metricValue){
+    const aqiCut = Math.min(18, Math.max(10, Math.round(metricValue / 12)));
+    const exposureCut = Math.min(22, Math.max(11, Math.round(metricValue / 10)));
+    return { aqiCut, exposureCut };
+  }
+
+  function renderGrantNextStep(){
+    const pollutant = getCurrentPollutant();
+    const tpl = decisionTemplates[state.pollutant] || decisionTemplates.aqi;
+    const { district, metric } = currentDistrictData();
+    const riskCls = getRiskClass(metric[state.window]);
+    const risk = riskLabel(riskCls);
+    const business = calcBusiness(metric[state.window]);
+    const effect = calcGovEffect(metric[state.window]);
+    const peakWindow = district.peak.replace(' / ', '–');
+
+    const scenarioCommandList = document.getElementById('scenarioCommandList');
+    if (scenarioCommandList) {
+      scenarioCommandList.innerHTML = `
+        <div class="item"><strong>Район</strong>${district.name}</div>
+        <div class="item"><strong>Риск</strong>${risk}</div>
+        <div class="item"><strong>Причина</strong>${tpl.factor}</div>
+        <div class="item"><strong>Что делать сейчас</strong>Ограничить грузовой поток на 18%, перенести наружные работы на вечер, усилить полив дорог и короткое информирование населения.</div>
+        <div class="item"><strong>Ожидаемый эффект</strong>Снижение ${pollutant.label} на ${effect.aqiCut}–${Math.min(effect.aqiCut+6, 24)}% за 3–5 часов, меньше нагрузки на медслужбы и меньше жалоб населения.</div>
+      `;
+    }
+
+    const noActionList = document.getElementById('noActionList');
+    if (noActionList) {
+      noActionList.innerHTML = `
+        <div class="item"><strong>К вечеру</strong>рост ${pollutant.label} на +${Math.min(effect.aqiCut + 8, 22)}%</div>
+        <div class="item"><strong>Операции города</strong>увеличение нагрузки на транспорт и медслужбы</div>
+        <div class="item"><strong>Население</strong>рост обращений и жалоб из критичных районов</div>
+        <div class="item"><strong>Эффективность</strong>снижение качества работы города в активное окно</div>
+      `;
+    }
+
+    const syncImpactList = document.getElementById('syncImpactList');
+    if (syncImpactList) {
+      syncImpactList.innerHTML = `
+        <div class="item"><strong>USER</strong>${tpl.userNow} · ${tpl.userLater} · ${tpl.userEvening}</div>
+        <div class="item"><strong>BUSINESS</strong>Потери меняются вместе с районом: сейчас ${district.name} даёт до -$${business.loss.toLocaleString('en-US')} в активное окно.</div>
+        <div class="item"><strong>GOV</strong>Штабной сценарий перестраивается на район ${district.name}, тип ситуации «${tpl.govType}» и окно ${peakWindow}.</div>
+      `;
+    }
+
+    const syncMeta = `${district.name} · ${pollutant.label} · ${appData.windows[state.window]} · единая система`;
+    const metaEl = document.getElementById('liveScenarioMeta');
+    if (metaEl) metaEl.textContent = syncMeta;
+
+    const autoBtn = document.getElementById('liveAutoBtn');
+    if (autoBtn) autoBtn.textContent = `Live режим: ${state.liveSimulation ? 'активен' : 'пауза'}`;
+    const autoState = document.getElementById('liveAutoState');
+    if (autoState) autoState.textContent = state.liveSimulation ? 'АКТИВЕН' : 'ПАУЗА';
+
+    const scenarioName = document.getElementById('liveScenarioName');
+    if (scenarioName) scenarioName.textContent = `${district.name} · ${tpl.govType}`;
+    const scenarioDesc = document.getElementById('liveScenarioDesc');
+    if (scenarioDesc) scenarioDesc.textContent = `Сценарий связывает район ${district.name}, показатель ${pollutant.label}, окно ${appData.windows[state.window]} и решения для USER / BUSINESS / GOV в одном действии.`;
+
+    const heroSummary = document.getElementById('heroSummary');
+    if (heroSummary) heroSummary.textContent = `${tpl.userNow}. Для бизнеса: потери до -$${business.loss.toLocaleString('en-US')} сегодня. Для города: приоритет ${district.name}, окно ${peakWindow}, ожидаемый эффект до -${effect.aqiCut}% за 3 часа.`;
+
+    const bizLossToday = document.getElementById('bizLossToday');
+    if (bizLossToday) bizLossToday.textContent = `-$${business.loss.toLocaleString('en-US')}`;
+    const bizSavingsDay = document.getElementById('bizSavingsDay');
+    if (bizSavingsDay) bizSavingsDay.textContent = `+$${business.save.toLocaleString('en-US')}`;
+    const bizSavingsMeta = document.getElementById('bizSavingsMeta');
+    if (bizSavingsMeta) bizSavingsMeta.textContent = `Район ${district.name} · окно ${peakWindow} · снижение потерь при переносе операций и перераспределении логистики.`;
+
+    const bizLossList = document.getElementById('bizLossList');
+    if (bizLossList) {
+      bizLossList.innerHTML = `
+        <div class="item"><strong>Задержки поставок</strong>до -$${Math.round(business.loss*0.48).toLocaleString('en-US')}</div>
+        <div class="item"><strong>Снижение производительности</strong>-${business.productivity}%</div>
+        <div class="item"><strong>Доп. риск</strong>штрафы, просадка SLA и перегрузка персонала</div>
+      `;
+    }
+
+    const bizSolutionList = document.getElementById('bizSolutionList');
+    if (bizSolutionList) {
+      bizSolutionList.innerHTML = `
+        <div class="item"><strong>Смены</strong>Перенести наружные операции на вечернее окно</div>
+        <div class="item"><strong>Логистика</strong>Увести часть рейсов из пикового интервала ${peakWindow}</div>
+        <div class="item"><strong>Объекты</strong>Усилить фильтрацию и ограничить длительные работы на открытом воздухе</div>
+      `;
+    }
+
+    const govScenarioNowList = document.getElementById('govScenarioNowList');
+    if (govScenarioNowList) {
+      govScenarioNowList.innerHTML = `
+        <div class="item"><strong>Приоритетный район</strong>${district.name}</div>
+        <div class="item"><strong>Тип ситуации</strong>${tpl.govType}</div>
+        <div class="item"><strong>Окно реагирования</strong>${peakWindow}</div>
+        <div class="item"><strong>Рекомендуемые действия</strong>Транспортное ограничение, усиленный мониторинг, оперативное информирование и перенос строительных работ.</div>
+      `;
+    }
+
+    const govExpectedEffect = document.getElementById('govExpectedEffect');
+    if (govExpectedEffect) govExpectedEffect.textContent = `-${effect.aqiCut}% ${pollutant.label}`;
+    const govEffectList = document.getElementById('govEffectList');
+    if (govEffectList) {
+      govEffectList.innerHTML = `
+        <div class="item"><strong>Снижение ${pollutant.label}</strong>до -${effect.aqiCut}% за 3 часа</div>
+        <div class="item"><strong>Снижение нагрузки</strong>на транспорт и медслужбы</div>
+        <div class="item"><strong>Контроль</strong>динамика эффекта в коротком цикле и повторная оценка района</div>
+      `;
+    }
+
+    const govBriefText = document.getElementById('govBriefText');
+    if (govBriefText) govBriefText.textContent = `Главный приоритет — ${district.name}. Тип ситуации: ${tpl.govType}. Окно реагирования: ${peakWindow}. Нужно запускать транспортные ограничения, усиленный мониторинг и оперативное информирование.`;
+
+    const govBriefList = document.getElementById('govBriefList');
+    if (govBriefList) {
+      govBriefList.innerHTML = `
+        <div class="command-item"><strong>Транспортное ограничение</strong><span>Снизить поток грузового транспорта до -18% в активном окне.</span></div>
+        <div class="command-item"><strong>Усиленный мониторинг</strong><span>Контроль по району ${district.name} и соседним коридорам каждые 3 часа.</span></div>
+        <div class="command-item"><strong>Оперативное информирование</strong><span>Короткие уведомления для населения, объектов и служб города.</span></div>
+      `;
+    }
+
+    const govActions = document.getElementById('govActions');
+    if (govActions) {
+      govActions.innerHTML = `
+        <div class="rec-item"><strong>Штабное решение</strong><p>Район ${district.name} — первый приоритет. Меры: транспорт, стройка, полив дорог, информирование.</p></div>
+        <div class="rec-item"><strong>Контроль эффекта</strong><p>Ожидаемое снижение ${pollutant.label} на ${effect.aqiCut}–${Math.min(effect.aqiCut+6,24)}% за 3–5 часов.</p></div>
+        <div class="rec-item"><strong>Если ничего не делать</strong><p>Вероятен рост нагрузки к вечеру, усиление жалоб и просадка эффективности города.</p></div>
+      `;
+    }
+
+    const businessNarrative = document.getElementById('businessNarrative');
+    if (businessNarrative) businessNarrative.textContent = `Бизнес-слой переводит район ${district.name} и показатель ${pollutant.label} в деньги: потери сегодня, решение по сменам и логистике, экономия за один день.`;
+
+    const businessOutputs = document.getElementById('businessOutputs');
+    if (businessOutputs) {
+      businessOutputs.innerHTML = `
+        <div class="rec-item"><strong>Потери сегодня</strong><p>Задержки поставок, просадка производительности и риск штрафов дают до -$${business.loss.toLocaleString('en-US')} в активное окно.</p></div>
+        <div class="rec-item"><strong>Решение</strong><p>Перенести наружные операции на вечер, перераспределить логистику и защитить критичные объекты.</p></div>
+        <div class="rec-item"><strong>Экономия</strong><p>До +$${business.save.toLocaleString('en-US')} за 1 день при корректировке операционного сценария.</p></div>
+      `;
+    }
+
+    const govNarrative = document.getElementById('govNarrative');
+    if (govNarrative) govNarrative.textContent = `Государственный слой объединяет район ${district.name}, тип ситуации «${tpl.govType}», окно ${peakWindow} и ожидаемый эффект после вмешательства в течение 3 часов.`;
+
+    const accessBiz = document.getElementById('bizAccessState');
+    if (accessBiz) accessBiz.textContent = 'Готов';
+    const accessGov = document.getElementById('govAccessState');
+    if (accessGov) accessGov.textContent = 'Открыт';
+  }
+
+  const _oldUpdateAll = window.updateAll;
+  window.updateAll = function() {
+    _oldUpdateAll();
+    renderGrantNextStep();
+  };
+
+  const simBtn = document.getElementById('simulateBtn');
+  if (simBtn) {
+    simBtn.textContent = `Live режим: ${state.liveSimulation ? 'активен' : 'пауза'}`;
+    simBtn.addEventListener('click', () => {
+      setTimeout(renderGrantNextStep, 0);
     });
   }
-  if(districtSelect){
-    districtSelect.addEventListener('change', function(){
-      resetMeasuresState();
-      syncTopChips();
-      if(liveMeta && districtSelect.options[districtSelect.selectedIndex]){
-        const districtName = districtSelect.options[districtSelect.selectedIndex].textContent.trim();
-        liveMeta.textContent = `${districtName} · AQI · Сейчас · синхронизация включена`;
-      }
-    });
-  }
-  syncTopChips();
+
+  renderGrantNextStep();
 })();
 </script>
 
