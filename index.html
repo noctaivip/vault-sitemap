@@ -4062,6 +4062,54 @@
   .ghost-btn.active, .access-btn.active, .nav button.active { filter: saturate(1.08); }
 </style>
 
+
+<style id="grant-next-step-upgrade">
+  .decision-strip, .business-money-strip, .gov-command-strip-next {
+    display:grid;
+    gap:18px;
+    margin:18px 0;
+  }
+  .decision-strip { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .business-money-strip { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .gov-command-strip-next { grid-template-columns: 1.15fr .85fr; }
+  .scenario-command-card, .no-action-card, .biz-money-next, .gov-next-card {
+    padding:22px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(circle at 84% 12%, rgba(97,225,255,.10), transparent 28%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    box-shadow: 0 18px 42px rgba(10,24,40,.22);
+  }
+  .scenario-command-card h3, .no-action-card h3, .biz-money-next h3, .gov-next-card h3 {
+    margin:0 0 8px;
+    font-size:20px;
+    letter-spacing:-.02em;
+  }
+  .scenario-command-card .sub, .no-action-card .sub, .biz-money-next .sub, .gov-next-card .sub {
+    margin-bottom:14px;
+  }
+  .mini-bullets { display:flex; flex-direction:column; gap:10px; }
+  .mini-bullets .item {
+    padding:14px 16px; border-radius:18px; border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.028); color:var(--muted); font-size:13px; line-height:1.6;
+  }
+  .mini-bullets .item strong { display:block; color:var(--text); margin-bottom:5px; font-size:14px; }
+  .strip-value { font-size:34px; line-height:1; letter-spacing:-.04em; color:#97f1ff; margin-bottom:10px; }
+  .strip-meta { color:var(--muted); font-size:13px; line-height:1.6; }
+  .sync-panel {
+    margin-top:14px; display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .sync-pill {
+    padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03); color:var(--muted); font-size:12px;
+  }
+  .sync-pill strong { color:var(--text); margin-left:6px; }
+  @media (max-width:1180px) {
+    .decision-strip, .business-money-strip, .gov-command-strip-next { grid-template-columns:1fr; }
+  }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -4228,8 +4276,33 @@
 <strong style="display:block; margin-bottom:8px; color:var(--text);">Город</strong>
 Приоритет: район, транспорт, надзор и информирование населения с оценкой эффекта в течение текущего окна.
 </div>
+
 </div>
 </div>
+
+<div class="decision-strip" id="decisionStrip">
+  <div class="scenario-command-card">
+    <h3>Сценарий управления сейчас</h3>
+    <div class="sub">Решение → действие → эффект. Один район, один сценарий, три контура.</div>
+    <div class="mini-bullets" id="scenarioCommandList"></div>
+  </div>
+  <div class="no-action-card">
+    <h3>Если ничего не делать</h3>
+    <div class="sub">Ключевой блок для города, штаба и бизнеса.</div>
+    <div class="mini-bullets" id="noActionList"></div>
+  </div>
+  <div class="scenario-command-card">
+    <h3>Единая синхронизация системы</h3>
+    <div class="sub">При смене района все уровни решения меняются одновременно.</div>
+    <div class="mini-bullets" id="syncImpactList"></div>
+    <div class="sync-panel">
+      <div class="sync-pill">USER<strong id="syncUserState">обновлён</strong></div>
+      <div class="sync-pill">BUSINESS<strong id="syncBizState">обновлён</strong></div>
+      <div class="sync-pill">GOV<strong id="syncGovState">обновлён</strong></div>
+    </div>
+  </div>
+</div>
+
 <div class="grid grid-4">
 <div class="card metric-card">
 <div class="label" id="metric1Label">Сейчас на улице</div>
@@ -4476,6 +4549,20 @@
 <div class="f">Пиковое окно, где нужно раннее управленческое действие.</div>
 </div>
 </div>
+
+</div>
+
+<div class="gov-command-strip-next">
+  <div class="gov-next-card">
+    <h3>Штабной сценарий управления</h3>
+    <div class="sub">Район, тип ситуации, окно реагирования и пакет мер без длинных объяснений.</div>
+    <div class="mini-bullets" id="govScenarioNowList"></div>
+  </div>
+  <div class="gov-next-card">
+    <h3>Контроль эффекта</h3>
+    <div class="strip-value" id="govExpectedEffect">-12% AQI</div>
+    <div class="mini-bullets" id="govEffectList"></div>
+  </div>
 </div>
 
 <div class="gov-hero-grid">
@@ -4629,8 +4716,28 @@
 <div class="hero-stat"><strong>3</strong><span>объекта в мониторинге</span></div>
 <div class="summary-box" id="businessNarrative">Бизнес-слой переводит городскую экологическую аналитику в операционные решения, протоколы безопасности и ценность регулярной отчётности.</div>
 </div>
+
 </div>
 </div>
+
+<div class="business-money-strip">
+  <div class="biz-money-next">
+    <h3>Потери сегодня</h3>
+    <div class="strip-value" id="bizLossToday">-$42,000</div>
+    <div class="mini-bullets" id="bizLossList"></div>
+  </div>
+  <div class="biz-money-next">
+    <h3>Решение</h3>
+    <div class="sub">Что нужно сделать сегодня, чтобы не терять деньги в пиковое окно.</div>
+    <div class="mini-bullets" id="bizSolutionList"></div>
+  </div>
+  <div class="biz-money-next">
+    <h3>Экономия за день</h3>
+    <div class="strip-value" id="bizSavingsDay">+$28,000</div>
+    <div class="strip-meta" id="bizSavingsMeta">Эффект от переноса операций, смены окна и перераспределения логистики.</div>
+  </div>
+</div>
+
 <div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
 <div class="impact-card wow-panel">
 <div class="ey">Корпоративный контур</div>
@@ -9379,5 +9486,218 @@ updateUserLayer();
     color: #e6f2ff !important;
   }
 </style>
+
+
+<script id="grant-next-step-script">
+(function(){
+  if (window.__grantNextStepLoaded) return;
+  window.__grantNextStepLoaded = true;
+
+  const decisionTemplates = {
+    aqi: {
+      userNow: '❌ не выходить',
+      userLater: '⏱ через 2 часа можно кратковременно',
+      userEvening: '✅ вечером лучшее окно',
+      govType: 'транспортный пик',
+      factor: 'транспорт + слабое рассеивание'
+    },
+    pm25: {
+      userNow: '⚠ сократить активность на улице',
+      userLater: '⏱ выходить коротко и с защитой',
+      userEvening: '✅ позднее окно безопаснее',
+      govType: 'взвешенные частицы / пыль',
+      factor: 'дорожная пыль + стройка + трафик'
+    },
+    co2: {
+      userNow: '⚠ не находиться долго вдоль магистралей',
+      userLater: '⏱ краткие выходы допустимы',
+      userEvening: '✅ лучше выбирать проветриваемые зоны',
+      govType: 'городское накопление',
+      factor: 'плотный поток + низкая циркуляция'
+    }
+  };
+
+  function currentDistrictData(){
+    const sorted = currentSortedDistricts();
+    const fallback = sorted[0];
+    const key = (state.selectedDistrict && appData.districts[state.selectedDistrict]) ? state.selectedDistrict : fallback.key;
+    return { key, district: appData.districts[key], metric: appData.districts[key][state.pollutant], top: fallback };
+  }
+
+  function calcBusiness(metricValue){
+    const loss = Math.round(metricValue * 290);
+    const save = Math.round(loss * 0.67);
+    const productivity = Math.min(24, Math.max(9, Math.round(metricValue / 8)));
+    return { loss, save, productivity };
+  }
+
+  function calcGovEffect(metricValue){
+    const aqiCut = Math.min(18, Math.max(10, Math.round(metricValue / 12)));
+    const exposureCut = Math.min(22, Math.max(11, Math.round(metricValue / 10)));
+    return { aqiCut, exposureCut };
+  }
+
+  function renderGrantNextStep(){
+    const pollutant = getCurrentPollutant();
+    const tpl = decisionTemplates[state.pollutant] || decisionTemplates.aqi;
+    const { district, metric } = currentDistrictData();
+    const riskCls = getRiskClass(metric[state.window]);
+    const risk = riskLabel(riskCls);
+    const business = calcBusiness(metric[state.window]);
+    const effect = calcGovEffect(metric[state.window]);
+    const peakWindow = district.peak.replace(' / ', '–');
+
+    const scenarioCommandList = document.getElementById('scenarioCommandList');
+    if (scenarioCommandList) {
+      scenarioCommandList.innerHTML = `
+        <div class="item"><strong>Район</strong>${district.name}</div>
+        <div class="item"><strong>Риск</strong>${risk}</div>
+        <div class="item"><strong>Причина</strong>${tpl.factor}</div>
+        <div class="item"><strong>Что делать сейчас</strong>Ограничить грузовой поток на 18%, перенести наружные работы на вечер, усилить полив дорог и короткое информирование населения.</div>
+        <div class="item"><strong>Ожидаемый эффект</strong>Снижение ${pollutant.label} на ${effect.aqiCut}–${Math.min(effect.aqiCut+6, 24)}% за 3–5 часов, меньше нагрузки на медслужбы и меньше жалоб населения.</div>
+      `;
+    }
+
+    const noActionList = document.getElementById('noActionList');
+    if (noActionList) {
+      noActionList.innerHTML = `
+        <div class="item"><strong>К вечеру</strong>рост ${pollutant.label} на +${Math.min(effect.aqiCut + 8, 22)}%</div>
+        <div class="item"><strong>Операции города</strong>увеличение нагрузки на транспорт и медслужбы</div>
+        <div class="item"><strong>Население</strong>рост обращений и жалоб из критичных районов</div>
+        <div class="item"><strong>Эффективность</strong>снижение качества работы города в активное окно</div>
+      `;
+    }
+
+    const syncImpactList = document.getElementById('syncImpactList');
+    if (syncImpactList) {
+      syncImpactList.innerHTML = `
+        <div class="item"><strong>USER</strong>${tpl.userNow} · ${tpl.userLater} · ${tpl.userEvening}</div>
+        <div class="item"><strong>BUSINESS</strong>Потери меняются вместе с районом: сейчас ${district.name} даёт до -$${business.loss.toLocaleString('en-US')} в активное окно.</div>
+        <div class="item"><strong>GOV</strong>Штабной сценарий перестраивается на район ${district.name}, тип ситуации «${tpl.govType}» и окно ${peakWindow}.</div>
+      `;
+    }
+
+    const syncMeta = `${district.name} · ${pollutant.label} · ${appData.windows[state.window]} · live sync`;
+    const metaEl = document.getElementById('liveScenarioMeta');
+    if (metaEl) metaEl.textContent = syncMeta;
+
+    const autoBtn = document.getElementById('liveAutoBtn');
+    if (autoBtn) autoBtn.textContent = `Live режим: ${state.liveSimulation ? 'активен' : 'пауза'}`;
+    const autoState = document.getElementById('liveAutoState');
+    if (autoState) autoState.textContent = state.liveSimulation ? 'АКТИВЕН' : 'ПАУЗА';
+
+    const scenarioName = document.getElementById('liveScenarioName');
+    if (scenarioName) scenarioName.textContent = `${district.name} · ${tpl.govType}`;
+    const scenarioDesc = document.getElementById('liveScenarioDesc');
+    if (scenarioDesc) scenarioDesc.textContent = `Сценарий связывает район ${district.name}, показатель ${pollutant.label}, окно ${appData.windows[state.window]} и решения для USER / BUSINESS / GOV в одном действии.`;
+
+    const heroSummary = document.getElementById('heroSummary');
+    if (heroSummary) heroSummary.textContent = `${tpl.userNow}. Для бизнеса: потери до -$${business.loss.toLocaleString('en-US')} сегодня. Для города: приоритет ${district.name}, окно ${peakWindow}, ожидаемый эффект до -${effect.aqiCut}% за 3 часа.`;
+
+    const bizLossToday = document.getElementById('bizLossToday');
+    if (bizLossToday) bizLossToday.textContent = `-$${business.loss.toLocaleString('en-US')}`;
+    const bizSavingsDay = document.getElementById('bizSavingsDay');
+    if (bizSavingsDay) bizSavingsDay.textContent = `+$${business.save.toLocaleString('en-US')}`;
+    const bizSavingsMeta = document.getElementById('bizSavingsMeta');
+    if (bizSavingsMeta) bizSavingsMeta.textContent = `Район ${district.name} · окно ${peakWindow} · снижение потерь при переносе операций и перераспределении логистики.`;
+
+    const bizLossList = document.getElementById('bizLossList');
+    if (bizLossList) {
+      bizLossList.innerHTML = `
+        <div class="item"><strong>Задержки поставок</strong>до -$${Math.round(business.loss*0.48).toLocaleString('en-US')}</div>
+        <div class="item"><strong>Снижение производительности</strong>-${business.productivity}%</div>
+        <div class="item"><strong>Доп. риск</strong>штрафы, просадка SLA и перегрузка персонала</div>
+      `;
+    }
+
+    const bizSolutionList = document.getElementById('bizSolutionList');
+    if (bizSolutionList) {
+      bizSolutionList.innerHTML = `
+        <div class="item"><strong>Смены</strong>Перенести наружные операции на вечернее окно</div>
+        <div class="item"><strong>Логистика</strong>Увести часть рейсов из пикового интервала ${peakWindow}</div>
+        <div class="item"><strong>Объекты</strong>Усилить фильтрацию и ограничить длительные работы на открытом воздухе</div>
+      `;
+    }
+
+    const govScenarioNowList = document.getElementById('govScenarioNowList');
+    if (govScenarioNowList) {
+      govScenarioNowList.innerHTML = `
+        <div class="item"><strong>Приоритетный район</strong>${district.name}</div>
+        <div class="item"><strong>Тип ситуации</strong>${tpl.govType}</div>
+        <div class="item"><strong>Окно реагирования</strong>${peakWindow}</div>
+        <div class="item"><strong>Рекомендуемые действия</strong>Транспортное ограничение, усиленный мониторинг, оперативное информирование и перенос строительных работ.</div>
+      `;
+    }
+
+    const govExpectedEffect = document.getElementById('govExpectedEffect');
+    if (govExpectedEffect) govExpectedEffect.textContent = `-${effect.aqiCut}% ${pollutant.label}`;
+    const govEffectList = document.getElementById('govEffectList');
+    if (govEffectList) {
+      govEffectList.innerHTML = `
+        <div class="item"><strong>Снижение ${pollutant.label}</strong>до -${effect.aqiCut}% за 3 часа</div>
+        <div class="item"><strong>Снижение нагрузки</strong>на транспорт и медслужбы</div>
+        <div class="item"><strong>Контроль</strong>динамика эффекта в коротком цикле и повторная оценка района</div>
+      `;
+    }
+
+    const govBriefText = document.getElementById('govBriefText');
+    if (govBriefText) govBriefText.textContent = `Главный приоритет — ${district.name}. Тип ситуации: ${tpl.govType}. Окно реагирования: ${peakWindow}. Нужно запускать транспортные ограничения, усиленный мониторинг и оперативное информирование.`;
+
+    const govBriefList = document.getElementById('govBriefList');
+    if (govBriefList) {
+      govBriefList.innerHTML = `
+        <div class="command-item"><strong>Транспортное ограничение</strong><span>Снизить поток грузового транспорта до -18% в активном окне.</span></div>
+        <div class="command-item"><strong>Усиленный мониторинг</strong><span>Контроль по району ${district.name} и соседним коридорам каждые 3 часа.</span></div>
+        <div class="command-item"><strong>Оперативное информирование</strong><span>Короткие уведомления для населения, объектов и служб города.</span></div>
+      `;
+    }
+
+    const govActions = document.getElementById('govActions');
+    if (govActions) {
+      govActions.innerHTML = `
+        <div class="rec-item"><strong>Штабное решение</strong><p>Район ${district.name} — первый приоритет. Меры: транспорт, стройка, полив дорог, информирование.</p></div>
+        <div class="rec-item"><strong>Контроль эффекта</strong><p>Ожидаемое снижение ${pollutant.label} на ${effect.aqiCut}–${Math.min(effect.aqiCut+6,24)}% за 3–5 часов.</p></div>
+        <div class="rec-item"><strong>Если ничего не делать</strong><p>Вероятен рост нагрузки к вечеру, усиление жалоб и просадка эффективности города.</p></div>
+      `;
+    }
+
+    const businessNarrative = document.getElementById('businessNarrative');
+    if (businessNarrative) businessNarrative.textContent = `Бизнес-слой переводит район ${district.name} и показатель ${pollutant.label} в деньги: потери сегодня, решение по сменам и логистике, экономия за один день.`;
+
+    const businessOutputs = document.getElementById('businessOutputs');
+    if (businessOutputs) {
+      businessOutputs.innerHTML = `
+        <div class="rec-item"><strong>Потери сегодня</strong><p>Задержки поставок, просадка производительности и риск штрафов дают до -$${business.loss.toLocaleString('en-US')} в активное окно.</p></div>
+        <div class="rec-item"><strong>Решение</strong><p>Перенести наружные операции на вечер, перераспределить логистику и защитить критичные объекты.</p></div>
+        <div class="rec-item"><strong>Экономия</strong><p>До +$${business.save.toLocaleString('en-US')} за 1 день при корректировке операционного сценария.</p></div>
+      `;
+    }
+
+    const govNarrative = document.getElementById('govNarrative');
+    if (govNarrative) govNarrative.textContent = `Государственный слой объединяет район ${district.name}, тип ситуации «${tpl.govType}», окно ${peakWindow} и ожидаемый эффект после вмешательства в течение 3 часов.`;
+
+    const accessBiz = document.getElementById('bizAccessState');
+    if (accessBiz) accessBiz.textContent = 'Готов';
+    const accessGov = document.getElementById('govAccessState');
+    if (accessGov) accessGov.textContent = 'Открыт';
+  }
+
+  const _oldUpdateAll = window.updateAll;
+  window.updateAll = function() {
+    _oldUpdateAll();
+    renderGrantNextStep();
+  };
+
+  const simBtn = document.getElementById('simulateBtn');
+  if (simBtn) {
+    simBtn.textContent = `Live режим: ${state.liveSimulation ? 'активен' : 'пауза'}`;
+    simBtn.addEventListener('click', () => {
+      setTimeout(renderGrantNextStep, 0);
+    });
+  }
+
+  renderGrantNextStep();
+})();
+</script>
 
 </body></html>
