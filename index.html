@@ -4131,8 +4131,8 @@
 </div>
 <div class="topbar-right">
 <div class="topbar-status">
-<div class="chip" id="refreshChip">Обновлено: сейчас</div>
-<div class="chip" id="contextChip">Ташкент · Центр · Сейчас</div>
+<div class="chip" id="refreshChip">Система активна · обновлено: сейчас</div>
+<div class="chip" id="contextChip">Ташкент · 12 районов онлайн · Сейчас</div>
 <button class="ghost-btn active" id="installBtn">Скачать приложение</button>
 </div>
 <div class="topbar-access">
@@ -4163,6 +4163,8 @@
 <div class="data-pill" id="liveScenarioMeta">Юнусабад · AQI · Сейчас · синхронизация включена</div>
 <div class="data-pill">Роль: <strong id="operatorRole" style="margin-left:6px; color:var(--text);">Городской оператор</strong></div>
 <div class="data-pill">Обновлено: <strong id="liveUpdatedAt" style="margin-left:6px; color:var(--text);">09:42</strong></div>
+<div class="data-pill">Районы онлайн: <strong id="districtsOnline" style="margin-left:6px; color:var(--text);">12</strong></div>
+<div class="data-pill">Модель: <strong id="modelStatus" style="margin-left:6px; color:var(--text);">v1.2</strong></div>
 </div>
 </div>
 </div>
@@ -4194,6 +4196,7 @@
 <button class="ghost-btn active" id="liveAutoBtn">Live sync: ВКЛ</button>
 <button class="ghost-btn" id="applyMeasuresBtn">Применить меры</button>
 <div class="data-pill" id="measuresStatePill">Статус мер: <strong id="measuresState" style="margin-left:6px; color:var(--text);">Готово к применению</strong></div>
+<div class="data-pill" id="measuresEffectPill">Эффект: <strong id="measuresEffect" style="margin-left:6px; color:var(--text);">Ожидание эффекта</strong></div>
 <div class="data-pill">Живой продуктовый сценарий</div>
 </div>
 </div>
@@ -4208,7 +4211,7 @@
 <div class="card">
 <h3>BUSINESS · деньги сегодня</h3>
 <div class="sub">Потери, решение и экономия без лишней аналитики.</div>
-<div class="summary-box" id="businessDecisionBox">Потери: -$42,000<br/>Решение: перенести наружные операции на вечер<br/>Экономия: +$28,000 за 1 день</div>
+<div class="summary-box" id="businessDecisionBox">Потери: -$42,000<br/>Решение: перенести наружные операции на вечер<br/>Экономия: +$28,000 за 1 день<br/>Подписка: от $2,000 / месяц / объект</div>
 </div>
 <div class="card">
 <h3>GOV · штабной режим</h3>
@@ -4953,11 +4956,17 @@
 
     function updateTopbar() {
       const pollutant = getCurrentPollutant();
-      document.getElementById('contextChip').textContent = `${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}`;
-      document.getElementById('refreshChip').textContent = `Обновлено ${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}`;
-      document.getElementById('liveClock').textContent = `${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })} · ${appData.city}`;
+      const timeNow = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+      const onlineDistricts = Object.keys(appData.districts || {}).length;
+      document.getElementById('contextChip').textContent = `${appData.city} · ${onlineDistricts} районов онлайн · ${appData.windows[state.window]}`;
+      document.getElementById('refreshChip').textContent = `Система активна · обновлено ${timeNow}`;
+      document.getElementById('liveClock').textContent = `${timeNow} · ${appData.city}`;
       document.getElementById('liveSummary').textContent = `Активный режим: ${pollutant.label}, окно ${appData.windows[state.window]}. Все ключевые экраны синхронизированы с этим сценарием.`;
       document.getElementById('dataChip').textContent = `Источник данных: городской агрегированный поток · ${pollutant.label}`;
+      const onlineNode = document.getElementById('districtsOnline');
+      if (onlineNode) onlineNode.textContent = String(onlineDistricts);
+      const liveUpdated = document.getElementById('liveUpdatedAt');
+      if (liveUpdated) liveUpdated.textContent = timeNow;
     }
 
     function updateOverview() {
@@ -9048,17 +9057,31 @@ updateUserLayer();
 (function(){
   const applyBtn = document.getElementById('applyMeasuresBtn');
   const measuresState = document.getElementById('measuresState');
+  const measuresEffect = document.getElementById('measuresEffect');
   const liveUpdatedAt = document.getElementById('liveUpdatedAt');
   const liveMeta = document.getElementById('liveScenarioMeta');
+  const refreshChip = document.getElementById('refreshChip');
+  const contextChip = document.getElementById('contextChip');
+  const districtsOnline = document.getElementById('districtsOnline');
+  const modelStatus = document.getElementById('modelStatus');
   const districtSelect = document.getElementById('districtSelect');
-  function setNow(){
+  function currentTime(){
     const now = new Date();
     const hh = String(now.getHours()).padStart(2,'0');
     const mm = String(now.getMinutes()).padStart(2,'0');
-    if(liveUpdatedAt) liveUpdatedAt.textContent = `${hh}:${mm}`;
+    return `${hh}:${mm}`;
+  }
+  function syncTopChips(){
+    const time = currentTime();
+    if(liveUpdatedAt) liveUpdatedAt.textContent = time;
+    if(refreshChip) refreshChip.textContent = `Система активна · обновлено ${time}`;
+    if(contextChip) contextChip.textContent = `Ташкент · 12 районов онлайн · Сейчас`;
+    if(districtsOnline) districtsOnline.textContent = '12';
+    if(modelStatus) modelStatus.textContent = 'v1.2';
   }
   function resetMeasuresState(){
     if(measuresState) measuresState.textContent = 'Готово к применению';
+    if(measuresEffect) measuresEffect.textContent = 'Ожидание эффекта';
     if(applyBtn){
       applyBtn.classList.remove('active');
       applyBtn.textContent = 'Применить меры';
@@ -9071,25 +9094,27 @@ updateUserLayer();
         applyBtn.classList.remove('active');
         applyBtn.textContent = 'Применить меры';
         if(measuresState) measuresState.textContent = 'Готово к применению';
+        if(measuresEffect) measuresEffect.textContent = 'Ожидание эффекта';
       } else {
         applyBtn.classList.add('active');
         applyBtn.textContent = 'Меры применены';
         if(measuresState) measuresState.textContent = 'Применено';
+        if(measuresEffect) measuresEffect.textContent = 'AQI ↓ 14% · нагрузка ↓ 9% · сценарий применён';
       }
-      setNow();
+      syncTopChips();
     });
   }
   if(districtSelect){
     districtSelect.addEventListener('change', function(){
       resetMeasuresState();
-      setNow();
+      syncTopChips();
       if(liveMeta && districtSelect.options[districtSelect.selectedIndex]){
         const districtName = districtSelect.options[districtSelect.selectedIndex].textContent.trim();
         liveMeta.textContent = `${districtName} · AQI · Сейчас · синхронизация включена`;
       }
     });
   }
-  setNow();
+  syncTopChips();
 })();
 </script>
 
