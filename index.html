@@ -1904,108 +1904,8 @@
 </style>
 
 
-<style id="mobile-menu-hard-fix">
-@media (max-width: 820px) {
-  body.menu-open {
-    overflow: hidden !important;
-  }
-
-  #sidebarOverlay {
-    display: block !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    background: rgba(5,15,30,0.55) !important;
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
-    transition: opacity .2s ease !important;
-    z-index: 50 !important;
-  }
-
-  #sidebarOverlay.open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  .sidebar {
-    transform: translateX(-110%) !important;
-    transition: transform .22s ease !important;
-    z-index: 80 !important;
-  }
-
-  .sidebar.mobile-open {
-    transform: translateX(0) !important;
-  }
-
-  #hamburgerBtn {
-    z-index: 90 !important;
-    display: inline-flex !important;
-  }
-}
-</style>
 
 
-<style id="final-mobile-menu-fix">
-@media (max-width: 820px) {
-  .app-shell {
-    display: block !important;
-    width: 100% !important;
-    margin: 0 !important;
-  }
-
-  .content-pane {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 72px 12px 12px !important;
-    border-radius: 0 !important;
-  }
-
-  .sidebar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: min(320px, calc(100vw - 56px)) !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
-    overflow-y: auto !important;
-    transform: translateX(-110%) !important;
-    transition: transform .22s ease !important;
-    z-index: 80 !important;
-    border-radius: 0 22px 22px 0 !important;
-    box-shadow: 0 24px 80px rgba(0,0,0,.45) !important;
-  }
-
-  .sidebar.mobile-open {
-    transform: translateX(0) !important;
-  }
-
-  #sidebarOverlay {
-    display: block !important;
-    position: fixed !important;
-    inset: 0 !important;
-    background: rgba(5,15,30,0.55) !important;
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity .2s ease !important;
-    z-index: 70 !important;
-  }
-
-  #sidebarOverlay.open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  #hamburgerBtn {
-    display: inline-flex !important;
-    position: fixed !important;
-    top: 12px !important;
-    left: 12px !important;
-    z-index: 90 !important;
-  }
-}
-</style>
 
 
 <style id="mobile-menu-final-safe-fix">
@@ -2625,570 +2525,8 @@
 </style>
 
 
-<style id="apple-stripe-premium-upgrade">
-  :root {
-    --glass-top: rgba(255,255,255,0.095);
-    --glass-bottom: rgba(255,255,255,0.035);
-    --edge-strong: rgba(166, 233, 255, 0.18);
-    --edge-soft: rgba(166, 233, 255, 0.10);
-    --panel-lift:
-      0 1px 0 rgba(255,255,255,0.05) inset,
-      0 0 0 1px rgba(166,233,255,0.04),
-      0 24px 70px rgba(4,12,22,0.22);
-  }
-
-  body {
-    background:
-      radial-gradient(circle at 14% 16%, rgba(87, 182, 255, 0.20), transparent 24%),
-      radial-gradient(circle at 86% 14%, rgba(89, 231, 255, 0.14), transparent 22%),
-      radial-gradient(circle at 70% 78%, rgba(139, 135, 255, 0.11), transparent 22%),
-      linear-gradient(180deg, #0c1824 0%, #102335 44%, #0b1723 100%) !important;
-  }
-
-  .sidebar,
-  .content-pane {
-    background:
-      linear-gradient(180deg, rgba(18,32,48,0.84), rgba(18,32,48,0.76)) !important;
-    border: 1px solid var(--edge-soft) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.04) inset,
-      0 0 0 1px rgba(255,255,255,0.015),
-      0 32px 90px rgba(3,10,20,0.24) !important;
-  }
-
-  .topbar,
-  .hero,
-  .card,
-  .premium-hero,
-  .status-box,
-  .live-box,
-  .summary-box,
-  .vault-card,
-  .ops-card,
-  .impact-card,
-  .command-box,
-  .biz-shell-card,
-  .biz-money-card,
-  .biz-exec-card,
-  .gov-shell-card,
-  .gov-priority-card,
-  .gov-command-card,
-  .signal-card,
-  .scenario-card,
-  .console-card,
-  .map-detail,
-  .mini-metric,
-  .day-chip,
-  .district-row,
-  .rec-item,
-  .alert-item,
-  .source-item,
-  .command-item,
-  .ops-item,
-  .map-quick-card,
-  .sheet-box,
-  .kpi,
-  .legend {
-    background:
-      linear-gradient(180deg, var(--glass-top), var(--glass-bottom)) !important;
-    border: 1px solid var(--edge-soft) !important;
-    box-shadow: var(--panel-lift) !important;
-    backdrop-filter: blur(20px) saturate(120%);
-    -webkit-backdrop-filter: blur(20px) saturate(120%);
-  }
-
-  .hero,
-  .premium-hero {
-    background:
-      radial-gradient(circle at 84% 14%, rgba(130, 238, 255, 0.16), transparent 22%),
-      radial-gradient(circle at 18% 84%, rgba(139,135,255,0.08), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04)) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.06) inset,
-      0 0 0 1px rgba(166,233,255,0.05),
-      0 28px 80px rgba(4,12,22,0.24) !important;
-  }
-
-  .brand-mark,
-  .hero-side,
-  .access-card,
-  .report-sheet {
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.06) inset,
-      0 0 0 1px rgba(166,233,255,0.05),
-      0 24px 70px rgba(4,12,22,0.24) !important;
-  }
-
-  .nav button,
-  .selector,
-  .ghost-btn,
-  .chip,
-  .mode-shell,
-  .access-switch,
-  .access-btn,
-  .pill {
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028)) !important;
-    border-color: rgba(166,233,255,0.12) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.03) inset,
-      0 10px 24px rgba(4,12,22,0.08);
-  }
-
-  .nav button.active,
-  .access-btn.active,
-  .ghost-btn.active {
-    background:
-      linear-gradient(180deg, rgba(129, 232, 255, 0.24), rgba(120, 235, 255, 0.07)) !important;
-    border-color: rgba(166,233,255,0.24) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.06) inset,
-      0 0 0 1px rgba(120,235,255,0.08),
-      0 18px 38px rgba(62,200,255,0.16) !important;
-  }
-
-  .nav button:hover,
-  .selector:hover,
-  .ghost-btn:hover,
-  .access-btn:hover,
-  .map-quick-card:hover {
-    transform: translateY(-1px);
-    border-color: rgba(166,233,255,0.20) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.05) inset,
-      0 16px 34px rgba(62,200,255,0.12) !important;
-  }
-
-  #installBtn {
-    background:
-      linear-gradient(180deg, rgba(93, 226, 255, 1), rgba(36, 190, 255, 0.92)) !important;
-    color: #03111d !important;
-    border-color: rgba(255,255,255,0.30) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.35) inset,
-      0 0 0 1px rgba(120,235,255,0.12),
-      0 18px 42px rgba(62,200,255,0.28) !important;
-    text-shadow: none !important;
-  }
-
-  .hero h2,
-  .premium-hero h3 {
-    font-weight: 650 !important;
-    letter-spacing: -0.04em !important;
-  }
-
-  .card h3,
-  .biz-shell-card h3,
-  .biz-exec-card h3,
-  .gov-shell-card h3,
-  .gov-command-card h3 {
-    font-weight: 620 !important;
-    letter-spacing: -0.03em !important;
-  }
-
-  .metric-card .value,
-  .hero-stat strong,
-  .impact-card .value,
-  .vault-card .v,
-  .kpi .big,
-  .big,
-  .biz-money-card .big,
-  .gov-priority-card .big {
-    color: #97f1ff !important;
-    text-shadow:
-      0 0 24px rgba(151,241,255,0.10),
-      0 1px 0 rgba(255,255,255,0.04);
-  }
-
-  .summary-box,
-  .hero p,
-  .sub,
-  .status-box span,
-  .live-box p,
-  .rec-item p,
-  .alert-item p,
-  .source-item p,
-  .district-row p,
-  .command-item span,
-  .ops-item span,
-  .gov-mini-chip span,
-  .biz-mini-chip span,
-  .tiny {
-    color: #c7d6e4 !important;
-  }
-
-  .table-card table th {
-    color: #d7e8f7 !important;
-    font-weight: 550 !important;
-  }
-
-  .table-card table td {
-    color: #f0f7ff !important;
-  }
-
-  .table-card th,
-  .table-card td {
-    border-bottom-color: rgba(166,233,255,0.08) !important;
-  }
-
-  .city-map {
-    background:
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      radial-gradient(circle at 36% 34%, rgba(255,99,99,0.24), transparent 10%),
-      radial-gradient(circle at 61% 48%, rgba(255,159,87,0.24), transparent 12%),
-      radial-gradient(circle at 26% 72%, rgba(246,197,102,0.18), transparent 10%),
-      radial-gradient(circle at 80% 20%, rgba(82,197,146,0.12), transparent 10%),
-      linear-gradient(180deg, rgba(17,31,47,0.94), rgba(12,24,38,0.98)) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.04) inset,
-      0 0 0 1px rgba(166,233,255,0.05),
-      0 24px 60px rgba(0,0,0,.18) !important;
-  }
-
-  .badge.red,
-  .badge.orange,
-  .badge.yellow,
-  .badge.green,
-  .badge.cyan {
-    box-shadow: 0 8px 20px rgba(4,12,22,0.10);
-  }
-
-  .screen#overview > .grid.grid-3:first-of-type .card,
-  .screen#business .biz-money-grid .biz-money-card,
-  .screen#gov .gov-priority-grid .gov-priority-card {
-    background:
-      radial-gradient(circle at 88% 10%, rgba(151,241,255,0.12), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.038)) !important;
-    border-color: rgba(166,233,255,0.18) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.06) inset,
-      0 0 0 1px rgba(151,241,255,0.05),
-      0 22px 56px rgba(62,200,255,0.12) !important;
-  }
-
-  .screen#overview > .grid.grid-3:first-of-type .card h3 {
-    font-size: 20px !important;
-  }
-
-  .screen#overview > .grid.grid-3:first-of-type .summary-box {
-    font-size: 15px !important;
-    line-height: 1.75 !important;
-  }
-
-  .hamburger-floating {
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)) !important;
-    border-color: rgba(166,233,255,0.14) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.04) inset,
-      0 18px 40px rgba(0,0,0,.24) !important;
-  }
-
-  @media (max-width: 820px) {
-    .topbar,
-    .hero,
-    .card,
-    .premium-hero {
-      border-radius: 24px !important;
-    }
-  }
-</style>
 
 
-<style id="institutional-premium-tighten-v5">
-  :root {
-    --bg: #dce6f1 !important;
-    --bg-2: #eef4fa !important;
-    --panel: rgba(246, 250, 254, 0.94) !important;
-    --panel-2: rgba(238, 245, 252, 0.96) !important;
-    --line: rgba(30, 67, 112, 0.14) !important;
-    --text: #11233a !important;
-    --muted: #566f8c !important;
-    --soft: #7a8fa8 !important;
-    --cyan: #0b74d1 !important;
-    --cyan-2: #075db0 !important;
-    --shadow: 0 28px 72px rgba(12, 31, 56, 0.10) !important;
-  }
-
-  body {
-    background:
-      radial-gradient(circle at 12% 16%, rgba(73, 138, 214, 0.16), transparent 24%),
-      radial-gradient(circle at 88% 14%, rgba(16, 116, 209, 0.08), transparent 22%),
-      linear-gradient(180deg, #e3ebf4 0%, #d8e3ee 46%, #d3dfea 100%) !important;
-  }
-
-  body::before {
-    opacity: .24 !important;
-    background-image:
-      linear-gradient(rgba(18, 42, 71, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(18, 42, 71, 0.035) 1px, transparent 1px) !important;
-  }
-
-  .sidebar,
-  .content-pane {
-    background: linear-gradient(180deg, rgba(247, 250, 253, 0.95), rgba(241, 246, 251, 0.94)) !important;
-    border: 1px solid rgba(27, 63, 108, 0.12) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.85) inset,
-      0 0 0 1px rgba(255,255,255,0.30),
-      0 28px 80px rgba(14, 32, 56, 0.10) !important;
-  }
-
-  .topbar,
-  .hero,
-  .card,
-  .premium-hero,
-  .status-box,
-  .live-box,
-  .summary-box,
-  .vault-card,
-  .ops-card,
-  .impact-card,
-  .command-box,
-  .biz-shell-card,
-  .biz-money-card,
-  .biz-exec-card,
-  .gov-shell-card,
-  .gov-priority-card,
-  .gov-command-card,
-  .signal-card,
-  .scenario-card,
-  .console-card,
-  .map-detail,
-  .mini-metric,
-  .day-chip,
-  .district-row,
-  .rec-item,
-  .alert-item,
-  .source-item,
-  .command-item,
-  .ops-item,
-  .map-quick-card,
-  .sheet-box,
-  .kpi,
-  .legend,
-  .hero-side,
-  .selector,
-  .ghost-btn,
-  .chip,
-  .mode-shell,
-  .access-switch,
-  .access-btn,
-  .pill,
-  .nav button {
-    background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(241,246,251,0.94)) !important;
-    border-color: rgba(27, 63, 108, 0.11) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.92) inset,
-      0 12px 28px rgba(14, 32, 56, 0.06) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  .hero,
-  .premium-hero {
-    background:
-      radial-gradient(circle at 84% 16%, rgba(11,116,209,0.08), transparent 22%),
-      linear-gradient(180deg, rgba(255,255,255,0.95), rgba(241,246,251,0.94)) !important;
-  }
-
-  .brand {
-    border-bottom-color: rgba(27, 63, 108, 0.10) !important;
-  }
-
-  .brand-mark {
-    background: linear-gradient(180deg, rgba(235,244,252,1), rgba(220,236,248,1)) !important;
-    border-color: rgba(11,116,209,0.14) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.9) inset,
-      0 10px 24px rgba(11,116,209,0.10) !important;
-  }
-
-  .brand h1,
-  .hero h2,
-  .premium-hero h3,
-  .card h3,
-  .biz-shell-card h3,
-  .biz-exec-card h3,
-  .gov-shell-card h3,
-  .gov-command-card h3,
-  .gov-priority-card .big,
-  .biz-money-card .big,
-  .metric-card .value,
-  .impact-card .value,
-  .vault-card .v,
-  .kpi .big,
-  .hero-stat strong,
-  .detail-title strong,
-  .mini-metric .v,
-  .sheet-box .v,
-  .console-card .v,
-  .signal-card .v,
-  .focus-card .v,
-  .scenario-card .metric,
-  .live-engine-panel .big,
-  .live-engine-status .big,
-  .gov-command-card .value {
-    color: #11233a !important;
-    text-shadow: none !important;
-  }
-
-  .eyebrow,
-  .live-engine-kicker,
-  .gov-priority-card .ey,
-  .gov-shell-card .ey,
-  .impact-card .ey,
-  .ops-card .ey,
-  .kpi .kicker,
-  .metric-card .label,
-  .sheet-box .k,
-  .signal-card .k,
-  .focus-card .k,
-  .mini-metric .k,
-  .live-engine-status .ey,
-  .live-engine-panel .ey,
-  .mode-summary,
-  .tiny,
-  .brand p,
-  .sub,
-  .hero p,
-  .summary-box,
-  .status-box span,
-  .live-box p,
-  .rec-item p,
-  .alert-item p,
-  .source-item p,
-  .district-row p,
-  .command-item span,
-  .ops-item span,
-  .gov-mini-chip span,
-  .biz-mini-chip span,
-  .table-card th,
-  .table-card td,
-  .selector,
-  .ghost-btn,
-  .chip,
-  .pill,
-  .status-row,
-  .hero-stat span,
-  .day-chip span {
-    color: #58718d !important;
-  }
-
-  .nav button {
-    color: #18324f !important;
-    font-weight: 500 !important;
-  }
-
-  .nav button:hover,
-  .map-quick-card:hover,
-  .ghost-btn:hover,
-  .access-btn:hover {
-    border-color: rgba(11,116,209,0.18) !important;
-    background: linear-gradient(180deg, rgba(246,251,255,1), rgba(233,242,250,1)) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.95) inset,
-      0 14px 30px rgba(11,116,209,0.08) !important;
-    transform: translateY(-1px);
-  }
-
-  .nav button.active,
-  .access-btn.active,
-  .ghost-btn.active,
-  .map-quick-card.active {
-    color: #0f2a47 !important;
-    border-color: rgba(11,116,209,0.22) !important;
-    background: linear-gradient(180deg, rgba(227,240,252,1), rgba(214,231,246,1)) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.96) inset,
-      0 16px 34px rgba(11,116,209,0.10) !important;
-  }
-
-  #installBtn {
-    background: linear-gradient(180deg, #0d73cd, #085eaf) !important;
-    border-color: rgba(8, 79, 150, 0.36) !important;
-    color: #ffffff !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.18) inset,
-      0 18px 36px rgba(11,116,209,0.24) !important;
-    font-weight: 700 !important;
-  }
-
-  .chip, .pill, .selector, .ghost-btn, .access-btn, .mode-shell, .access-switch {
-    border-radius: 16px !important;
-  }
-
-  .badge.red { background: rgba(255,99,99,.12) !important; color: #af3535 !important; }
-  .badge.orange { background: rgba(255,159,87,.12) !important; color: #ad5e1e !important; }
-  .badge.yellow { background: rgba(246,197,102,.14) !important; color: #9b6b00 !important; }
-  .badge.green { background: rgba(82,197,146,.14) !important; color: #2f7c5a !important; }
-  .badge.cyan { background: rgba(11,116,209,.10) !important; color: #0b74d1 !important; }
-
-  .table-card th, .table-card td {
-    border-bottom-color: rgba(27, 63, 108, 0.08) !important;
-  }
-
-  .city-map {
-    background:
-      linear-gradient(90deg, rgba(16,44,74,0.035) 1px, transparent 1px),
-      linear-gradient(rgba(16,44,74,0.035) 1px, transparent 1px),
-      radial-gradient(circle at 36% 34%, rgba(224,82,82,0.24), transparent 10%),
-      radial-gradient(circle at 61% 48%, rgba(224,138,69,0.22), transparent 12%),
-      radial-gradient(circle at 26% 72%, rgba(226,181,80,0.18), transparent 10%),
-      radial-gradient(circle at 80% 20%, rgba(82,197,146,0.12), transparent 10%),
-      linear-gradient(180deg, rgba(235,242,248,0.98), rgba(223,233,242,0.98)) !important;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.92) inset,
-      0 12px 26px rgba(14, 32, 56, 0.08) !important;
-  }
-
-  .legend,
-  .district-label {
-    background: linear-gradient(180deg, rgba(251,253,255,0.96), rgba(239,245,250,0.96)) !important;
-    color: #17314e !important;
-    border-color: rgba(27,63,108,0.12) !important;
-  }
-
-  .dot.cyan, .green, .yellow, .orange, .red, .cyan {
-    filter: saturate(1.08);
-  }
-
-  .hero h2 {
-    font-size: clamp(34px, 4vw, 54px) !important;
-    line-height: 1.02 !important;
-    font-weight: 700 !important;
-  }
-
-  .hero p {
-    font-size: 16px !important;
-    line-height: 1.72 !important;
-  }
-
-  .status-box strong,
-  .live-box h3,
-  .rec-item strong,
-  .alert-item strong,
-  .source-item strong,
-  .command-item strong,
-  .ops-item strong,
-  .scenario-card .title,
-  .gov-mini-chip strong {
-    color: #15304f !important;
-  }
-
-  @media (max-width: 820px) {
-    body {
-      background: linear-gradient(180deg, #dfe7f0 0%, #d5e0ea 100%) !important;
-    }
-    .sidebar, .content-pane {
-      box-shadow: none !important;
-    }
-    .topbar, .hero, .card, .premium-hero {
-      border-radius: 22px !important;
-    }
-  }
-</style>
 
 <style id="airguard-fix-brand-access-v7">
   .brand {
@@ -3461,6 +2799,44 @@
   }
 </style>
 
+
+<style id="institutional-topbar-clean-fix">
+  .topbar-right {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+  .topbar-status {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+  .topbar-access {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+  #installBtn {
+    min-width: 190px;
+    font-weight: 600;
+  }
+  @media (max-width: 1180px) {
+    .topbar-right { grid-template-columns: 1fr !important; }
+    .topbar-access { justify-content: flex-start !important; }
+  }
+  @media (max-width: 820px) {
+    .topbar-right, .topbar-status, .topbar-access {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+    }
+    #installBtn { width: 100% !important; min-width: 0 !important; }
+  }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -3530,9 +2906,10 @@
 </div>
 <div class="topbar-right">
 <div class="topbar-status">
-<div class="chip" id="refreshChip">Обновлено: сейчас</div>
-<div class="chip" id="contextChip">Ташкент · Центр · Сейчас</div>
-<button class="ghost-btn active" id="installBtn">Скачать приложение</button>
+<div class="chip" id="refreshChip">Система активна · 12 районов онлайн · модель v1.2</div>
+<div class="chip" id="contextChip">Локация: Ташкент · Район: Центр · Метрика: AQI · Окно: Сейчас</div>
+<div class="chip" id="accessModeChip">Контур: Пользователь</div>
+<button class="ghost-btn active" id="installBtn">Запросить доступ</button>
 </div>
 <div class="topbar-access">
 <div class="access-switch" id="accessSwitch">
@@ -4411,8 +3788,8 @@
 
     function updateTopbar() {
       const pollutant = getCurrentPollutant();
-      document.getElementById('contextChip').textContent = `${appData.city} · ${pollutant.label} · ${appData.windows[state.window]}`;
-      document.getElementById('refreshChip').textContent = `Обновлено ${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}`;
+      document.getElementById('contextChip').textContent = `Локация: ${cityLabel} · Район: ${districtLabel} · Метрика: ${pollutantLabel} · Окно: ${windowLabel}`;
+      document.getElementById('refreshChip').textContent = 'Система активна · 12 районов онлайн · модель v1.2';
       document.getElementById('liveClock').textContent = `${new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })} · ${appData.city}`;
       document.getElementById('liveSummary').textContent = `Активный режим: ${pollutant.label}, окно ${appData.windows[state.window]}. Все ключевые экраны синхронизированы с этим сценарием.`;
       document.getElementById('dataChip').textContent = `Источник данных: городской агрегированный поток · ${pollutant.label}`;
@@ -6217,7 +5594,7 @@ updateUserLayer();
   }
 
   function activateMode(mode) {
-    const chip = document.getElementById('accessChip');
+    const chip = document.getElementById('accessModeChip');
     if (chip) chip.textContent = 'Доступ: ' + (ACCESS_LABELS[mode] || 'пользователь');
 
     document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
@@ -6298,8 +5675,8 @@ updateUserLayer();
           e.stopImmediatePropagation();
           openGate('business');
         } else {
-          const chip = document.getElementById('accessChip');
-          if (chip) chip.textContent = 'Доступ: бизнес';
+          const chip = document.getElementById('accessModeChip');
+          if (chip) chip.textContent = 'Контур: Бизнес';
           document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.accessTarget === 'business');
           });
@@ -6315,8 +5692,8 @@ updateUserLayer();
           e.stopImmediatePropagation();
           openGate('gov');
         } else {
-          const chip = document.getElementById('accessChip');
-          if (chip) chip.textContent = 'Доступ: государство';
+          const chip = document.getElementById('accessModeChip');
+          if (chip) chip.textContent = 'Контур: Государство';
           document.querySelectorAll('#accessSwitch [data-access-target]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.accessTarget === 'gov');
           });
@@ -6420,11 +5797,11 @@ updateUserLayer();
     }
 
     // improve wow effect in access chip
-    const chip = document.getElementById('accessChip');
+    const chip = document.getElementById('accessModeChip');
     if (chip) {
-      if (state.gov) chip.textContent = 'Доступ: государство';
-      else if (state.business) chip.textContent = 'Доступ: бизнес';
-      else chip.textContent = 'Доступ: пользователь';
+      if (state.gov) chip.textContent = 'Контур: Государство';
+      else if (state.business) chip.textContent = 'Контур: Бизнес';
+      else chip.textContent = 'Контур: Пользователь';
     }
   }
 
@@ -6545,9 +5922,9 @@ updateUserLayer();
     }
 
     // chip
-    const chip = document.getElementById('accessChip');
+    const chip = document.getElementById('accessModeChip');
     if (chip) {
-      chip.textContent = mode === 'gov' ? 'Доступ: государство' : mode === 'business' ? 'Доступ: бизнес' : 'Доступ: пользователь';
+      chip.textContent = mode === 'gov' ? 'Контур: Государство' : mode === 'business' ? 'Контур: Бизнес' : 'Контур: Пользователь';
     }
 
     // overview changes
@@ -7369,7 +6746,7 @@ updateUserLayer();
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    setInstallButtonState('Скачать приложение', false);
+    setInstallButtonState('Запросить доступ', false);
   });
 
   window.addEventListener('appinstalled', function () {
@@ -7382,7 +6759,7 @@ updateUserLayer();
     const btn = document.getElementById('installBtn');
     if (!btn) return;
 
-    setInstallButtonState('Скачать приложение', false);
+    setInstallButtonState('Запросить доступ', false);
 
     btn.addEventListener('click', async function () {
       if (deferredPrompt) {
