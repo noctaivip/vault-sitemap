@@ -3068,6 +3068,97 @@
   }
 </style>
 
+
+<style id="execution-monetization-layer-v1">
+  .exec-proof-grid,
+  .monetization-grid {
+    display:grid;
+    gap:18px;
+    margin:18px 0;
+  }
+  .exec-proof-grid { grid-template-columns: 1.02fr .98fr; }
+  .monetization-grid { grid-template-columns: 1fr 1fr; }
+
+  .exec-card,
+  .proof-card,
+  .monet-card,
+  .economics-card {
+    padding:20px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(circle at 84% 12%, rgba(97,225,255,.10), transparent 28%),
+      linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+    box-shadow: 0 18px 42px rgba(10,24,40,.18);
+  }
+  .exec-card h3,
+  .proof-card h3,
+  .monet-card h3,
+  .economics-card h3 {
+    margin:0 0 8px;
+    font-size:20px;
+    letter-spacing:-.02em;
+  }
+  .flow-three {
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap:12px;
+    margin-top:14px;
+  }
+  .flow-box {
+    padding:16px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+  }
+  .flow-box .k {
+    font-size:11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing:.08em;
+    margin-bottom:8px;
+  }
+  .flow-box .v {
+    font-size:22px;
+    letter-spacing:-.03em;
+    margin-bottom:6px;
+  }
+  .flow-box .f {
+    color: var(--muted);
+    font-size:12px;
+    line-height:1.55;
+  }
+  .mono-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:14px;
+  }
+  .mono-item {
+    padding:14px 16px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.028);
+  }
+  .mono-item strong {
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+  }
+  .mono-item span {
+    color: var(--muted);
+    font-size:13px;
+    line-height:1.55;
+  }
+  @media (max-width: 1180px) {
+    .exec-proof-grid,
+    .monetization-grid,
+    .flow-three {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -3738,6 +3829,52 @@
   </div>
 </div>
 
+
+<div class="exec-proof-grid access-guard biz-guard section-hidden-by-access" id="execProofGrid">
+  <div class="exec-card">
+    <h3>Decision → Execution → Outcome</h3>
+    <div class="sub">Показывает, как экологический сигнал превращается в конкретное действие на объекте и измеримый результат.</div>
+    <div class="flow-three">
+      <div class="flow-box">
+        <div class="k">Decision</div>
+        <div class="v" id="execDecisionTitle">AQI signal</div>
+        <div class="f" id="execDecisionText">Система определяет критическое окно и предлагает корректировку операционного режима.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">Execution</div>
+        <div class="v" id="execActionTitle">Shift operations</div>
+        <div class="f" id="execActionText">Наружные работы и часть логистики переносятся из пикового окна в более спокойный интервал.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">Outcome</div>
+        <div class="v" id="execOutcomeTitle">Loss reduction</div>
+        <div class="f" id="execOutcomeText">Снижение потерь, просадки SLA и нагрузки на персонал в течение одного операционного дня.</div>
+      </div>
+    </div>
+  </div>
+  <div class="proof-card">
+    <h3>Proof of impact</h3>
+    <div class="sub">Блок доказывает инвестору и комиссии, что система влияет на measurable financial outcome, а не просто показывает сигналы.</div>
+    <div class="flow-three">
+      <div class="flow-box">
+        <div class="k">Baseline</div>
+        <div class="v" id="proofBaseline">$0</div>
+        <div class="f">Потери объекта без раннего решения и без смещения окна операций.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">With system</div>
+        <div class="v" id="proofWithSystem">$0</div>
+        <div class="f">Потери после применения сценария AirGuard на том же объекте.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">Delta</div>
+        <div class="v" id="proofDelta">0%</div>
+        <div class="f">Снижение дневных потерь за счёт раннего решения и исполнения сценария.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="impact-grid access-guard biz-guard section-hidden-by-access" id="bizImpactGrid">
 <div class="impact-card wow-panel">
 <div class="ey">Корпоративный контур</div>
@@ -4077,6 +4214,41 @@
       </div>
     </div>
   </div>
+
+<div class="monetization-grid">
+  <div class="monet-card">
+    <h3>Monetization layer</h3>
+    <div class="sub">Проект переводится в asset-class только тогда, когда доходная модель видна прямо в продукте.</div>
+    <div class="mono-list">
+      <div class="mono-item"><strong>SaaS · B2B</strong><span>$800–$2,500 / month per facility for logistics, construction, industrial and commercial objects.</span></div>
+      <div class="mono-item"><strong>Enterprise</strong><span>$25k–$120k / year for multi-site operators with decision dashboards and operational reporting.</span></div>
+      <div class="mono-item"><strong>City license</strong><span>$150k–$500k / year for district and city-level environmental control workflows.</span></div>
+      <div class="mono-item"><strong>Data API</strong><span>$0.02–$0.10 per request for enterprise integrations, insurers, mobility and research partners.</span></div>
+    </div>
+  </div>
+  <div class="economics-card">
+    <h3>Pilot economics</h3>
+    <div class="sub">Грант и первый инвестор должны видеть простую unit economics пилота, а не только красивый интерфейс.</div>
+    <div class="flow-three">
+      <div class="flow-box">
+        <div class="k">Pilot cost</div>
+        <div class="v">$120K</div>
+        <div class="f">90-day software-first pilot: data ingestion, decision engine, KPI trace, reporting.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">Daily benefit</div>
+        <div class="v" id="pilotBenefit">$5K+</div>
+        <div class="f">Консервативный эффект на совокупных pilot-объектах при снижении операционных потерь.</div>
+      </div>
+      <div class="flow-box">
+        <div class="k">Payback</div>
+        <div class="v" id="pilotPayback">24 days</div>
+        <div class="f">Ориентир по возврату пилота после валидации сценария и подключения первых объектов.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </section>
 
 </main></div>
@@ -8950,6 +9122,7 @@ updateUserLayer();
 </script>
 
 
+
 <script id="investor-next-step-script">
 (function(){
   function money(n){
@@ -8957,7 +9130,7 @@ updateUserLayer();
   }
 
   function renderInvestorNextStep(){
-    if (typeof appData === 'undefined' || typeof state === 'undefined' || typeof currentSortedDistricts !== 'function') return;
+    if (typeof appData === 'undefined' || typeof state === 'undefined') return;
 
     const district = appData.districts[state.selectedDistrict] || appData.districts.center;
     const metric = district[state.pollutant][state.window];
@@ -8976,6 +9149,8 @@ updateUserLayer();
     const outdoorLoss = outdoorBase * (metric >= (state.pollutant === 'aqi' ? 130 : state.pollutant === 'pm25' ? 55 : 720) ? 0.28 : 0.16) * metricFactor;
     const totalLoss = productivityLoss + logisticsLoss + outdoorLoss;
     const savings = totalLoss * 0.58;
+    const reducedLoss = totalLoss - savings;
+    const deltaPct = Math.round((savings / Math.max(totalLoss, 1)) * 100);
 
     const setText = (id, value) => {
       const el = document.getElementById(id);
@@ -9006,6 +9181,31 @@ updateUserLayer();
       <div class="item"><strong>Доверительный коридор</strong>Пилотная точность: ±7–12% при районной агрегации и сверке источников.</div>
       <div class="item"><strong>Контроль качества</strong>Нормализация, quality checks и районная сверка до передачи в decision engine.</div>
     `);
+
+    const execDecisionTitle = metric >= (state.pollutant === 'aqi' ? 130 : state.pollutant === 'pm25' ? 55 : 720)
+      ? 'Peak signal'
+      : 'Moderate signal';
+    const execDecisionText = `Сигнал ${state.pollutant.toUpperCase()} = ${metric} в районе ${district.name} определяет активное окно ${peak} и запускает управленческий сценарий.`;
+    const execActionTitle = 'Shift operations';
+    const execActionText = `Перенос outdoor activity, сокращение критического движения в ${peak} и смещение части логистики в более спокойный интервал.`;
+    const execOutcomeTitle = `${deltaPct}% lower loss`;
+    const execOutcomeText = `При исполнении сценария дневные потери объекта снижаются до ${money(reducedLoss)}, а операционная нагрузка становится управляемой.`;
+
+    setText('execDecisionTitle', execDecisionTitle);
+    setText('execDecisionText', execDecisionText);
+    setText('execActionTitle', execActionTitle);
+    setText('execActionText', execActionText);
+    setText('execOutcomeTitle', execOutcomeTitle);
+    setText('execOutcomeText', execOutcomeText);
+
+    setText('proofBaseline', money(totalLoss));
+    setText('proofWithSystem', money(reducedLoss));
+    setText('proofDelta', `-${deltaPct}%`);
+
+    const pilotDailyBenefit = savings * 3;
+    const paybackDays = Math.max(18, Math.round(120000 / Math.max(pilotDailyBenefit, 1)));
+    setText('pilotBenefit', money(pilotDailyBenefit));
+    setText('pilotPayback', `${paybackDays} days`);
   }
 
   const originalUpdateAll = window.updateAll;
@@ -9024,5 +9224,6 @@ updateUserLayer();
   });
 })();
 </script>
+
 
 </body></html>
