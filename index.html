@@ -2924,6 +2924,150 @@
   }
 </style>
 
+
+<style id="investor-next-step-v1">
+  .trust-arch-grid,
+  .biz-calc-grid,
+  .pilot-kpi-grid {
+    display:grid;
+    gap:18px;
+    margin:18px 0;
+  }
+  .trust-arch-grid { grid-template-columns: 1.05fr .95fr; }
+  .biz-calc-grid { grid-template-columns: 1.08fr .92fr; }
+  .pilot-kpi-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+  .trust-card-next,
+  .arch-card-next,
+  .biz-calc-card,
+  .pilot-kpi-card {
+    padding:20px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(circle at 84% 12%, rgba(97,225,255,.10), transparent 28%),
+      linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+    box-shadow: 0 18px 42px rgba(10,24,40,.18);
+  }
+
+  .trust-card-next h3,
+  .arch-card-next h3,
+  .biz-calc-card h3,
+  .pilot-kpi-card h3 {
+    margin:0 0 8px;
+    font-size:20px;
+    letter-spacing:-.02em;
+  }
+
+  .arch-flow {
+    display:grid;
+    grid-template-columns: repeat(5, minmax(0,1fr));
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .arch-step {
+    padding:14px 12px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+    text-align:center;
+  }
+
+  .arch-step strong {
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+  }
+
+  .arch-step span {
+    color: var(--muted);
+    font-size:12px;
+    line-height:1.45;
+  }
+
+  .formula-box {
+    padding:16px 18px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.03);
+    font-size:14px;
+    line-height:1.75;
+    color: var(--text);
+    margin-bottom:14px;
+  }
+
+  .calc-mini-grid {
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap:12px;
+    margin-top:14px;
+  }
+
+  .calc-mini-card {
+    padding:14px 16px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.028);
+  }
+
+  .calc-mini-card .k {
+    font-size:11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing:.08em;
+    margin-bottom:8px;
+  }
+
+  .calc-mini-card .v {
+    font-size:28px;
+    letter-spacing:-.04em;
+    margin-bottom:6px;
+  }
+
+  .calc-mini-card .f {
+    color: var(--muted);
+    font-size:12px;
+    line-height:1.55;
+  }
+
+  .kpi-compact-list {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .kpi-compact-item {
+    padding:14px 16px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.028);
+  }
+
+  .kpi-compact-item strong {
+    display:block;
+    margin-bottom:5px;
+    font-size:14px;
+  }
+
+  .kpi-compact-item span {
+    color: var(--muted);
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  @media (max-width: 1180px) {
+    .trust-arch-grid,
+    .biz-calc-grid,
+    .pilot-kpi-grid,
+    .arch-flow,
+    .calc-mini-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -3131,6 +3275,30 @@
       <div class="source-mini-item"><strong>Спутниковые данные</strong><span>Контур фоновой концентрации и региональная динамика.</span></div>
       <div class="source-mini-item"><strong>Локальные сенсоры</strong><span>Точечные сигналы возле объектов, дорог и плотных зон.</span></div>
       <div class="source-mini-item"><strong>Прогнозные модели</strong><span>Оценка окна ухудшения и ожидаемого эффекта от мер.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-arch-grid" id="trustArchitectureGrid">
+  <div class="trust-card-next">
+    <h3>Data trust block</h3>
+    <div class="sub">Отвечает на главный вопрос комиссии: откуда сигнал, как часто обновляется и насколько ему можно доверять.</div>
+    <div class="mini-bullets" id="dataTrustList">
+      <div class="item"><strong>Текущие источники</strong>Городские станции, спутниковые слои, локальные сенсоры и прогнозные модели.</div>
+      <div class="item"><strong>Частота обновления</strong>Каждые 5–15 минут в зависимости от источника и режима.</div>
+      <div class="item"><strong>Доверительный коридор</strong>Операционная точность сценария: ±7–12% при районной агрегации.</div>
+      <div class="item"><strong>Контроль качества</strong>Очистка выбросов, сверка по районам и нормализация входящего сигнала.</div>
+    </div>
+  </div>
+  <div class="arch-card-next">
+    <h3>Operational architecture</h3>
+    <div class="sub">Не витрина, а рабочий конвейер принятия решений поверх данных.</div>
+    <div class="arch-flow">
+      <div class="arch-step"><strong>Sources</strong><span>stations · satellites · sensors · weather</span></div>
+      <div class="arch-step"><strong>QA layer</strong><span>нормализация · очистка · сверка</span></div>
+      <div class="arch-step"><strong>District engine</strong><span>районная агрегация · risk map</span></div>
+      <div class="arch-step"><strong>Decision engine</strong><span>USER · BUSINESS · GOV сценарии</span></div>
+      <div class="arch-step"><strong>Outputs</strong><span>UI · alerts · API · KPI trace</span></div>
     </div>
   </div>
 </div>
@@ -3829,6 +3997,86 @@
 
 </div>
 
+</section>
+
+
+<section class="screen" id="grant">
+  <div class="premium-hero">
+    <h3>Grant & Investment</h3>
+    <p>Инвесторский и грантовый слой AirGuard: trusted data pipeline, operational architecture, pilot KPI и верифицируемая траектория запуска в Ташкенте.</p>
+  </div>
+
+  <div class="trust-arch-grid">
+    <div class="trust-card-next">
+      <h3>Data trust</h3>
+      <div class="sub">Почему система не выглядит как “ещё одна красивая витрина”.</div>
+      <div class="mini-bullets">
+        <div class="item"><strong>Сигнал</strong>Городские станции + погодные источники + спутниковый контур + локальные сенсоры пилота.</div>
+        <div class="item"><strong>Частота</strong>Обновление каждые 5–15 минут, районная агрегация и короткий цикл сверки.</div>
+        <div class="item"><strong>Качество</strong>Фильтрация шумов, аномалий и проверка на расхождения между источниками.</div>
+        <div class="item"><strong>Выход</strong>Не график, а сценарий USER / BUSINESS / GOV с ожидаемым эффектом.</div>
+      </div>
+    </div>
+    <div class="arch-card-next">
+      <h3>Operational architecture</h3>
+      <div class="sub">Как pilot превращается в реальную decision platform.</div>
+      <div class="arch-flow">
+        <div class="arch-step"><strong>Ingestion</strong><span>API / stations / weather / sensors</span></div>
+        <div class="arch-step"><strong>Normalization</strong><span>quality checks · timezone · outlier cleanup</span></div>
+        <div class="arch-step"><strong>District scoring</strong><span>район · окно · риск · приоритет</span></div>
+        <div class="arch-step"><strong>Decision engine</strong><span>команды для людей, бизнеса и города</span></div>
+        <div class="arch-step"><strong>KPI trace</strong><span>эффект мер, latency, pilot reporting</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pilot-kpi-grid">
+    <div class="pilot-kpi-card">
+      <h3>90 дней</h3>
+      <div class="sub">Полный pilot cycle</div>
+      <div class="strip-value">90</div>
+      <div class="strip-meta">От data ingestion до первого городского отчёта с KPI.</div>
+    </div>
+    <div class="pilot-kpi-card">
+      <h3>3 района</h3>
+      <div class="sub">Фокус запуска</div>
+      <div class="strip-value">3</div>
+      <div class="strip-meta">Юнусабад · Центр · Чиланзар как pilot-контур Ташкента.</div>
+    </div>
+    <div class="pilot-kpi-card">
+      <h3>5–15 минут</h3>
+      <div class="sub">Обновление данных</div>
+      <div class="strip-value">Live</div>
+      <div class="strip-meta">Операционный интервал для принятия решения, а не постфактум.</div>
+    </div>
+    <div class="pilot-kpi-card">
+      <h3>-12% AQI</h3>
+      <div class="sub">Целевой эффект пилота</div>
+      <div class="strip-value">KPI</div>
+      <div class="strip-meta">Цель — доказать влияние ранних мер на районный сценарий.</div>
+    </div>
+  </div>
+
+  <div class="command-strip">
+    <div class="command-box">
+      <h3>Pilot KPI block</h3>
+      <div class="kpi-compact-list">
+        <div class="kpi-compact-item"><strong>Data uptime</strong><span>Не ниже 95% по всем активным источникам в pilot-контуре.</span></div>
+        <div class="kpi-compact-item"><strong>Decision latency</strong><span>Не более 15 минут от входящего сигнала до обновлённого сценария.</span></div>
+        <div class="kpi-compact-item"><strong>Business pilot</strong><span>Минимум 3 pilot-объекта с ежедневным расчётом потерь и решений.</span></div>
+        <div class="kpi-compact-item"><strong>Gov trace</strong><span>Короткий отчёт по району, окну и эффекту мер в течение 3 часов.</span></div>
+      </div>
+    </div>
+    <div class="command-box">
+      <h3>Что делает грант</h3>
+      <div class="kpi-compact-list">
+        <div class="kpi-compact-item"><strong>Backend</strong><span>Ingestion layer, cache, failover, operational history.</span></div>
+        <div class="kpi-compact-item"><strong>Decision engine</strong><span>Сценарии USER / BUSINESS / GOV и measurable output layer.</span></div>
+        <div class="kpi-compact-item"><strong>Pilot deployment</strong><span>Три района Ташкента + первые объекты бизнеса.</span></div>
+        <div class="kpi-compact-item"><strong>Sensor strategy</strong><span>План подключения локальных датчиков после software-first pilot.</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 </main></div>
@@ -8697,6 +8945,82 @@ updateUserLayer();
       var btn = document.querySelector('.nav button[data-screen="grant"]');
       if (btn) btn.click();
     }
+  });
+})();
+</script>
+
+
+<script id="investor-next-step-script">
+(function(){
+  function money(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function renderInvestorNextStep(){
+    if (typeof appData === 'undefined' || typeof state === 'undefined' || typeof currentSortedDistricts !== 'function') return;
+
+    const district = appData.districts[state.selectedDistrict] || appData.districts.center;
+    const metric = district[state.pollutant][state.window];
+    const peak = district.peak || '—';
+
+    const employees = 120;
+    const avgWage = 520;
+    const logisticsBase = 6200;
+    const outdoorBase = 3800;
+    const dailyPayroll = (employees * avgWage) / 30;
+
+    const metricFactor = Math.max(0.85, Math.min(1.55, metric / (state.pollutant === 'co2' ? 720 : state.pollutant === 'pm25' ? 55 : 120)));
+    const productivityPct = Math.max(4, Math.min(12, Math.round((metricFactor - 0.55) * 10)));
+    const productivityLoss = dailyPayroll * (productivityPct / 100);
+    const logisticsLoss = logisticsBase * (metric >= (state.pollutant === 'aqi' ? 130 : state.pollutant === 'pm25' ? 55 : 720) ? 0.22 : 0.14) * metricFactor;
+    const outdoorLoss = outdoorBase * (metric >= (state.pollutant === 'aqi' ? 130 : state.pollutant === 'pm25' ? 55 : 720) ? 0.28 : 0.16) * metricFactor;
+    const totalLoss = productivityLoss + logisticsLoss + outdoorLoss;
+    const savings = totalLoss * 0.58;
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+    const setHTML = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = value;
+    };
+
+    setHTML('bizCalcAssumptions', `
+      <div class="item"><strong>Pilot-объект</strong>Район: ${district.name} · окно: ${peak} · показатель: ${state.pollutant.toUpperCase()}.</div>
+      <div class="item"><strong>Базовые допущения</strong>${employees} сотрудников · средняя зарплата ${money(avgWage)}/мес · логистика ${money(logisticsBase)}/день.</div>
+      <div class="item"><strong>Коэффициент среды</strong>Текущий сигнал ${metric} формирует падение продуктивности ${productivityPct}% и усиливает логистические потери в пиковом окне.</div>
+      <div class="item"><strong>Решение</strong>Перенос наружных операций и маршрутов в более спокойное окно даёт быстрый measurable effect.</div>
+    `);
+
+    setText('bizCalcPayroll', money(dailyPayroll));
+    setText('bizCalcProd', money(productivityLoss));
+    setText('bizCalcLog', money(logisticsLoss));
+    setText('bizCalcOutdoor', money(outdoorLoss));
+    setText('bizCalcTotal', money(totalLoss));
+    setText('bizCalcSave', money(savings));
+
+    setHTML('dataTrustList', `
+      <div class="item"><strong>Текущие источники</strong>Городские станции, спутниковые слои, локальные сенсоры и прогнозные модели под сценарий ${district.name}.</div>
+      <div class="item"><strong>Частота обновления</strong>Операционный слой пересчитывается каждые 5–15 минут по активному окну «${peak}».</div>
+      <div class="item"><strong>Доверительный коридор</strong>Пилотная точность: ±7–12% при районной агрегации и сверке источников.</div>
+      <div class="item"><strong>Контроль качества</strong>Нормализация, quality checks и районная сверка до передачи в decision engine.</div>
+    `);
+  }
+
+  const originalUpdateAll = window.updateAll;
+  if (typeof originalUpdateAll === 'function') {
+    window.updateAll = function(){
+      originalUpdateAll.apply(this, arguments);
+      renderInvestorNextStep();
+    };
+  }
+
+  window.addEventListener('DOMContentLoaded', function(){
+    setTimeout(renderInvestorNextStep, 160);
+  });
+  window.addEventListener('load', function(){
+    setTimeout(renderInvestorNextStep, 280);
   });
 })();
 </script>
