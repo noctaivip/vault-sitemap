@@ -2910,6 +2910,20 @@
   }
 </style>
 
+
+<style id="grant-button-visible-fix">
+  .nav button[data-screen="grant"] {
+    display: flex !important;
+    border-color: rgba(97,225,255,0.22) !important;
+    background: linear-gradient(180deg, rgba(97,225,255,0.12), rgba(97,225,255,0.04)) !important;
+    box-shadow: 0 10px 24px rgba(32,184,232,0.10);
+  }
+
+  .nav button[data-screen="grant"] small {
+    color: #bfeeff !important;
+  }
+</style>
+
 </head>
 <body>
 <button class="hamburger-floating" id="hamburgerBtn" aria-label="Открыть меню">
@@ -6054,17 +6068,17 @@ updateUserLayer();
     general: {
       badge: 'USER',
       summary: 'Пользовательский контур: простые решения, прогноз, карта и персональные уведомления.',
-      nav: ['overview','map','forecast','alerts','user']
+      nav: ['overview','map','forecast','alerts','user','grant']
     },
     business: {
       badge: 'B2B',
       summary: 'Бизнес-контур: объекты, персонал, операционный риск, окна наружных работ и корпоративная отчётность.',
-      nav: ['overview','map','forecast','alerts','business']
+      nav: ['overview','map','forecast','alerts','business','grant']
     },
     gov: {
       badge: 'B2G',
       summary: 'Государственный контур: критические районы, меры реагирования, городской контроль и управленческие сценарии.',
-      nav: ['overview','map','forecast','districts','sources','gov']
+      nav: ['overview','map','forecast','districts','sources','gov','grant']
     }
   };
 
@@ -8672,6 +8686,18 @@ updateUserLayer();
   }
 
   renderGrantNextStep();
+})();
+</script>
+
+
+<script id="grant-hash-open-fix">
+(function(){
+  window.addEventListener('load', function () {
+    if (window.location.hash === '#grant') {
+      var btn = document.querySelector('.nav button[data-screen="grant"]');
+      if (btn) btn.click();
+    }
+  });
 })();
 </script>
 
