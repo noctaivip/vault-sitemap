@@ -3371,7 +3371,7 @@
 <div class="chip" id="refreshChip">Система активна · 12 районов онлайн · модель v1.2</div>
 <div class="chip" id="contextChip">Локация: Ташкент · Район: Центр · Метрика: AQI · Окно: Сейчас</div>
 <div class="chip" id="accessModeChip">Контур: Пользователь</div>
-<button class="ghost-btn active" id="installBtn">Запросить доступ</button>
+<button class="ghost-btn active" id="installBtn">Скачать приложение</button>
 </div>
 <div class="topbar-access">
 <div class="access-switch" id="accessSwitch">
@@ -7771,7 +7771,7 @@ updateUserLayer();
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    setInstallButtonState('Запросить доступ', false);
+    setInstallButtonState('Скачать приложение', false);
   });
 
   window.addEventListener('appinstalled', function () {
@@ -7784,7 +7784,7 @@ updateUserLayer();
     const btn = document.getElementById('installBtn');
     if (!btn) return;
 
-    setInstallButtonState('Запросить доступ', false);
+    setInstallButtonState('Скачать приложение', false);
 
     btn.addEventListener('click', async function () {
       if (deferredPrompt) {
